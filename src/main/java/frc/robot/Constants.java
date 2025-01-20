@@ -24,4 +24,9 @@ public class Constants {
 
     }
 
+    public final class Robot {
+        public final static double chassisWidth = 26.0;
+        public final static double chassisDepth = 26.0;
+    }
+
 }

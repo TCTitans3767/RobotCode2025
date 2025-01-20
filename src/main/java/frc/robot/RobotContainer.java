@@ -38,7 +38,7 @@ public class RobotContainer {
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.03).withRotationalDeadband(MaxAngularRate * 0.03) // Add a 10% deadband
+            .withDeadband(MaxSpeed * 0.02).withRotationalDeadband(MaxAngularRate * 0.02) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -83,8 +83,8 @@ public class RobotContainer {
             // new TeleopDrive(() -> drive.withVelocityX(Math.pow(-joystick.getRawAxis(1) * MaxSpeed, 3)) // Drive forward with negative Y (forward)
             //                             .withVelocityY(Math.pow(-joystick.getRawAxis(0) * MaxSpeed, 3)) // Drive left with negative X (left)
             //                             .withRotationalRate(-joystick.getRawAxis(2) * MaxAngularRate), drivetrain) // Drive counterclockwise with negative X (left), drivetrain)
-            new TeleopDrive(() -> drive.withVelocityX(Math.pow(-joystick.getLeftY() * MaxSpeed, 3)) // Drive forward with negative Y (forward)
-                                        .withVelocityY(Math.pow(-joystick.getLeftX() * MaxSpeed, 3)) // Drive left with negative X (left)
+            new TeleopDrive(() -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(-joystick.getLeftY() * MaxSpeed, 2) : -Math.pow(-joystick.getLeftY() * MaxSpeed, 2)) // Drive forward with negative Y (forward)
+                                        .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(-joystick.getLeftX() * MaxSpeed, 2) : -Math.pow(-joystick.getLeftX() * MaxSpeed, 2)) // Drive left with negative X (left)
                                         .withRotationalRate(-joystick.getRightX() * MaxAngularRate), drivetrain) // Drive counterclockwise with negative X (left), drivetrain)
         );
 

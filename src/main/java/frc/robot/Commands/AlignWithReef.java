@@ -1,9 +1,12 @@
 package frc.robot.Commands;
 
-import java.lang.management.BufferPoolMXBean;
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.AprilTagCamera;
@@ -16,6 +19,9 @@ public class AlignWithReef extends Command{
     private final Drivetrain drivetrain = RobotContainer.getDrivetrain();
     private final BooleanSupplier rightBranch;
 
+    private int nearestReefTag;
+    private Pose2d nearestReefPose;
+
     private final PIDController xController = new PIDController(10, 0, 0);
     private final PIDController yController = new PIDController(10, 0, 0);
     private final PIDController headingController = new PIDController(7.5, 0, 0);
@@ -23,14 +29,25 @@ public class AlignWithReef extends Command{
     public AlignWithReef(AprilTagCamera camera, BooleanSupplier rightBranch) {
         this.camera = camera;
         this.rightBranch = rightBranch;
+
+        headingController.enableContinuousInput(-Math.PI, Math.PI);
     }
 
     @Override
     public void initialize() {
-        
-        
+        camera.turnOn();
 
-        headingController.setSetpoint(camera.getTagAngle(0));
+        nearestReefTag = AprilTagCamera.getNearestReefTag();
+
+        nearestReefPose = AprilTagCamera.getTagPose(nearestReefTag);
+
+        headingController.setTolerance(0.5);
+        headingController.setSetpoint(AprilTagCamera.getTagAngle(nearestReefTag).plus(Rotation2d.k180deg).getDegrees());
+        headingController.reset();
+
+        xController.setSetpoint(nearestReefPose.getX());
+
+        
 
     }
 

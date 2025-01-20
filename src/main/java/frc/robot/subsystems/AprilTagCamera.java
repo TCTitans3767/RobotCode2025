@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -65,6 +67,8 @@ public class AprilTagCamera extends SubsystemBase{
                     }
                 }
             }
+        } else {
+            return;
         }
     }
 
@@ -84,8 +88,8 @@ public class AprilTagCamera extends SubsystemBase{
         AprilTagCamera.doEstimationAll = true;
     }
 
-    public static double getTagAngle(int tagID) {
-        return fieldLayout.getTagPose(tagID).get().toPose2d().getRotation().getDegrees();
+    public static Rotation2d getTagAngle(int tagID) {
+        return fieldLayout.getTagPose(tagID).get().toPose2d().getRotation();
     }
 
     public static Pose2d getTagPose(int tagID) {
@@ -95,6 +99,78 @@ public class AprilTagCamera extends SubsystemBase{
     public static double getNearestReefAngle() {
         if (Robot.getAlliance() == Alliance.Blue) {
             List<Integer> nearestTags = Arrays.asList(Constants.ReefTagIDs.blue);
+
+            nearestTags.sort(new Comparator<Integer>() {
+
+                Drivetrain drivetrain = RobotContainer.getDrivetrain();
+
+                @Override
+                public int compare(Integer tag1, Integer tag2) {
+                    double distanceToTag1 = AprilTagCamera.getTagPose(tag1).getTranslation().getDistance(drivetrain.getPose().getTranslation());
+                    double distanceToTag2 = AprilTagCamera.getTagPose(tag2).getTranslation().getDistance(drivetrain.getPose().getTranslation());
+
+                    return (int) Math.floor(distanceToTag1 - distanceToTag2);
+                }
+            });
+
+            return getTagAngle(nearestTags.get(0)).plus(Rotation2d.fromDegrees(180)).getDegrees();
+
+        } else {
+            List<Integer> nearestTags = Arrays.asList(Constants.ReefTagIDs.red);
+
+            nearestTags.sort(new Comparator<Integer>() {
+
+                Drivetrain drivetrain = RobotContainer.getDrivetrain();
+
+                @Override
+                public int compare(Integer tag1, Integer tag2) {
+                    double distanceToTag1 = AprilTagCamera.getTagPose(tag1).getTranslation().getDistance(drivetrain.getPose().getTranslation());
+                    double distanceToTag2 = AprilTagCamera.getTagPose(tag2).getTranslation().getDistance(drivetrain.getPose().getTranslation());
+
+                    return (int) Math.floor(distanceToTag1 - distanceToTag2);
+                }
+            });
+
+            return getTagAngle(nearestTags.get(0)).plus(Rotation2d.fromDegrees(180)).getDegrees();
+        }
+    }
+
+    public static int getNearestReefTag() {
+        if (Robot.getAlliance() == Alliance.Blue) {
+            List<Integer> nearestTags = Arrays.asList(Constants.ReefTagIDs.blue);
+
+            nearestTags.sort(new Comparator<Integer>() {
+
+                Drivetrain drivetrain = RobotContainer.getDrivetrain();
+
+                @Override
+                public int compare(Integer tag1, Integer tag2) {
+                    double distanceToTag1 = AprilTagCamera.getTagPose(tag1).getTranslation().getDistance(drivetrain.getPose().getTranslation());
+                    double distanceToTag2 = AprilTagCamera.getTagPose(tag2).getTranslation().getDistance(drivetrain.getPose().getTranslation());
+
+                    return (int) Math.floor(distanceToTag1 - distanceToTag2);
+                }
+            });
+
+            return nearestTags.get(0);
+
+        } else {
+            List<Integer> nearestTags = Arrays.asList(Constants.ReefTagIDs.red);
+
+            nearestTags.sort(new Comparator<Integer>() {
+
+                Drivetrain drivetrain = RobotContainer.getDrivetrain();
+
+                @Override
+                public int compare(Integer tag1, Integer tag2) {
+                    double distanceToTag1 = AprilTagCamera.getTagPose(tag1).getTranslation().getDistance(drivetrain.getPose().getTranslation());
+                    double distanceToTag2 = AprilTagCamera.getTagPose(tag2).getTranslation().getDistance(drivetrain.getPose().getTranslation());
+
+                    return (int) Math.floor(distanceToTag1 - distanceToTag2);
+                }
+            });
+
+            return nearestTags.get(0);
         }
     }
 }
