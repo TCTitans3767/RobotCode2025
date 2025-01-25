@@ -47,13 +47,18 @@ public class AlignWithReef extends Command{
 
         xController.setSetpoint(nearestReefPose.getX());
 
-        
+        yController.setSetpoint(nearestReefPose.getY());
 
     }
 
     @Override
     public void execute() {
         
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
     @Override
