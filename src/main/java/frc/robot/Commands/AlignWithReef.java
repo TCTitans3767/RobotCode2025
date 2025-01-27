@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.AprilTagCamera;
 import frc.robot.subsystems.Drivetrain;
@@ -16,7 +17,7 @@ import frc.robot.utils.CommandTrigger;
 public class AlignWithReef extends Command{
     
     private final AprilTagCamera camera;
-    private final Drivetrain drivetrain = RobotContainer.getDrivetrain();
+    private final Drivetrain drivetrain = Robot.getDrivetrain();
     private final BooleanSupplier rightBranch;
 
     private int nearestReefTag;

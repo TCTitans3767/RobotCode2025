@@ -50,7 +50,7 @@ public class RobotContainer {
 
     private AutoFactory autoFactory;
 
-    public final static Drivetrain drivetrain = TunerConstants.createDrivetrain();
+    public final Drivetrain drivetrain = Robot.getDrivetrain();
 
     public RobotContainer() {
         configureBindings();
@@ -107,10 +107,6 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         return Autos.test(autoFactory).cmd();
-    }
-
-    public static Drivetrain getDrivetrain() {
-        return RobotContainer.drivetrain;
     }
 
 }

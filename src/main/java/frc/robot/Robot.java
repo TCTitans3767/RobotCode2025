@@ -13,9 +13,13 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Drivetrain;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+
+  public final static Drivetrain drivetrain = TunerConstants.createDrivetrain();
 
   private final RobotContainer m_robotContainer;
 
@@ -81,5 +85,9 @@ public class Robot extends TimedRobot {
 
   public static Alliance getAlliance() {
     return DriverStation.isDSAttached() ? DriverStation.getAlliance().orElse(Alliance.Blue) : Alliance.Blue;
+  }
+
+  public static Drivetrain getDrivetrain() {
+    return drivetrain;
   }
 }
