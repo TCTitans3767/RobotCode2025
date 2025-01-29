@@ -14,7 +14,10 @@ import choreo.auto.AutoFactory;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,10 +31,14 @@ import frc.robot.Commands.AlignWithReef;
 import frc.robot.Commands.TeleopDrive;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Limelight;
 
 public class RobotContainer {
 
-    private Command alignWithReef = new AlignWithReef(null, () -> false);
+    public final Drivetrain drivetrain = Robot.getDrivetrain();
+    public final Limelight limelight = Robot.getLimelight();
+
+    private Command alignWithReef = new AlignWithReef(limelight, () -> false);
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -50,11 +57,11 @@ public class RobotContainer {
 
     private AutoFactory autoFactory;
 
-    public final Drivetrain drivetrain = Robot.getDrivetrain();
-
     public RobotContainer() {
         configureBindings();
         configureChoreo();
+
+        limelight.initialPoseEstimates();
 
         SmartDashboard.putData(drivetrain.getField());
 
@@ -101,6 +108,7 @@ public class RobotContainer {
 
         // reset the field-centric heading on left bumper press
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        joystick.b().whileTrue(alignWithReef);
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
