@@ -31,7 +31,7 @@ public class AprilTagCamera extends SubsystemBase{
 
     private static boolean doEstimationAll = true;
     private boolean doEstimation = true;
-    private static Drivetrain drivetrain = RobotContainer.getDrivetrain();
+    private static Drivetrain drivetrain = Robot.getDrivetrain();
 
     private static AprilTagFieldLayout fieldLayout;
     private final PhotonCamera camera;
@@ -102,7 +102,7 @@ public class AprilTagCamera extends SubsystemBase{
 
             nearestTags.sort(new Comparator<Integer>() {
 
-                Drivetrain drivetrain = RobotContainer.getDrivetrain();
+                Drivetrain drivetrain = Robot.getDrivetrain();
 
                 @Override
                 public int compare(Integer tag1, Integer tag2) {
@@ -120,7 +120,7 @@ public class AprilTagCamera extends SubsystemBase{
 
             nearestTags.sort(new Comparator<Integer>() {
 
-                Drivetrain drivetrain = RobotContainer.getDrivetrain();
+                Drivetrain drivetrain = Robot.getDrivetrain();
 
                 @Override
                 public int compare(Integer tag1, Integer tag2) {
@@ -141,7 +141,7 @@ public class AprilTagCamera extends SubsystemBase{
 
             nearestTags.sort(new Comparator<Integer>() {
 
-                Drivetrain drivetrain = RobotContainer.getDrivetrain();
+                Drivetrain drivetrain = Robot.getDrivetrain();
 
                 @Override
                 public int compare(Integer tag1, Integer tag2) {
@@ -159,7 +159,7 @@ public class AprilTagCamera extends SubsystemBase{
 
             nearestTags.sort(new Comparator<Integer>() {
 
-                Drivetrain drivetrain = RobotContainer.getDrivetrain();
+                Drivetrain drivetrain = Robot.getDrivetrain();
 
                 @Override
                 public int compare(Integer tag1, Integer tag2) {
@@ -173,4 +173,5 @@ public class AprilTagCamera extends SubsystemBase{
             return nearestTags.get(0);
         }
     }
+
 }

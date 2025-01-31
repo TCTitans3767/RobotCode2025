@@ -8,14 +8,23 @@ import edu.wpi.first.epilogue.EpilogueConfiguration;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.epilogue.Logged.Importance;
 import edu.wpi.first.epilogue.logging.EpilogueBackend;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Limelight;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+
+  public final static Drivetrain drivetrain = TunerConstants.createDrivetrain();
+  public final static Limelight limelight = new Limelight("", new Pose3d(Units.inchesToMeters(12), Units.inchesToMeters(0), Units.inchesToMeters(3), new Rotation3d(0, 0, 0)));
 
   private final RobotContainer m_robotContainer;
 
@@ -81,5 +90,13 @@ public class Robot extends TimedRobot {
 
   public static Alliance getAlliance() {
     return DriverStation.isDSAttached() ? DriverStation.getAlliance().orElse(Alliance.Blue) : Alliance.Blue;
+  }
+
+  public static Drivetrain getDrivetrain() {
+    return drivetrain;
+  }
+
+  public static Limelight getLimelight() {
+    return limelight;
   }
 }
