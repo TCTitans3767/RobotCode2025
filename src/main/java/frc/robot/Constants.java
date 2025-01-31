@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 public class Constants {
     
     public final class ReefTagIDs {
@@ -25,8 +27,8 @@ public class Constants {
     }
 
     public final class Robot {
-        public final static double chassisWidth = 26.0;
-        public final static double chassisDepth = 26.0;
+        public final static double chassisWidthMeters = Units.inchesToMeters(26.0);
+        public final static double chassisDepthMeters = Units.inchesToMeters(26.0);
     }
 
 }

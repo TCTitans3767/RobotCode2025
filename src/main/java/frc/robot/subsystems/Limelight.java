@@ -16,6 +16,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -32,6 +33,7 @@ public class Limelight extends SubsystemBase{
 
     private boolean doEstimation = false;
     private static boolean doEstimationAll = true;
+    private boolean doEstimationFrame = true;
     private static AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
 
     private int startupEstimations = 0;
@@ -48,26 +50,29 @@ public class Limelight extends SubsystemBase{
             robotToLimelight.getRotation().getZ()
         );
 
-        drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.2, 0.2, 0.5));
+        drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 999999));
 
     }
 
     @Override
     public void periodic() {
-
-        if (!doEstimation || !doEstimationAll) {
-            return;
-        }
+        doEstimationFrame = true;
 
         PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
         if (Math.abs(drivetrain.getPigeon2().getAngularVelocityZDevice().getValueAsDouble()) > 720) {
-            return;
+            doEstimationFrame = false;
         }
         if (estimatedPose.tagCount == 0) {
-            return;
+            doEstimationFrame = false;
         }
 
-        drivetrain.addVisionMeasurement(estimatedPose.pose);
+        if (doEstimationFrame && doEstimation && doEstimationAll) {
+            drivetrain.addVisionMeasurement(estimatedPose.pose);
+        }
+
+        SmartDashboard.putNumber(limelightName + "/Target Pose X", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[0]);
+        SmartDashboard.putNumber(limelightName + "/Target Pose Y", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[1]);
+        SmartDashboard.putNumber(limelightName + "/Target Pose Z", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[2]);
 
     }
 
@@ -78,9 +83,9 @@ public class Limelight extends SubsystemBase{
         LimelightHelpers.SetRobotOrientation(limelightName, 
             robotOrientation.getZ(),
             0,
-            robotOrientation.getY(),
             0,
-            robotOrientation.getX(),
+            0,
+            0,
             0
         );
         LimelightHelpers.SetIMUMode(limelightName, 2);
@@ -97,11 +102,15 @@ public class Limelight extends SubsystemBase{
     }
 
     public double getXFromTag() {
-        return LimelightHelpers.getBotPose3d_TargetSpace(limelightName).getX();
+        return LimelightHelpers.getTargetPose_RobotSpace(limelightName)[0];
     }
 
     public double getYFromTag() {
-        return LimelightHelpers.getBotPose3d_TargetSpace(limelightName).getY();
+        return LimelightHelpers.getTargetPose_RobotSpace(limelightName)[1];
+    }
+
+    public double getZFromTag() {
+        return LimelightHelpers.getTargetPose_RobotSpace(limelightName)[2];
     }
 
     public boolean tagIsVisible() {
@@ -109,18 +118,24 @@ public class Limelight extends SubsystemBase{
     }
 
     public void initialPoseEstimates() {
-        while (startupEstimations < 10) {
+        doEstimation = false;
+        drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.1, 0.1, 0.5));
+        int numTries = 0;
+        while (startupEstimations < 10 && numTries < 40) {
             PoseEstimate result = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
             if (result.tagCount == 1) {
                 if (result.rawFiducials[0].ambiguity > 0.3) {
+                    numTries++;
                     continue;
                 }
                 if (result.rawFiducials[0].distToCamera > 3) {
+                    numTries++;
                     continue;
                 }
             }
 
             if (result.tagCount == 0) {
+                numTries++;
                 continue;
             }
 
@@ -130,7 +145,7 @@ public class Limelight extends SubsystemBase{
         }
 
         resetIMU(drivetrain.getRotation3d());
-        drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.5, 0.5, 99999));
+        drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 99999));
         turnOnAprilTags();
     }
 

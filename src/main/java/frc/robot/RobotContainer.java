@@ -27,7 +27,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Auton.Autos;
-import frc.robot.Commands.AlignWithReef;
+import frc.robot.Commands.AlignWithLeftReef;
+import frc.robot.Commands.AlignWithRightReef;
 import frc.robot.Commands.TeleopDrive;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Drivetrain;
@@ -38,7 +39,8 @@ public class RobotContainer {
     public final Drivetrain drivetrain = Robot.getDrivetrain();
     public final Limelight limelight = Robot.getLimelight();
 
-    private Command alignWithReef = new AlignWithReef(limelight, () -> false);
+    private Command alignWithRightReef = new AlignWithRightReef(limelight);
+    private Command alignWithLeftReef = new AlignWithLeftReef(limelight);
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -108,7 +110,10 @@ public class RobotContainer {
 
         // reset the field-centric heading on left bumper press
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-        joystick.b().whileTrue(alignWithReef);
+        joystick.rightBumper().onTrue(limelight.runOnce(() -> limelight.resetIMU(new Rotation3d())));
+        joystick.povUp().onTrue(limelight.runOnce(() -> limelight.initialPoseEstimates()));
+        joystick.b().whileTrue(alignWithRightReef);
+        joystick.x().whileTrue(alignWithLeftReef);
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }

@@ -275,7 +275,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         );
         SmartDashboard.putNumber("Drivetrain/haeding error degrees", sample.getPose().getRotation().getDegrees() - getPose().getRotation().getDegrees());
         SmartDashboard.putNumber("Drivetrain/pose error meters", getPose().getTranslation().getDistance(new Translation2d(sample.x, sample.y)));
-        field.getObject("path").setPose(sample.getPose());
+        field.getObject("goalObject").setPose(sample.getPose());
     }
 
     public Pose2d getPose() {
