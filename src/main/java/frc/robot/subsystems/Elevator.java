@@ -26,6 +26,7 @@ public class Elevator extends SubsystemBase{
         leftMotor = new TalonFX(Constants.Elevator.leftMotorID);
         leftConfig = new TalonFXConfiguration();
         leftConfig.Feedback.SensorToMechanismRatio = Constants.Elevator.conversionFactor;
+        leftConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         
         // Slot 0 PID setup
         slot0Config = new Slot0Configs();
@@ -46,7 +47,6 @@ public class Elevator extends SubsystemBase{
         leftMotor.getConfigurator().apply(leftConfig);
         leftMotor.getConfigurator().apply(slot0Config);
         leftMotor.getConfigurator().apply(motionMagicConfig);
-        leftConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         leftMotor.setNeutralMode(NeutralModeValue.Brake);
 
         rightConfig = new TalonFXConfiguration();
