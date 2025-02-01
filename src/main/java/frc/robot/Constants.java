@@ -25,7 +25,17 @@ public class Constants {
         };
 
     }
+  
+    public final class Climber {
+        public final static int leftMotorID = 0;
+        public final static int rightMotorID = 1;
+      
+        public final static double maxVelocity = 0.1;
+        public final static double maxAcceleration = 0.1;
 
+        public final static double conversonFactor = 1;
+    }
+  
     public final class Elevator {
         // CAN IDs
         public final static int leftMotorID = 0;
@@ -38,7 +48,7 @@ public class Constants {
         public final static double kG = 0.1;
         public final static double kV = 0.1;
         public final static double kS = 0.1;
-
+        
         // Motion Magic Constants
         public final static double maxVelocity = 0.1;
         public final static double maxAcceleration = 0.1;
