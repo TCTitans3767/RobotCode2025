@@ -9,12 +9,14 @@ import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.ctre.phoenix6.swerve.jni.SwerveJNI;
 import com.ctre.phoenix6.swerve.SwerveModule.SteerRequestType;
 import com.google.gson.FieldAttributes;
 
 import choreo.trajectory.SwerveSample;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -273,7 +275,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         );
         SmartDashboard.putNumber("Drivetrain/haeding error degrees", sample.getPose().getRotation().getDegrees() - getPose().getRotation().getDegrees());
         SmartDashboard.putNumber("Drivetrain/pose error meters", getPose().getTranslation().getDistance(new Translation2d(sample.x, sample.y)));
-        field.getObject("path").setPose(sample.getPose());
+        field.getObject("goalObject").setPose(sample.getPose());
     }
 
     public Pose2d getPose() {
