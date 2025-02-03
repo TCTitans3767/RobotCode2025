@@ -50,6 +50,7 @@ public class Constants {
     public final class Intake {
         // CAN IDs
         public final static int wheelMotorID = 2;
+        public final static int pivotMotorID = 3;
 
         // PID Constants
         public final static double kP = 0.1;
@@ -62,6 +63,8 @@ public class Constants {
         // Motion Magic Constants
         public final static double maxVelocity = 0.1;
         public final static double maxAcceleration = 0.1;
+        public final static double angleMax = 0.1;
+        public final static double angleMin = 0.1;
 
         // Conversion Factor
         public final static double conversionFactor = 1;

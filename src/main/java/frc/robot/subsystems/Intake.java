@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -15,8 +16,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 
 public class Intake extends SubsystemBase{
-    private final TalonFX wheelMotor;
-    private final TalonFXConfiguration wheelConfig;
+    private final TalonFX wheelMotor, pivotMotor;
+    private final TalonFXConfiguration wheelConfig, pivotConfig;
 
     private final Slot0Configs slot0Config;
     private final MotionMagicConfigs motionMagicConfig;
@@ -27,8 +28,10 @@ public class Intake extends SubsystemBase{
         wheelConfig = new TalonFXConfiguration();
         wheelConfig.Feedback.SensorToMechanismRatio = Constants.Intake.conversionFactor;
         wheelConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        
-        // Slot 0 PID setup
+        pivotMotor = new TalonFX(Constants.Intake.pivotMotorID);
+        pivotConfig = new TalonFXConfiguration();
+         
+        // Slot 0 PID setup 
         slot0Config = new Slot0Configs();
         slot0Config.kP = Constants.Intake.kP;
         slot0Config.kI = Constants.Intake.kI;
@@ -49,7 +52,7 @@ public class Intake extends SubsystemBase{
         wheelMotor.getConfigurator().apply(motionMagicConfig);
         wheelMotor.setNeutralMode(NeutralModeValue.Brake);
 
-       
+        
     }
 
     @Override
@@ -59,6 +62,13 @@ public class Intake extends SubsystemBase{
     public void setSpeed(double speed) {
         wheelMotor.set(speed);
     
-    }
+     }
 
+     public void setPosition(double position) {
+        if (position < Constants.Intake.angleMax && position > Constants.Intake.angleMin) {
+            pivotMotor.setControl(new MotionMagicVoltage(position));
+        } else {
+            SignalLogger.writeString("Intake position out of bounds", String.valueOf(position));
+        }
+    }
 }
