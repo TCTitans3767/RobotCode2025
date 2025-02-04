@@ -20,6 +20,7 @@ public class Elevator extends SubsystemBase{
 
     private final Slot0Configs slot0Config;
     private final MotionMagicConfigs motionMagicConfig;
+    private final MotionMagicVoltage motionMagicRequest;
 
     public Elevator() {
         // Motor basic setup
@@ -55,6 +56,8 @@ public class Elevator extends SubsystemBase{
         rightMotor.getConfigurator().apply(rightConfig);
         rightMotor.setNeutralMode(NeutralModeValue.Brake);
 
+        motionMagicRequest = new MotionMagicVoltage(0);
+
     }
 
     @Override
@@ -67,6 +70,9 @@ public class Elevator extends SubsystemBase{
         rightMotor.setControl(new Follower(Constants.Elevator.leftMotorID, true));
     }
 
-    
+    public void setPosition(double position) {
+        leftMotor.setControl(motionMagicRequest.withPosition(position));
+        rightMotor.setControl(new Follower(Constants.Elevator.leftMotorID, true));
+    }
     
 }

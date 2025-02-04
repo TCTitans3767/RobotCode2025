@@ -27,20 +27,26 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Auton.Autos;
-import frc.robot.Commands.AlignWithLeftReef;
-import frc.robot.Commands.AlignWithRightReef;
-import frc.robot.Commands.TeleopDrive;
+import frc.robot.Commands.DriveCommands.AlignWithLeftReef;
+import frc.robot.Commands.DriveCommands.AlignWithRightReef;
+import frc.robot.Commands.DriveCommands.TeleopDrive;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.RobotController;
 
 public class RobotContainer {
 
     public final Drivetrain drivetrain = Robot.getDrivetrain();
     public final Limelight limelight = Robot.getLimelight();
+    public final Elevator elevator = Robot.getElevator();
+    public final Manipulator manipulator = Robot.getManipulator();
+    public final Climber climber = Robot.getClimber();
 
-    private Command alignWithRightReef = new AlignWithRightReef(limelight);
-    private Command alignWithLeftReef = new AlignWithLeftReef(limelight);
+    public final RobotController robotController;
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -60,12 +66,17 @@ public class RobotContainer {
     private AutoFactory autoFactory;
 
     public RobotContainer() {
+
+        robotController = new RobotController(drivetrain, elevator, manipulator, climber, limelight,
+                 () -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(-joystick.getLeftY()  * MaxSpeed, 3) : Math.pow(-joystick.getLeftY() * MaxSpeed, 3)) // Drive forward with negative Y (forward)
+                .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(-joystick.getLeftX() * MaxSpeed, 3) : Math.pow(-joystick.getLeftX() * MaxSpeed, 3)) // Drive left with negative X (left)
+                .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left), drivetrain));
+        ); 
+
         configureBindings();
         configureChoreo();
 
         limelight.initialPoseEstimates();
-
-        SmartDashboard.putData(drivetrain.getField());
 
     }
 
@@ -80,22 +91,23 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
+
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
-        drivetrain.setDefaultCommand(
-            // Drivetrain will execute this command periodically
-            // drivetrain.applyRequest(() ->
-            //     drive.withVelocityX(Math.pow(-joystick.getLeftY() * MaxSpeed, 3)) // Drive forward with negative Y (forward)
-            //         .withVelocityY(Math.pow(-joystick.getLeftX() * MaxSpeed, 3)) // Drive left with negative X (left)
-            //         .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-            // )
-            // new TeleopDrive(() -> drive.withVelocityX(Math.pow(-joystick.getRawAxis(1) * MaxSpeed, 3)) // Drive forward with negative Y (forward)
-            //                             .withVelocityY(Math.pow(-joystick.getRawAxis(0) * MaxSpeed, 3)) // Drive left with negative X (left)
-            //                             .withRotationalRate(-joystick.getRawAxis(2) * MaxAngularRate), drivetrain) // Drive counterclockwise with negative X (left), drivetrain)
-            new TeleopDrive(() -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(-joystick.getLeftY() * MaxSpeed, 2) : -Math.pow(-joystick.getLeftY() * MaxSpeed, 2)) // Drive forward with negative Y (forward)
-                                        .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(-joystick.getLeftX() * MaxSpeed, 2) : -Math.pow(-joystick.getLeftX() * MaxSpeed, 2)) // Drive left with negative X (left)
-                                        .withRotationalRate(-joystick.getRightX() * MaxAngularRate), drivetrain) // Drive counterclockwise with negative X (left), drivetrain)
-        );
+        // drivetrain.setDefaultCommand(
+        //     // Drivetrain will execute this command periodically
+        //     // drivetrain.applyRequest(() ->
+        //     //     drive.withVelocityX(Math.pow(-joystick.getLeftY() * MaxSpeed, 3)) // Drive forward with negative Y (forward)
+        //     //         .withVelocityY(Math.pow(-joystick.getLeftX() * MaxSpeed, 3)) // Drive left with negative X (left)
+        //     //         .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        //     // )
+        //     // new TeleopDrive(() -> drive.withVelocityX(Math.pow(-joystick.getRawAxis(1) * MaxSpeed, 3)) // Drive forward with negative Y (forward)
+        //     //                             .withVelocityY(Math.pow(-joystick.getRawAxis(0) * MaxSpeed, 3)) // Drive left with negative X (left)
+        //     //                             .withRotationalRate(-joystick.getRawAxis(2) * MaxAngularRate), drivetrain) // Drive counterclockwise with negative X (left), drivetrain)
+        //     new TeleopDrive(() -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(-joystick.getLeftY(), 3)  * MaxSpeed : -Math.pow(-joystick.getLeftY(), 3) * MaxSpeed) // Drive forward with negative Y (forward)
+        //                                 .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(-joystick.getLeftX(), 3) * MaxSpeed : -Math.pow(-joystick.getLeftX(), 3) * MaxSpeed) // Drive left with negative X (left)
+        //                                 .withRotationalRate(-joystick.getRightX() * MaxAngularRate), drivetrain) // Drive counterclockwise with negative X (left), drivetrain)
+        // );
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // joystick.b().whileTrue(drivetrain.applyRequest(() ->
@@ -112,8 +124,8 @@ public class RobotContainer {
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
         joystick.rightBumper().onTrue(limelight.runOnce(() -> limelight.resetIMU(new Rotation3d())));
         joystick.povUp().onTrue(limelight.runOnce(() -> limelight.initialPoseEstimates()));
-        joystick.b().whileTrue(alignWithRightReef);
-        joystick.x().whileTrue(alignWithLeftReef);
+        joystick.b().whileTrue(robotController.ScoreRight());
+        joystick.x().whileTrue(robotController.ScoreLeft());
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }

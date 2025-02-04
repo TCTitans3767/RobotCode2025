@@ -54,7 +54,7 @@ public class Constants {
         public final static double maxAcceleration = 0.1;
 
         // Conversion Factor
-        public final static double conversionFactor = 1;
+        public final static double conversionFactor = 7;
     }
 
     public final class Manipulator {
