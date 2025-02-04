@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.lang.management.LockInfo;
+import java.util.concurrent.locks.Lock;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -32,7 +34,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
+import frc.robot.Constants;
+import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
 /**
@@ -40,6 +43,7 @@ import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
  * Subsystem so it can easily be used in command-based projects.
  */
 public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
+
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
@@ -52,9 +56,9 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
     private boolean m_hasAppliedOperatorPerspective = false;
 
     private final SwerveRequest.FieldCentric swerveRequest = new SwerveRequest.FieldCentric();
-    private final PIDController choreoXController = new PIDController(19.5, 0, 0.1);
-    private final PIDController choreoYController = new PIDController(19.5, 0, 0.1);
-    private final PIDController choreoOmegaController = new PIDController(18.5, 0, 0.1);
+    private final PIDController choreoXController = new PIDController(12, 0, 0);
+    private final PIDController choreoYController = new PIDController(12, 0, 0);
+    private final PIDController choreoOmegaController = new PIDController(10, 0, 0);
 
     private Field2d field = new Field2d();
 
@@ -256,6 +260,8 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             });
         }
 
+        System.out.println(this.getPose().toString());
+
         field.setRobotPose(getPose());
     }
 
@@ -280,6 +286,10 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
 
     public Pose2d getPose() {
         return getState().Pose;
+    }
+
+    private int ensureRange(int value, int min, int max) {
+        return Math.min(Math.max(value, min), max);
     }
 
     private void startSimThread() {

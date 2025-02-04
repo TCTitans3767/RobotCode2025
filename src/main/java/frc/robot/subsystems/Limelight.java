@@ -33,7 +33,7 @@ public class Limelight extends SubsystemBase{
 
     private boolean doEstimation = false;
     private static boolean doEstimationAll = true;
-    private boolean doEstimationFrame = true;
+    private boolean goodEstimationFrame = true;
     private static AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
 
     private int startupEstimations = 0;
@@ -56,17 +56,17 @@ public class Limelight extends SubsystemBase{
 
     @Override
     public void periodic() {
-        doEstimationFrame = true;
+        goodEstimationFrame = true;
 
         PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
         if (Math.abs(drivetrain.getPigeon2().getAngularVelocityZDevice().getValueAsDouble()) > 720) {
-            doEstimationFrame = false;
+            goodEstimationFrame = false;
         }
         if (estimatedPose.tagCount == 0) {
-            doEstimationFrame = false;
+            goodEstimationFrame = false;
         }
 
-        if (doEstimationFrame && doEstimation && doEstimationAll) {
+        if (goodEstimationFrame && doEstimation && doEstimationAll) {
             drivetrain.addVisionMeasurement(estimatedPose.pose);
         }
 

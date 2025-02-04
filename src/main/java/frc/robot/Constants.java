@@ -27,11 +27,41 @@ public class Constants {
         };
 
     }
+  
+    public final class Climber {
+        public final static int leftMotorID = 0;
+        public final static int rightMotorID = 1;
+      
+        public final static double maxVelocity = 0.1;
+        public final static double maxAcceleration = 0.1;
 
+        public final static double conversonFactor = 1;
+    }
+  
     public final class Elevator {
         // CAN IDs
         public final static int leftMotorID = 0;
         public final static int rightMotorID = 1;
+
+        // PID Constants
+        public final static double kP = 0.1;
+        public final static double kI = 0.1;
+        public final static double kD = 0.1;
+        public final static double kG = 0.1;
+        public final static double kV = 0.1;
+        public final static double kS = 0.1;
+        
+        // Motion Magic Constants
+        public final static double maxVelocity = 0.1;
+        public final static double maxAcceleration = 0.1;
+
+        // Conversion Factor
+        public final static double conversionFactor = 7;
+    }
+
+    public final class Manipulator {
+        // CAN IDs
+        public final static int motorID = 2;
 
         // PID Constants
         public final static double kP = 0.1;
@@ -49,9 +79,31 @@ public class Constants {
         public final static double conversionFactor = 1;
     }
 
+
     public final class Arm {
         // CAN IDs
         public final static int ArmMotorID = 3;
+        // PID Constants
+        public final static double kP = 0.1;
+        public final static double kI = 0.1;
+        public final static double kD = 0.1;
+        public final static double kG = 0.1;
+        public final static double kV = 0.1;
+        public final static double kS = 0.1;
+      
+        // Motion Magic Constants
+        public final static double maxVelocity = 0.1;
+        public final static double maxAcceleration = 0.1;
+        public final static double angleMax = 0.1;
+        public final static double angleMin = 0.1;
+      
+        public final static double conversionFactor = 2;
+    }
+
+    public final class Intake {
+        // CAN IDs
+        public final static int wheelMotorID = 2;
+        public final static int pivotMotorID = 3;
 
         // PID Constants
         public final static double kP = 0.1;
@@ -61,16 +113,18 @@ public class Constants {
         public final static double kV = 0.1;
         public final static double kS = 0.1;
 
+
          // Motion Magic Constants
         public final static double maxVelocity = 0.1;
         public final static double maxAcceleration = 0.1;
         public final static double angleMax = 0.1;
         public final static double angleMin = 0.1;
-
-
-        public final static double conversionFactor = 2;
+      
+        // Conversion Factor
+        public final static double conversionFactor = 1;
 
     }
+  
     public final class Robot {
         public final static double chassisWidthMeters = Units.inchesToMeters(26.0);
         public final static double chassisDepthMeters = Units.inchesToMeters(26.0);

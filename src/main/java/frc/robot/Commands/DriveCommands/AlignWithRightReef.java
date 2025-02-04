@@ -1,4 +1,4 @@
-package frc.robot.Commands;
+package frc.robot.Commands.DriveCommands;
 
 import java.util.function.BooleanSupplier;
 
@@ -27,7 +27,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.CommandTrigger;
 
-public class AlignWithLeftReef extends Command{
+public class AlignWithRightReef extends Command{
     
     private final Limelight camera;
     private final Drivetrain drivetrain = Robot.getDrivetrain();
@@ -45,7 +45,7 @@ public class AlignWithLeftReef extends Command{
     private Pose2d OdometryTargetPose;
     private final Field2d field = drivetrain.getField();
     
-    public AlignWithLeftReef(Limelight camera) {
+    public AlignWithRightReef(Limelight camera) {
         this.camera = camera;
 
         headingController.enableContinuousInput(-180, 180);
@@ -60,7 +60,7 @@ public class AlignWithLeftReef extends Command{
 
         nearestReefPose = Limelight.getTagPose(nearestReefTag);
 
-        OdometryTargetPose = nearestReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(-9), new Rotation2d(0)));
+        OdometryTargetPose = nearestReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(9), new Rotation2d(0)));
 
         headingController.setTolerance(0.2);
         headingController.setSetpoint(Limelight.getTagAngle(nearestReefTag).plus(Rotation2d.k180deg).getDegrees());
@@ -76,7 +76,7 @@ public class AlignWithLeftReef extends Command{
         if (camera.tagIsVisible()) {
             drivetrain.setControl(driveWithTag.withRotationalRate(headingController.calculate(rotation.getYaw().getValueAsDouble()))
                                     .withVelocityX(-xController.calculate(camera.getZFromTag(), (Constants.Robot.chassisDepthMeters/2)))
-                                    .withVelocityY(yController.calculate(camera.getXFromTag(), Units.inchesToMeters(12)))
+                                    .withVelocityY(yController.calculate(camera.getXFromTag(), Units.inchesToMeters(-9)))
                                 );
         } else {
             drivetrain.setControl(driveWithOdometry.withRotationalRate(headingController.calculate(rotation.getYaw().getValueAsDouble()))
