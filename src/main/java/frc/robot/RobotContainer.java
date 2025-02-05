@@ -31,9 +31,11 @@ import frc.robot.Commands.DriveCommands.AlignWithLeftReef;
 import frc.robot.Commands.DriveCommands.AlignWithRightReef;
 import frc.robot.Commands.DriveCommands.TeleopDrive;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.RobotController;
@@ -45,6 +47,8 @@ public class RobotContainer {
     public final Elevator elevator = Robot.getElevator();
     public final Manipulator manipulator = Robot.getManipulator();
     public final Climber climber = Robot.getClimber();
+    public final Arm arm = Robot.getArm();
+    public final Intake intake = Robot.getIntake();
 
     public final RobotController robotController;
 
@@ -67,7 +71,7 @@ public class RobotContainer {
 
     public RobotContainer() {
 
-        robotController = new RobotController(drivetrain, elevator, manipulator, climber, limelight,
+        robotController = new RobotController(drivetrain, elevator, manipulator, arm, intake, climber, limelight,
                  () -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(-joystick.getLeftY()  * MaxSpeed, 3) : Math.pow(-joystick.getLeftY() * MaxSpeed, 3)) // Drive forward with negative Y (forward)
                 .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(-joystick.getLeftX() * MaxSpeed, 3) : Math.pow(-joystick.getLeftX() * MaxSpeed, 3)) // Drive left with negative X (left)
                 .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left), drivetrain));

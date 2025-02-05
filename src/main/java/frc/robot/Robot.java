@@ -18,9 +18,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.RobotController;
@@ -35,6 +37,8 @@ public class Robot extends TimedRobot {
   public final static Elevator elevator = null;
   public final static Climber climber = null;
   public final static Manipulator manipulator = null;
+  public final static Intake intake = null;
+  public final static Arm arm = null;
   public final static Limelight limelight = new Limelight("", new Pose3d(Units.inchesToMeters(12), Units.inchesToMeters(0), Units.inchesToMeters(3), new Rotation3d(0, 0, 0)));
 
   private final RobotContainer m_robotContainer;
@@ -124,5 +128,13 @@ public static Manipulator getManipulator() {
 
 public static Climber getClimber() {
     return climber;
+}
+
+public static Intake getIntake() {
+  return intake;
+}
+
+public static Arm getArm() {
+    return arm;
 }
 }
