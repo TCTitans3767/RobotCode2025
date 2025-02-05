@@ -259,10 +259,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
                 m_hasAppliedOperatorPerspective = true;
             });
         }
-
-        System.out.println(this.getPose().toString());
-
-        field.setRobotPose(getPose());
+        
     }
 
     public Field2d getField() {

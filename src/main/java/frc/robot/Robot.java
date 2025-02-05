@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import dev.doglog.DogLog;
+import dev.doglog.DogLogOptions;
 import edu.wpi.first.epilogue.EpilogueConfiguration;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.epilogue.Logged.Importance;
@@ -12,6 +14,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,6 +33,10 @@ import frc.robot.subsystems.RobotController;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
+  private static boolean testMode = true;
+
+  public final static PowerDistribution pdh = new PowerDistribution();
+
   public final static Drivetrain drivetrain = TunerConstants.createDrivetrain();
   // public final static Elevator elevator = new Elevator();
   // public final static Climber climber = new Climber();
@@ -44,6 +51,15 @@ public class Robot extends TimedRobot {
   private final RobotContainer m_robotContainer;
 
   public Robot() {
+    DogLog.setOptions(new DogLogOptions(
+        () -> testMode, 
+        false, 
+        false, 
+        false, 
+        true, 
+        1000
+      )
+    );
     m_robotContainer = new RobotContainer();
   }
 
@@ -122,19 +138,27 @@ public class Robot extends TimedRobot {
     return elevator;
   }
 
-public static Manipulator getManipulator() {
-    return manipulator;
-}
+  public static Manipulator getManipulator() {
+      return manipulator;
+  }
 
-public static Climber getClimber() {
-    return climber;
-}
+  public static Climber getClimber() {
+      return climber;
+  }
 
-public static Intake getIntake() {
-  return intake;
-}
+  public static Intake getIntake() {
+    return intake;
+  }
 
-public static Arm getArm() {
-    return arm;
-}
+  public static Arm getArm() {
+      return arm;
+  }
+
+  public static void enableTestMode() {
+      Robot.testMode = true;
+  }
+
+  public static void disableTestMode() {
+      Robot.testMode = false;
+  }
 }

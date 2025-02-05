@@ -24,6 +24,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.utils.LimelightHelpers;
+import frc.robot.utils.Logger;
 import frc.robot.utils.LimelightHelpers.LimelightResults;
 import frc.robot.utils.LimelightHelpers.PoseEstimate;
 
@@ -59,6 +60,7 @@ public class Limelight extends SubsystemBase{
             robotToLimelightSet = true;
         } catch (Exception e) {
             System.out.println("failed to set camera pose");
+            Logger.logFault(limelightName + " failed to set camera pose");
             robotToLimelightSet = false;
         }
 
@@ -80,10 +82,12 @@ public class Limelight extends SubsystemBase{
                     robotToLimelight.getRotation().getY(), 
                     robotToLimelight.getRotation().getZ()
                 );
+                Logger.clearFault(limelightName + " failed to set camera pose");
                 robotToLimelightSet = true;
                 initialPoseEstimates();
             } catch (Exception e) {
                 System.out.println("failed to set camera pose");
+                Logger.logFault(limelightName + " failed to set camera pose");
                 robotToLimelightSet = false;
                 doEstimation = false;
             }
@@ -182,35 +186,6 @@ public class Limelight extends SubsystemBase{
             drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 99999));
             turnOnAprilTags();
         }
-        doEstimation = false;
-        drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.1, 0.1, 0.5));
-        int numTries = 0;
-        while (startupEstimations < 10 && numTries < 40) {
-            PoseEstimate result = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
-            if (result.tagCount == 1) {
-                if (result.rawFiducials[0].ambiguity > 0.3) {
-                    numTries++;
-                    continue;
-                }
-                if (result.rawFiducials[0].distToCamera > 3) {
-                    numTries++;
-                    continue;
-                }
-            }
-
-            if (result.tagCount == 0) {
-                numTries++;
-                continue;
-            }
-
-            drivetrain.addVisionMeasurement(result.pose);
-            
-            startupEstimations++;
-        }
-
-        resetIMU(drivetrain.getRotation3d());
-        drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 99999));
-        turnOnAprilTags();
     }
 
     public double getTX() {

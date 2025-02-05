@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,6 +12,7 @@ import frc.robot.Robot;
 import frc.robot.Commands.StateCommands.Idle;
 import frc.robot.Commands.StateCommands.ScoreLeft;
 import frc.robot.Commands.StateCommands.ScoreRight;
+import frc.robot.utils.Logger;
 
 public class RobotController extends SubsystemBase {
 
