@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
       )
     );
     m_robotContainer = new RobotContainer();
+    SmartDashboard.putData(drivetrain.getField());
   }
 
   @Override
@@ -101,8 +102,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    drivetrain.getField().setRobotPose(drivetrain.getPose());
-    SmartDashboard.putData("field", drivetrain.getField());
   }
 
   @Override

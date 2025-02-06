@@ -75,7 +75,7 @@ public class RobotContainer {
                  () -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(-joystick.getLeftY()  * MaxSpeed, 3) : Math.pow(-joystick.getLeftY() * MaxSpeed, 3)) // Drive forward with negative Y (forward)
                 .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(-joystick.getLeftX() * MaxSpeed, 3) : Math.pow(-joystick.getLeftX() * MaxSpeed, 3)) // Drive left with negative X (left)
                 .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left), drivetrain));
-        ); 
+        );
 
         configureBindings();
         configureChoreo();

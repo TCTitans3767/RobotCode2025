@@ -46,6 +46,8 @@ public class RobotController extends SubsystemBase {
     @Override
     public void periodic() {
 
+        Logger.log("RobotController/Active Command", this.getCurrentCommand().getName());
+
     }
 
     public void idle() {
