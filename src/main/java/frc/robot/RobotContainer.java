@@ -137,7 +137,7 @@ public class RobotContainer {
         // joystick.rightTrigger(0.05).onFalse(new InstantCommand(() -> Robot.getElevator().setSpeed(0)));
         // joystick.povUp().onTrue(new InstantCommand(() -> Robot.getArm().setSpeed(0.1))).onFalse(new InstantCommand(() -> Robot.getArm().setSpeed(0)));
         // joystick.povDown().onTrue(new InstantCommand(() -> Robot.getArm().setSpeed(-0.1))).onFalse(new InstantCommand(() -> Robot.getArm().setSpeed(0)));
-        elevator.setDefaultCommand(new RunCommand(() -> {elevator.setSpeed((joystick.getLeftTriggerAxis() > 0.05) ? Math.pow(joystick.getLeftTriggerAxis(), 2) : -Math.pow(joystick.getRightTriggerAxis(), 2));}, elevator));
+        // elevator.setDefaultCommand(new RunCommand(() -> {elevator.setSpeed((joystick.getLeftTriggerAxis() > 0.05) ? Math.pow(joystick.getLeftTriggerAxis(), 2) : -Math.pow(joystick.getRightTriggerAxis(), 2));}, elevator));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
