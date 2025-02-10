@@ -16,14 +16,14 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class Arm extends SubsystemBase {
 
-  private final TalonFX ArmMotor;
+  private final TalonFX armMotor;
     private final TalonFXConfiguration ArmConfig;
     private final Slot0Configs slot0Config;
     private final MotionMagicConfigs motionMagicConfig;
 
     public Arm() {
         // Motor basic setup
-        ArmMotor = new TalonFX(Constants.Arm.ArmMotorID);
+        armMotor = new TalonFX(Constants.Arm.ArmMotorID);
         ArmConfig = new TalonFXConfiguration();
         ArmConfig.Feedback.SensorToMechanismRatio = Constants.Arm.conversionFactor;
         ArmConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
@@ -44,10 +44,10 @@ public class Arm extends SubsystemBase {
          motionMagicConfig.MotionMagicAcceleration = Constants.Arm.maxAcceleration;
 
            // Set the configurations
-        ArmMotor.getConfigurator().apply(ArmConfig);
-        ArmMotor.getConfigurator().apply(slot0Config);
-        ArmMotor.getConfigurator().apply(motionMagicConfig);
-        ArmMotor.setNeutralMode(NeutralModeValue.Brake);
+        armMotor.getConfigurator().apply(ArmConfig);
+        armMotor.getConfigurator().apply(slot0Config);
+        armMotor.getConfigurator().apply(motionMagicConfig);
+        armMotor.setNeutralMode(NeutralModeValue.Brake);
 
     }
     
@@ -57,12 +57,12 @@ public class Arm extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        ArmMotor.set(speed);
+        armMotor.set(speed);
     }
 
     public void setPositon(double position) {
       if (position < Constants.Arm.angleMax && position > Constants.Arm.angleMin) {
-        ArmMotor.setControl(new MotionMagicVoltage(position));
+        armMotor.setControl(new MotionMagicVoltage(position));
       } else {
           SignalLogger.writeString("Arm position out of bounds", String.valueOf(position));
       }

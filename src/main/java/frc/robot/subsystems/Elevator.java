@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.utils.Logger;
 
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -62,7 +64,15 @@ public class Elevator extends SubsystemBase{
 
     @Override
     public void periodic() {
-        return; // This is a method that is called periodically <- im so smart
+        Logger.log("Elevator/Set Speed", leftMotor.get());
+        Logger.log("Elevator/Speed", leftMotor.getVelocity().getValueAsDouble());
+        Logger.log("Elevator/height", leftMotor.getPosition().getValueAsDouble());
+
+        // if (leftMotor.getPosition().getValueAsDouble() <= 0.5 || leftMotor.getPosition().getValueAsDouble() >= 99999 ) {
+        //     leftMotor.set(0);
+        //     rightMotor.setControl(new Follower(Constants.Elevator.leftMotorID, true));
+        // }
+        
     }
 
     public void setSpeed(double speed) {

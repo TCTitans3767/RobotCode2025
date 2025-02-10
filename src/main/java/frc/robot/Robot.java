@@ -38,15 +38,16 @@ public class Robot extends TimedRobot {
   public final static PowerDistribution pdh = new PowerDistribution();
 
   public final static Drivetrain drivetrain = TunerConstants.createDrivetrain();
-  // public final static Elevator elevator = new Elevator();
+  public final static Elevator elevator = new Elevator();
   // public final static Climber climber = new Climber();
   // public final static Manipulator manipulator = new Manipulator();
-  public final static Elevator elevator = null;
+  // public final static Elevator elevator = null;
   public final static Climber climber = null;
   public final static Manipulator manipulator = null;
   public final static Intake intake = null;
   public final static Arm arm = null;
   public final static Limelight limelight = new Limelight("", new Pose3d(Units.inchesToMeters(12), Units.inchesToMeters(0), Units.inchesToMeters(3), new Rotation3d(0, 0, 0)));
+  // public final static Limelight limelight = null;
 
   private final RobotContainer m_robotContainer;
 
