@@ -28,7 +28,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
-import frc.robot.subsystems.RobotController;
+import frc.robot.subsystems.RobotMode;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;

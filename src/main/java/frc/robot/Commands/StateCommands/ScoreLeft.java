@@ -1,6 +1,7 @@
 package frc.robot.Commands.StateCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.Commands.DriveCommands.AlignWithLeftReef;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
@@ -9,11 +10,11 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
-import frc.robot.subsystems.RobotController;
+import frc.robot.subsystems.RobotMode;
 
 public class ScoreLeft extends Command{
 
-    private final RobotController robotController;
+    private final RobotMode robotController;
     private final Drivetrain drivetrain;
     private final Elevator elevator;
     private final Manipulator manipulator;
@@ -24,14 +25,14 @@ public class ScoreLeft extends Command{
     private final AlignWithLeftReef alignWithLeftReef;
     private final Limelight camera;
 
-    public ScoreLeft(RobotController robotController, Drivetrain drivetrain, Elevator elevator, Manipulator manipulator, Arm arm, Intake intake, Climber climber, Limelight camera) {
-        this.camera = camera;
-        this.drivetrain = drivetrain;
-        this.elevator = elevator;
-        this.manipulator = manipulator;
-        this.climber = climber;
-        this.arm = arm;
-        this.intake = intake;
+    public ScoreLeft(RobotMode robotController) {
+        camera = Robot.limelight;
+        drivetrain = Robot.drivetrain;
+        elevator = Robot.elevator;
+        manipulator = Robot.manipulator;
+        climber = Robot.climber;
+        arm = Robot.arm;
+        intake = Robot.intake;
         this.robotController = robotController;
         alignWithLeftReef = new AlignWithLeftReef(camera);
 

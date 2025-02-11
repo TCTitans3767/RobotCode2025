@@ -84,5 +84,12 @@ public class Elevator extends SubsystemBase{
         leftMotor.setControl(motionMagicRequest.withPosition(position));
         rightMotor.setControl(new Follower(Constants.Elevator.leftMotorID, true));
     }
+
+    public double getMotorTourque() {
+        return leftMotor.getTorqueCurrent().getValueAsDouble();
+    }
     
+    public void resetEncoder() {
+        leftMotor.setPosition(0);
+    }
 }

@@ -7,14 +7,17 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.Commands.ZeroElevator;
+import frc.robot.Commands.StateCommands.DoNothing;
 import frc.robot.Commands.StateCommands.Idle;
 import frc.robot.Commands.StateCommands.ScoreLeft;
 import frc.robot.Commands.StateCommands.ScoreRight;
 import frc.robot.utils.Logger;
 
-public class RobotController extends SubsystemBase {
+public class RobotMode extends SubsystemBase {
 
     private final Drivetrain drivetrain;
     private final Elevator elevator;
@@ -28,17 +31,23 @@ public class RobotController extends SubsystemBase {
     private final ScoreLeft scoreLeft;
     private final ScoreRight scoreRight;
 
-    public RobotController(Drivetrain drivetrain, Elevator elevator, Manipulator manipulator, Arm arm, Intake intake, Climber climber, Limelight lineupCamera, Supplier<SwerveRequest> request) {
-        this.drivetrain = drivetrain;
-        this.elevator = elevator;
-        this.manipulator = manipulator;
-        this.climber = climber;
-        this.arm = arm;
-        this.intake = intake;
-        this.lineupCamera = lineupCamera;
+    private final ZeroElevator zeroElevator;
+    private final DoNothing doNothing;
 
-        idle = new Idle(this, drivetrain, elevator, manipulator, arm, intake, climber, request);
-        scoreLeft = new ScoreLeft(this, drivetrain, elevator, manipulator, arm, intake, climber, lineupCamera);
+    public RobotMode(Supplier<SwerveRequest> request) {
+        drivetrain = Robot.drivetrain;
+        elevator = Robot.elevator;
+        manipulator = Robot.manipulator;
+        climber = Robot.climber;
+        arm = Robot.arm;
+        intake = Robot.intake;
+        lineupCamera = Robot.limelight;
+
+        zeroElevator = new ZeroElevator(elevator);
+        doNothing = new DoNothing(this);
+
+        idle = new Idle(this, request);
+        scoreLeft = new ScoreLeft(this);
         scoreRight = new ScoreRight(this, drivetrain, elevator, manipulator, arm, intake, climber, lineupCamera);
         this.setDefaultCommand(idle);
     }
@@ -64,6 +73,15 @@ public class RobotController extends SubsystemBase {
 
     public void cancelAll() {
         CommandScheduler.getInstance().cancelAll();
+    }
+
+    public void resetAllEncoders() {
+        doNothing.schedule();
+        new SequentialCommandGroup(
+            zeroElevator
+        ).andThen(() -> {
+            doNothing.cancel();
+        });
     }
     
 }

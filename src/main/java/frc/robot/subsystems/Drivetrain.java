@@ -46,6 +46,12 @@ import frc.robot.utils.Logger;
  */
 public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
 
+    public interface SwerveSupplier {
+        public double getSwerveX();
+        public double getSwerveY();
+        public double getSwerveRotation();
+    }
+
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
@@ -262,7 +268,6 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
                 m_hasAppliedOperatorPerspective = true;
             });
         }
-
         
         field.setRobotPose(getPose());
         

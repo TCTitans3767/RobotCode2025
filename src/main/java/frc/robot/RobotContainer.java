@@ -39,7 +39,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
-import frc.robot.subsystems.RobotController;
+import frc.robot.subsystems.RobotMode;
 
 public class RobotContainer {
 
@@ -51,7 +51,7 @@ public class RobotContainer {
     public final Arm arm = Robot.getArm();
     public final Intake intake = Robot.getIntake();
 
-    public final RobotController robotController;
+    public final RobotMode robotController;
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -72,7 +72,7 @@ public class RobotContainer {
 
     public RobotContainer() {
 
-        robotController = new RobotController(drivetrain, elevator, manipulator, arm, intake, climber, limelight,
+        robotController = new RobotMode(
                  () -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(-joystick.getLeftY()  * MaxSpeed, 3) : Math.pow(-joystick.getLeftY() * MaxSpeed, 3)) // Drive forward with negative Y (forward)
                 .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(-joystick.getLeftX() * MaxSpeed, 3) : Math.pow(-joystick.getLeftX() * MaxSpeed, 3)) // Drive left with negative X (left)
                 .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left), drivetrain));
@@ -131,6 +131,8 @@ public class RobotContainer {
         // joystick.povUp().onTrue(limelight.runOnce(() -> limelight.initialPoseEstimates()));
         joystick.b().whileTrue(robotController.ScoreRight());
         joystick.x().whileTrue(robotController.ScoreLeft());
+        joystick.povLeft().whileTrue(new RunCommand(() -> {manipulator.setSpeed(0.1);}, manipulator));
+        joystick.povRight().whileTrue(new RunCommand(() -> {manipulator.setSpeed(-0.1);}, manipulator));
         // joystick.leftTrigger(0.05).onTrue(new InstantCommand(() -> Robot.getElevator().setSpeed(Math.pow(joystick.getLeftTriggerAxis(), 2))));
         // joystick.leftTrigger(0.05).onFalse(new InstantCommand(() -> Robot.getElevator().setSpeed(0)));
         // joystick.rightTrigger(0.05).onTrue(new InstantCommand(() -> Robot.getElevator().setSpeed(-Math.pow(joystick.getRightTriggerAxis(), 2))));

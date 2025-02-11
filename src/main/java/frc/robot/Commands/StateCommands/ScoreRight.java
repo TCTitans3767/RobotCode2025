@@ -9,11 +9,11 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
-import frc.robot.subsystems.RobotController;
+import frc.robot.subsystems.RobotMode;
 
 public class ScoreRight extends Command{
 
-    private final RobotController robotController;
+    private final RobotMode robotController;
     private final Drivetrain drivetrain;
     private final Elevator elevator;
     private final Manipulator manipulator;
@@ -24,7 +24,7 @@ public class ScoreRight extends Command{
     private final AlignWithLeftReef alignWithLeftReef;
     private final Limelight camera;
 
-    public ScoreRight(RobotController robotController, Drivetrain drivetrain, Elevator elevator, Manipulator manipulator, Arm arm, Intake intake, Climber climber, Limelight camera) {
+    public ScoreRight(RobotMode robotController, Drivetrain drivetrain, Elevator elevator, Manipulator manipulator, Arm arm, Intake intake, Climber climber, Limelight camera) {
         this.camera = camera;
         this.drivetrain = drivetrain;
         this.elevator = elevator;
