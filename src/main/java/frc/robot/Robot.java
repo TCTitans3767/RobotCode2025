@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
@@ -48,6 +49,10 @@ public class Robot extends TimedRobot {
   public final static Arm arm = null;
   public final static Limelight limelight = new Limelight("", new Pose3d(Units.inchesToMeters(12), Units.inchesToMeters(0), Units.inchesToMeters(3), new Rotation3d(0, 0, 0)));
   // public final static Limelight limelight = null;
+  
+  public final static CommandXboxController joystick = new CommandXboxController(0);
+
+  public final static RobotMode robotMode = new RobotMode();
 
   private final RobotContainer m_robotContainer;
 

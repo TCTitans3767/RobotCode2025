@@ -59,4 +59,8 @@ public class Manipulator extends SubsystemBase{
         // Move the manipulator at the given speed
         motor.set(speed);
     }
+
+    public boolean hasGamePiece() {
+        return true;
+    }
 }

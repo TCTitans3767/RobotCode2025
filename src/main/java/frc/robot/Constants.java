@@ -57,6 +57,8 @@ public class Constants {
 
         // Conversion Factor
         public final static double conversionFactor = 1;
+
+        public final static double RotationsPerMeter = 1;
     }
 
     public final class Manipulator {
@@ -97,7 +99,8 @@ public class Constants {
         public final static double angleMax = 0.1;
         public final static double angleMin = 0.1;
       
-        public final static double conversionFactor = 2;
+        public final static double conversionFactor = 1;
+        public static final int ArmEncoderID = 0;
     }
 
     public final class Intake {

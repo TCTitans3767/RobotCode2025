@@ -4,6 +4,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.Logger;
+import frc.robot.utils.Utils;
 
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -23,6 +24,8 @@ public class Elevator extends SubsystemBase{
     private final Slot0Configs slot0Config;
     private final MotionMagicConfigs motionMagicConfig;
     private final MotionMagicVoltage motionMagicRequest;
+
+    private double targetPosition;
 
     public Elevator() {
         // Motor basic setup
@@ -81,8 +84,13 @@ public class Elevator extends SubsystemBase{
     }
 
     public void setPosition(double position) {
+        targetPosition = position;
         leftMotor.setControl(motionMagicRequest.withPosition(position));
         rightMotor.setControl(new Follower(Constants.Elevator.leftMotorID, true));
+    }
+
+    public boolean atPosition() {
+        return (leftMotor.getPosition().getValueAsDouble() - targetPosition < 0.1) && (leftMotor.getPosition().getValueAsDouble() - targetPosition > -0.1);
     }
 
     public double getMotorTourque() {

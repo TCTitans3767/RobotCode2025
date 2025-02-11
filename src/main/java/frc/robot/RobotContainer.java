@@ -51,7 +51,7 @@ public class RobotContainer {
     public final Arm arm = Robot.getArm();
     public final Intake intake = Robot.getIntake();
 
-    public final RobotMode robotController;
+    public final CommandXboxController joystick = Robot.joystick;
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -65,18 +65,11 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    private final CommandXboxController joystick = new CommandXboxController(0);
     // private final Joystick joystick = new Joystick(0);
 
     private AutoFactory autoFactory;
 
     public RobotContainer() {
-
-        robotController = new RobotMode(
-                 () -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(-joystick.getLeftY()  * MaxSpeed, 3) : Math.pow(-joystick.getLeftY() * MaxSpeed, 3)) // Drive forward with negative Y (forward)
-                .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(-joystick.getLeftX() * MaxSpeed, 3) : Math.pow(-joystick.getLeftX() * MaxSpeed, 3)) // Drive left with negative X (left)
-                .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left), drivetrain));
-        );
 
         configureBindings();
         configureChoreo();
@@ -129,8 +122,8 @@ public class RobotContainer {
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
         joystick.rightBumper().onTrue(limelight.runOnce(() -> limelight.resetIMU(new Rotation3d())));
         // joystick.povUp().onTrue(limelight.runOnce(() -> limelight.initialPoseEstimates()));
-        joystick.b().whileTrue(robotController.ScoreRight());
-        joystick.x().whileTrue(robotController.ScoreLeft());
+        joystick.b().whileTrue(Robot.robotMode.ScoreRight());
+        joystick.x().whileTrue(Robot.robotMode.ScoreLeft());
         joystick.povLeft().whileTrue(new RunCommand(() -> {manipulator.setSpeed(0.1);}, manipulator));
         joystick.povRight().whileTrue(new RunCommand(() -> {manipulator.setSpeed(-0.1);}, manipulator));
         // joystick.leftTrigger(0.05).onTrue(new InstantCommand(() -> Robot.getElevator().setSpeed(Math.pow(joystick.getLeftTriggerAxis(), 2))));
