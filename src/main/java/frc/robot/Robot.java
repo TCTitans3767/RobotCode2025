@@ -29,6 +29,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.RobotController;
+import frc.robot.utils.Logger;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -68,6 +69,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
+    Logger.log("Drivetrain/speed x", drivetrain.getState().Speeds.vxMetersPerSecond);
+    Logger.log("Drivetrain/speed y", drivetrain.getState().Speeds.vyMetersPerSecond);
   }
 
   @Override

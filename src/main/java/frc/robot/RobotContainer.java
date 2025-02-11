@@ -54,7 +54,7 @@ public class RobotContainer {
     public final RobotController robotController;
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.25).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -73,8 +73,8 @@ public class RobotContainer {
     public RobotContainer() {
 
         robotController = new RobotController(drivetrain, elevator, manipulator, arm, intake, climber, limelight,
-                 () -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(-joystick.getLeftY()  * MaxSpeed, 3) : Math.pow(-joystick.getLeftY() * MaxSpeed, 3)) // Drive forward with negative Y (forward)
-                .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(-joystick.getLeftX() * MaxSpeed, 3) : Math.pow(-joystick.getLeftX() * MaxSpeed, 3)) // Drive left with negative X (left)
+                 () -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(joystick.getLeftY()  * MaxSpeed, 2) : -Math.pow(joystick.getLeftY() * MaxSpeed, 2)) // Drive forward with negative Y (forward)
+                .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(joystick.getLeftX() * MaxSpeed, 2) : -Math.pow(joystick.getLeftX() * MaxSpeed, 2)) // Drive left with negative X (left)
                 .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left), drivetrain));
         );
 
