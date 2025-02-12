@@ -13,11 +13,18 @@ import edu.wpi.first.epilogue.logging.EpilogueBackend;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+<<<<<<< Updated upstream
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+=======
+import edu.wpi.first.wpilibj.LEDPattern;
+>>>>>>> Stashed changes
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -55,7 +62,8 @@ public class Robot extends TimedRobot {
   public final static RobotMode robotMode = new RobotMode();
 
   private final RobotContainer m_robotContainer;
-
+  AddressableLED m_led;
+  AddressableLEDBuffer m_ledBuffer;
   public Robot() {
     DogLog.setOptions(new DogLogOptions(
         () -> testMode, 
@@ -67,8 +75,35 @@ public class Robot extends TimedRobot {
       )
     );
     m_robotContainer = new RobotContainer();
+<<<<<<< Updated upstream
     SmartDashboard.putData(drivetrain.getField());
   }
+=======
+      /** Called once at the beginning of the robot program. */
+    // PWM port 9
+    // Must be a PWM header, not MXP or DIO
+      m_led = new AddressableLED(9);
+
+    // Reuse buffer
+    // Default to a length of 60, start empty output
+    // Length is expensive to set, so only set it once, then just update data
+      m_ledBuffer = new AddressableLEDBuffer(60);
+      m_led.setLength(m_ledBuffer.getLength());
+
+    // Set the data
+      m_led.setData(m_ledBuffer);
+      m_led.start();
+
+      // Create an LED pattern that sets the entire strip to solid red
+      LEDPattern red = LEDPattern.solid(Color.kRed);
+
+// Apply the LED pattern to the data buffer
+      red.applyTo(m_ledBuffer);
+
+// Write the data to the LED strip
+      m_led.setData(m_ledBuffer);
+ }
+>>>>>>> Stashed changes
 
   @Override
   public void robotPeriodic() {
