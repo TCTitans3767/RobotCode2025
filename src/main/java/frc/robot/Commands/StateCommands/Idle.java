@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Commands.DriveCommands.ControllerDrive;
+import frc.robot.Commands.GeneralControlCommands.SetArmAngle;
 import frc.robot.Commands.GeneralControlCommands.SetElevatorPosition;
 import frc.robot.utils.Utils;
 
@@ -21,6 +22,7 @@ public class Idle extends Command{
     @Override
     public void initialize() {
         new SetElevatorPosition(0.25);
+        new SetArmAngle(0.25);
         new ControllerDrive();
     }
     
