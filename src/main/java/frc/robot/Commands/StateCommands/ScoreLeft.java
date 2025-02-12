@@ -14,28 +14,18 @@ import frc.robot.subsystems.RobotMode;
 
 public class ScoreLeft extends Command{
 
-    private final RobotMode robotController;
-    private final Drivetrain drivetrain;
-    private final Elevator elevator;
-    private final Manipulator manipulator;
-    private final Climber climber;
-    private final Arm arm;
-    private final Intake intake;
+    private final RobotMode robotController = Robot.robotMode;
+    private final Drivetrain drivetrain = Robot.drivetrain;
+    private final Elevator elevator = Robot.elevator;
+    private final Manipulator manipulator = Robot.manipulator;
+    private final Climber climber = Robot.climber;
+    private final Arm arm = Robot.arm;
+    private final Intake intake = Robot.intake;
 
-    private final AlignWithLeftReef alignWithLeftReef;
-    private final Limelight camera;
+    private final AlignWithLeftReef alignWithLeftReef = new AlignWithLeftReef();
+    private final Limelight camera = Robot.limelight;
 
-    public ScoreLeft(RobotMode robotController) {
-        camera = Robot.limelight;
-        drivetrain = Robot.drivetrain;
-        elevator = Robot.elevator;
-        manipulator = Robot.manipulator;
-        climber = Robot.climber;
-        arm = Robot.arm;
-        intake = Robot.intake;
-        this.robotController = robotController;
-        alignWithLeftReef = new AlignWithLeftReef(camera);
-
+    public ScoreLeft() {
         addRequirements(robotController);
     }
 

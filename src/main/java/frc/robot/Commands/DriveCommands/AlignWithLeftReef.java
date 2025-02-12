@@ -24,13 +24,14 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.CommandTrigger;
 
 public class AlignWithLeftReef extends Command{
     
-    private final Limelight camera;
-    private final Drivetrain drivetrain = Robot.getDrivetrain();
+    private final Limelight camera = Robot.limelight;
+    private final Drivetrain drivetrain = Robot.drivetrain;
 
     private final RobotCentric driveWithTag = new RobotCentric();
     private final FieldCentric driveWithOdometry = new FieldCentric();
@@ -40,14 +41,16 @@ public class AlignWithLeftReef extends Command{
     private final PIDController yController = new PIDController(1.6, 0, 0);
     private final PIDController headingController = new PIDController(0.11, 0, 0);
 
+    private double xVelocity;
+    private double yVelocity;
+    private double rotationVelocity;
+
     private int nearestReefTag;
     private Pose2d nearestReefPose;
     private Pose2d OdometryTargetPose;
     private final Field2d field = drivetrain.getField();
     
-    public AlignWithLeftReef(Limelight camera) {
-        this.camera = camera;
-
+    public AlignWithLeftReef() {
         headingController.enableContinuousInput(-180, 180);
 
         addRequirements(drivetrain);
@@ -68,21 +71,30 @@ public class AlignWithLeftReef extends Command{
 
         camera.setTagFilter(new int[]{nearestReefTag});
 
+        Robot.robotMode.setDriveMode(DriveMode.RobotCentric);
+        Robot.robotMode.setSwerveControl(() -> xVelocity, () -> yVelocity, () -> rotationVelocity);
+
     }
 
     @Override
     public void execute() {
-
+        
         if (camera.tagIsVisible()) {
-            drivetrain.setControl(driveWithTag.withRotationalRate(headingController.calculate(rotation.getYaw().getValueAsDouble()))
-                                    .withVelocityX(-xController.calculate(camera.getZFromTag(), (Constants.Robot.chassisDepthMeters/2)))
-                                    .withVelocityY(yController.calculate(camera.getXFromTag(), Units.inchesToMeters(12)))
-                                );
+            // drivetrain.setControl(driveWithTag.withRotationalRate(headingController.calculate(rotation.getYaw().getValueAsDouble()))
+            //                         .withVelocityX(-xController.calculate(camera.getZFromTag(), (Constants.Robot.chassisDepthMeters/2)))
+            //                         .withVelocityY(yController.calculate(camera.getXFromTag(), Units.inchesToMeters(-9)))
+            //                     );
+            xVelocity = -xController.calculate(camera.getZFromTag(), (Constants.Robot.chassisDepthMeters/2));
+            yVelocity = yController.calculate(camera.getXFromTag(), Units.inchesToMeters(12));
+            rotationVelocity = headingController.calculate(rotation.getYaw().getValueAsDouble());
         } else {
-            drivetrain.setControl(driveWithOdometry.withRotationalRate(headingController.calculate(rotation.getYaw().getValueAsDouble()))
-                                    .withVelocityX(xController.calculate(drivetrain.getPose().getX(), OdometryTargetPose.getX()))
-                                    .withVelocityY(yController.calculate(drivetrain.getPose().getY(), OdometryTargetPose.getY()))                    
-            );
+            // drivetrain.setControl(driveWithOdometry.withRotationalRate(headingController.calculate(rotation.getYaw().getValueAsDouble()))
+            //                         .withVelocityX(xController.calculate(drivetrain.getPose().getX(), OdometryTargetPose.getX()))
+            //                         .withVelocityY(yController.calculate(drivetrain.getPose().getY(), OdometryTargetPose.getY()))                    
+            // );
+            xVelocity = xController.calculate(drivetrain.getPose().getX(), OdometryTargetPose.getX());
+            yVelocity = yController.calculate(drivetrain.getPose().getY(), OdometryTargetPose.getY());
+            rotationVelocity = headingController.calculate(rotation.getYaw().getValueAsDouble());
         }
 
         field.getObject("targetObject").setPose(OdometryTargetPose);

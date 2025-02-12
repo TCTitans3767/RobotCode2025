@@ -1,15 +1,15 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 
 public class ZeroElevator extends Command{
 
-    private final Elevator elevator;
+    private final Elevator elevator = Robot.elevator;
     private boolean zeroed = false;
     
-    public ZeroElevator(Elevator elevator) {
-        this.elevator = elevator;
+    public ZeroElevator() {
         addRequirements(elevator);
     }
 

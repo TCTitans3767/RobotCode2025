@@ -1,14 +1,14 @@
 package frc.robot.Commands.StateCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.RobotMode;
 
 public class DoNothing extends Command{
     
-    private final RobotMode robotController;
+    private final RobotMode robotController = Robot.robotMode;
     
-    public DoNothing(RobotMode robotController) {
-        this.robotController = robotController;
+    public DoNothing() {
         addRequirements(robotController);
     }
 

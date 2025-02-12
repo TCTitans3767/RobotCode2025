@@ -42,36 +42,22 @@ public class RobotMode extends SubsystemBase {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
-    private final Drivetrain drivetrain;
-    private final Elevator elevator;
-    private final Manipulator manipulator;
-    private final Climber climber;
-    private final Limelight lineupCamera;
-    private final Arm arm;
-    private final Intake intake;
+    private final Drivetrain drivetrain = Robot.drivetrain;
+    private final Elevator elevator = Robot.elevator;
+    private final Manipulator manipulato = Robot.manipulator;
+    private final Climber climber = Robot.climber;
+    private final Limelight lineupCamera = Robot.limelight;
+    private final Arm arm = Robot.arm;
+    private final Intake intake = Robot.intake;
 
-    private final Idle idle;
-    private final ScoreLeft scoreLeft;
-    private final ScoreRight scoreRight;
+    private final Idle idle = new Idle();
+    private final ScoreLeft scoreLeft = new ScoreLeft();
+    private final ScoreRight scoreRight = new ScoreRight();
 
-    private final ZeroElevator zeroElevator;
-    private final DoNothing doNothing;
+    private final ZeroElevator zeroElevator = new ZeroElevator();
+    private final DoNothing doNothing = new DoNothing();
 
     public RobotMode() {
-        drivetrain = Robot.drivetrain;
-        elevator = Robot.elevator;
-        manipulator = Robot.manipulator;
-        climber = Robot.climber;
-        arm = Robot.arm;
-        intake = Robot.intake;
-        lineupCamera = Robot.limelight;
-
-        zeroElevator = new ZeroElevator(elevator);
-        doNothing = new DoNothing(this);
-
-        idle = new Idle();
-        scoreLeft = new ScoreLeft(this);
-        scoreRight = new ScoreRight(this, drivetrain, elevator, manipulator, arm, intake, climber, lineupCamera);
         this.setDefaultCommand(idle);
     }
 
@@ -89,6 +75,11 @@ public class RobotMode extends SubsystemBase {
                 break;
         
             case RobotCentric:
+
+                drivetrain.setControl(robotCentric.withVelocityX(SwerveXSupplier.get())
+                                                .withVelocityY(SwerveYSupplier.get())
+                                                .withRotationalRate(SwerveRotationSupplier.get())
+                );
 
                 break;
             

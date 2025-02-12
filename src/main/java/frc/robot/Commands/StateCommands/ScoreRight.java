@@ -1,6 +1,7 @@
 package frc.robot.Commands.StateCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.Commands.DriveCommands.AlignWithLeftReef;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
@@ -13,28 +14,18 @@ import frc.robot.subsystems.RobotMode;
 
 public class ScoreRight extends Command{
 
-    private final RobotMode robotController;
-    private final Drivetrain drivetrain;
-    private final Elevator elevator;
-    private final Manipulator manipulator;
-    private final Climber climber;
-    private final Arm arm;
-    private final Intake intake;
+    private final RobotMode robotController = Robot.robotMode;
+    private final Drivetrain drivetrain = Robot.drivetrain;
+    private final Elevator elevator = Robot.elevator;
+    private final Manipulator manipulator = Robot.manipulator;
+    private final Climber climber = Robot.climber;
+    private final Arm arm = Robot.arm;
+    private final Intake intake = Robot.intake;
 
-    private final AlignWithLeftReef alignWithLeftReef;
-    private final Limelight camera;
+    private final AlignWithLeftReef alignWithLeftReef = new AlignWithLeftReef();
+    private final Limelight camera = Robot.limelight;
 
-    public ScoreRight(RobotMode robotController, Drivetrain drivetrain, Elevator elevator, Manipulator manipulator, Arm arm, Intake intake, Climber climber, Limelight camera) {
-        this.camera = camera;
-        this.drivetrain = drivetrain;
-        this.elevator = elevator;
-        this.manipulator = manipulator;
-        this.climber = climber;
-        this.arm = arm;
-        this.intake = intake;
-        this.robotController = robotController;
-        alignWithLeftReef = new AlignWithLeftReef(camera);
-
+    public ScoreRight() {
         addRequirements(robotController);
     }
 
