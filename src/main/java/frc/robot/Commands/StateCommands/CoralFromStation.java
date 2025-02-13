@@ -15,6 +15,10 @@ public class CoralFromStation extends SequentialCommandGroup{
             new ParallelCommandGroup(
                 new SetElevatorPosition(0.5),
                 new SetArmAngle(90)
+                // new SetIntakePosition(),
+                // new SetClimbPosition(),
+                // new SetManipulatorSpeed(),
+                // new SetDrivertrainTarget()
             ),
             new WaitUntilCommand(() -> Robot.manipulator.hasGamePiece())
         );
