@@ -53,7 +53,7 @@ public class AlignWithLeftReef extends Command{
     public AlignWithLeftReef() {
         headingController.enableContinuousInput(-180, 180);
 
-        addRequirements(drivetrain);
+        addRequirements(Robot.robotMode);
     }
 
     @Override

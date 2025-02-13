@@ -58,7 +58,7 @@ public class Constants {
         // Conversion Factor
         public final static double conversionFactor = 1;
 
-        public final static double RotationsPerMeter = 1;
+        public final static double RotationsPerMeter = 39.997;
     }
 
     public final class Manipulator {

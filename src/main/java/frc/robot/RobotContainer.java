@@ -43,13 +43,13 @@ import frc.robot.subsystems.RobotMode;
 
 public class RobotContainer {
 
-    public final Drivetrain drivetrain = Robot.getDrivetrain();
-    public final Limelight limelight = Robot.getLimelight();
-    public final Elevator elevator = Robot.getElevator();
-    public final Manipulator manipulator = Robot.getManipulator();
-    public final Climber climber = Robot.getClimber();
-    public final Arm arm = Robot.getArm();
-    public final Intake intake = Robot.getIntake();
+    public final Drivetrain drivetrain = Robot.drivetrain;
+    public final Limelight limelight = Robot.limelight;
+    public final Elevator elevator = Robot.elevator;
+    public final Manipulator manipulator = Robot.manipulator;
+    public final Climber climber = Robot.climber;
+    public final Arm arm = Robot.arm;
+    public final Intake intake = Robot.intake;
 
     public final CommandXboxController joystick = Robot.joystick;
 
@@ -57,11 +57,11 @@ public class RobotContainer {
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.02).withRotationalDeadband(MaxAngularRate * 0.02) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+    // private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+    //         .withDeadband(MaxSpeed * 0.02).withRotationalDeadband(MaxAngularRate * 0.02) // Add a 10% deadband
+    //         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+    // private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 

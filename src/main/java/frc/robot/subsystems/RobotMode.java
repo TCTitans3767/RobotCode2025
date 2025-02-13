@@ -6,6 +6,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import java.util.function.Supplier;
 
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import dev.doglog.DogLog;
@@ -21,26 +22,29 @@ import frc.robot.Commands.StateCommands.ScoreLeft;
 import frc.robot.Commands.StateCommands.ScoreRight;
 import frc.robot.generated.TunerConstants;
 import frc.robot.utils.Logger;
+import pabeles.concurrency.IntOperatorTask.Max;
 
 public class RobotMode extends SubsystemBase {
 
     public enum DriveMode {
+        TeleopDrive,
         RobotCentric, 
         FieldCentric,
         Auton,
         Brake
     }
 
+    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+
     private Supplier<Double> SwerveXSupplier;
     private Supplier<Double> SwerveYSupplier;
     private Supplier<Double> SwerveRotationSupplier;
+    private final SwerveRequest.FieldCentric teleopDrive = new SwerveRequest.FieldCentric().withDeadband(0.02 * MaxSpeed).withRotationalDeadband(0.02 * MaxAngularRate).withDriveRequestType(DriveRequestType.OpenLoopVoltage);
     private final SwerveRequest.FieldCentric fieldCentric = new SwerveRequest.FieldCentric();
     private final SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric();
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private DriveMode driveMode;
-
-    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     private final Drivetrain drivetrain = Robot.drivetrain;
     private final Elevator elevator = Robot.elevator;
@@ -65,20 +69,29 @@ public class RobotMode extends SubsystemBase {
     public void periodic() {
 
         switch (driveMode) {
-            case FieldCentric:
+            case TeleopDrive:
 
-                drivetrain.setControl(fieldCentric.withVelocityX(SwerveXSupplier.get() < 0 ? Math.pow(SwerveXSupplier.get() * MaxSpeed, 2) : -Math.pow(SwerveXSupplier.get() * MaxSpeed, 2))
+                drivetrain.setControl(teleopDrive.withVelocityX(SwerveXSupplier.get() < 0 ? Math.pow(SwerveXSupplier.get() * MaxSpeed, 2) : -Math.pow(SwerveXSupplier.get() * MaxSpeed, 2))
                                             .withVelocityY(SwerveYSupplier.get() < 0 ? Math.pow(SwerveYSupplier.get() * MaxSpeed, 2) : -Math.pow(SwerveYSupplier.get() * MaxSpeed, 2))
                                             .withRotationalRate(-SwerveRotationSupplier.get() * MaxAngularRate)
+                );
+
+                break;
+
+            case FieldCentric:
+
+                drivetrain.setControl(fieldCentric.withVelocityX(SwerveXSupplier.get() * MaxSpeed)
+                                            .withVelocityY(SwerveYSupplier.get() * MaxSpeed)
+                                            .withRotationalRate(SwerveRotationSupplier.get() * MaxAngularRate)
                 );
                 
                 break;
         
             case RobotCentric:
 
-                drivetrain.setControl(robotCentric.withVelocityX(SwerveXSupplier.get())
-                                                .withVelocityY(SwerveYSupplier.get())
-                                                .withRotationalRate(SwerveRotationSupplier.get())
+                drivetrain.setControl(robotCentric.withVelocityX(SwerveXSupplier.get() * MaxSpeed)
+                                                .withVelocityY(SwerveYSupplier.get() * MaxSpeed)
+                                                .withRotationalRate(SwerveRotationSupplier.get() * MaxAngularRate)
                 );
 
                 break;

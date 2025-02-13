@@ -20,7 +20,7 @@ public class Idle extends Command{
 
     @Override
     public void initialize() {
-        new SetElevatorPosition(0.25);
+        // new SetElevatorPosition(0.25);
         new ControllerDrive();
     }
     
