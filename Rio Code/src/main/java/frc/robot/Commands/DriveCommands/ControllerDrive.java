@@ -15,7 +15,7 @@ public class ControllerDrive extends InstantCommand{
         super(() -> {
             Robot.robotMode.setDriveMode(DriveMode.TeleopDrive);
             Robot.robotMode.setSwerveControl(() -> Robot.joystick.getLeftY(), () -> Robot.joystick.getLeftX(), () -> Robot.joystick.getRightX());
-        });
+        }, Robot.drivetrain);
     }
     
 }

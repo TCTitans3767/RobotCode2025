@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.Logger;
@@ -60,6 +61,7 @@ public class Elevator extends SubsystemBase{
         rightMotor = new TalonFX(Constants.Elevator.rightMotorID);
         rightMotor.getConfigurator().apply(rightConfig);
         rightMotor.setNeutralMode(NeutralModeValue.Brake);
+        rightMotor.setControl(new Follower(Constants.Elevator.leftMotorID, true));
 
         motionMagicRequest = new MotionMagicVoltage(0);
 
@@ -69,7 +71,7 @@ public class Elevator extends SubsystemBase{
     public void periodic() {
         Logger.log("Elevator/Set Speed", leftMotor.get());
         Logger.log("Elevator/Speed", leftMotor.getVelocity().getValueAsDouble());
-        Logger.log("Elevator/height", leftMotor.getPosition().getValueAsDouble());
+        Logger.log("Elevator/height meters", leftMotor.getPosition().getValueAsDouble() / Constants.Elevator.RotationsPerMeter);
 
         // if (leftMotor.getPosition().getValueAsDouble() <= 0.5 || leftMotor.getPosition().getValueAsDouble() >= 99999 ) {
         //     leftMotor.set(0);
@@ -80,13 +82,11 @@ public class Elevator extends SubsystemBase{
 
     public void setSpeed(double speed) {
         leftMotor.set(speed);
-        rightMotor.setControl(new Follower(Constants.Elevator.leftMotorID, true));
     }
 
-    public void setPosition(double position) {
-        targetPosition = position;
-        leftMotor.setControl(motionMagicRequest.withPosition(position));
-        rightMotor.setControl(new Follower(Constants.Elevator.leftMotorID, true));
+    public void setPosition(double meters) {
+        targetPosition = meters * Constants.Elevator.RotationsPerMeter;
+        leftMotor.setControl(motionMagicRequest.withPosition(meters * Constants.Elevator.RotationsPerMeter));
     }
 
     public boolean atPosition() {

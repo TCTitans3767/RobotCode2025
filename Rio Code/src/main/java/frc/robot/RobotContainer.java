@@ -74,6 +74,8 @@ public class RobotContainer {
         configureBindings();
         configureChoreo();
 
+        Robot.robotMode.setCurrentMode(new InstantCommand());
+
         limelight.initialPoseEstimates();
 
     }

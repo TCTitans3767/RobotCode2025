@@ -273,6 +273,10 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         
     }
 
+    public boolean closeToCoralStation() {
+        return true;
+    }
+
     public Field2d getField() {
         return field;
     }

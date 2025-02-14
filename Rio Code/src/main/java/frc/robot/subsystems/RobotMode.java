@@ -20,6 +20,12 @@ import frc.robot.Commands.StateCommands.DoNothing;
 import frc.robot.Commands.StateCommands.Idle;
 import frc.robot.Commands.StateCommands.ScoreLeft;
 import frc.robot.Commands.StateCommands.ScoreRight;
+import frc.robot.Commands.test.CoralFloor;
+import frc.robot.Commands.test.CoralFloorPose;
+import frc.robot.Commands.test.CoralStationActive;
+import frc.robot.Commands.test.CoralStationPose;
+import frc.robot.Commands.test.Transit;
+import frc.robot.Commands.test.TransitPose;
 import frc.robot.generated.TunerConstants;
 import frc.robot.utils.Logger;
 import pabeles.concurrency.IntOperatorTask.Max;
@@ -33,6 +39,9 @@ public class RobotMode extends SubsystemBase {
         Auton,
         Brake
     }
+
+    public Command currentMode = null;
+    public Command previousPose = null;
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -61,8 +70,15 @@ public class RobotMode extends SubsystemBase {
     private final ZeroElevator zeroElevator = new ZeroElevator();
     private final DoNothing doNothing = new DoNothing();
 
+    public final static CoralStationActive coralStation = new CoralStationActive();
+    public final static TransitPose transitPose = new TransitPose();
+    public final static Transit transit = new Transit();
+    public final static CoralStationPose coralStationPose = new CoralStationPose();
+    public final static CoralFloorPose coralFloorPose = new CoralFloorPose();
+    public final static CoralFloor coralFloor = new CoralFloor();
+
     public RobotMode() {
-        this.setDefaultCommand(idle);
+        this.setDefaultCommand(transitPose);
     }
 
     @Override
@@ -108,6 +124,12 @@ public class RobotMode extends SubsystemBase {
                 break;
         }
 
+    }
+
+    public void setCurrentMode(Command newMode) {
+        currentMode.cancel();
+        currentMode = newMode;
+        currentMode.schedule();
     }
 
     public void setDriveMode(DriveMode driveMode) {
