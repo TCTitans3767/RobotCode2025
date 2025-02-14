@@ -67,6 +67,7 @@ void setup() {
 void logic() {
   if (millis() >= 30000) { run = true; }  // The number here is how long to mute timer after startup
   // tickler timer
+
   if (millis() - lastPeriodic >= 20000 && count <= 4 && run) {
     /*
     when true, set current time
@@ -114,6 +115,11 @@ void logic() {
   } else {
     digitalWrite(10, LOW);
   }
+
+  if (count >= 6) {
+    lastPeriodic = millis();
+  }
+
 }
 
 void loop() {
