@@ -94,8 +94,8 @@ public class RobotContainer {
             // new TeleopDrive(() -> drive.withVelocityX(Math.pow(-joystick.getRawAxis(1) * MaxSpeed, 3)) // Drive forward with negative Y (forward)
             //                             .withVelocityY(Math.pow(-joystick.getRawAxis(0) * MaxSpeed, 3)) // Drive left with negative X (left)
             //                             .withRotationalRate(-joystick.getRawAxis(2) * MaxAngularRate), drivetrain) // Drive counterclockwise with negative X (left), drivetrain)
-            new TeleopDrive(() -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(-joystick.getLeftY() * MaxSpeed, 2) : -Math.pow(-joystick.getLeftY() * MaxSpeed, 2)) // Drive forward with negative Y (forward)
-                                        .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(-joystick.getLeftX() * MaxSpeed, 2) : -Math.pow(-joystick.getLeftX() * MaxSpeed, 2)) // Drive left with negative X (left)
+            new TeleopDrive(() -> drive.withVelocityX(joystick.getLeftY() < 0 ? Math.pow(joystick.getLeftY() * MaxSpeed, 2) : -Math.pow(joystick.getLeftY() * MaxSpeed, 2)) // Drive forward with negative Y (forward)
+                                        .withVelocityY(joystick.getLeftX() < 0 ? Math.pow(joystick.getLeftX() * MaxSpeed, 2) : -Math.pow(joystick.getLeftX() * MaxSpeed, 2)) // Drive left with negative X (left)
                                         .withRotationalRate(-joystick.getRightX() * MaxAngularRate), drivetrain) // Drive counterclockwise with negative X (left), drivetrain)
         );
 
