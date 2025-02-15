@@ -16,6 +16,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.util.Color;
@@ -61,6 +62,14 @@ public class Robot extends TimedRobot {
   AddressableLED m_led;
   AddressableLEDBuffer m_ledBuffer;
   public Robot() {
+    m_led = new AddressableLED(9);
+    m_ledBuffer = new AddressableLEDBuffer(60);
+    m_led.setLength(m_ledBuffer.getLength());
+    m_led.setData(m_ledBuffer);
+      m_led.start();
+      LEDPattern red = LEDPattern.solid(Color.kRed);
+      red.applyTo(m_ledBuffer);
+      m_led.setData(m_ledBuffer);
     DogLog.setOptions(new DogLogOptions(
         () -> testMode, 
         false, 
