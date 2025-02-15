@@ -35,7 +35,7 @@ public class Constants {
 
         public final static double conversonFactor = 1;
 
-        public final static double currentLimit = 3;
+        public final static double currentLimit = 30;
     }
   
     public final class Elevator {

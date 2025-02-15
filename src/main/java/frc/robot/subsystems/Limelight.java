@@ -41,14 +41,14 @@ public class Limelight extends SubsystemBase{
     public Limelight(String limelightName, Pose3d robotToLimelight) {
         this.limelightName = limelightName;
 
-        LimelightHelpers.setCameraPose_RobotSpace(limelightName, 
-            robotToLimelight.getX(),
-            robotToLimelight.getY(), 
-            robotToLimelight.getZ(), 
-            robotToLimelight.getRotation().getX(), 
-            robotToLimelight.getRotation().getY(), 
-            robotToLimelight.getRotation().getZ()
-        );
+        // LimelightHelpers.setCameraPose_RobotSpace(limelightName, 
+        //     robotToLimelight.getX(),
+        //     robotToLimelight.getY(), 
+        //     robotToLimelight.getZ(), 
+        //     robotToLimelight.getRotation().getX(), 
+        //     robotToLimelight.getRotation().getY(), 
+        //     robotToLimelight.getRotation().getZ()
+        // );
 
         drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 999999));
 
@@ -56,41 +56,41 @@ public class Limelight extends SubsystemBase{
 
     @Override
     public void periodic() {
-        doEstimationFrame = true;
+        // doEstimationFrame = true;
 
-        PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
-        if (Math.abs(drivetrain.getPigeon2().getAngularVelocityZDevice().getValueAsDouble()) > 720) {
-            doEstimationFrame = false;
-        }
-        if (estimatedPose.tagCount == 0) {
-            doEstimationFrame = false;
-        }
+        // PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
+        // if (Math.abs(drivetrain.getPigeon2().getAngularVelocityZDevice().getValueAsDouble()) > 720) {
+        //     doEstimationFrame = false;
+        // }
+        // if (estimatedPose.tagCount == 0) {
+        //     doEstimationFrame = false;
+        // }
 
-        if (doEstimationFrame && doEstimation && doEstimationAll) {
-            drivetrain.addVisionMeasurement(estimatedPose.pose);
-        }
+        // if (doEstimationFrame && doEstimation && doEstimationAll) {
+        //     drivetrain.addVisionMeasurement(estimatedPose.pose);
+        // }
 
-        SmartDashboard.putNumber(limelightName + "/Target Pose X", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[0]);
-        SmartDashboard.putNumber(limelightName + "/Target Pose Y", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[1]);
-        SmartDashboard.putNumber(limelightName + "/Target Pose Z", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[2]);
+        // SmartDashboard.putNumber(limelightName + "/Target Pose X", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[0]);
+        // SmartDashboard.putNumber(limelightName + "/Target Pose Y", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[1]);
+        // SmartDashboard.putNumber(limelightName + "/Target Pose Z", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[2]);
 
     }
 
     public void resetIMU(Rotation3d robotOrientation) {
-        doEstimation = false;
+        // doEstimation = false;
 
-        LimelightHelpers.SetIMUMode(limelightName, 1);
-        LimelightHelpers.SetRobotOrientation(limelightName, 
-            robotOrientation.getZ(),
-            0,
-            0,
-            0,
-            0,
-            0
-        );
-        LimelightHelpers.SetIMUMode(limelightName, 2);
+        // LimelightHelpers.SetIMUMode(limelightName, 1);
+        // LimelightHelpers.SetRobotOrientation(limelightName, 
+        //     robotOrientation.getZ(),
+        //     0,
+        //     0,
+        //     0,
+        //     0,
+        //     0
+        // );
+        // LimelightHelpers.SetIMUMode(limelightName, 2);
 
-        doEstimation = true;
+        // doEstimation = true;
     }
 
     public void setTagFilter(int[] ids) {
@@ -118,35 +118,35 @@ public class Limelight extends SubsystemBase{
     }
 
     public void initialPoseEstimates() {
-        doEstimation = false;
-        drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.1, 0.1, 0.5));
-        int numTries = 0;
-        while (startupEstimations < 10 && numTries < 40) {
-            PoseEstimate result = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
-            if (result.tagCount == 1) {
-                if (result.rawFiducials[0].ambiguity > 0.3) {
-                    numTries++;
-                    continue;
-                }
-                if (result.rawFiducials[0].distToCamera > 3) {
-                    numTries++;
-                    continue;
-                }
-            }
+        // doEstimation = false;
+        // drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.1, 0.1, 0.5));
+        // int numTries = 0;
+        // while (startupEstimations < 10 && numTries < 40) {
+        //     PoseEstimate result = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+        //     if (result.tagCount == 1) {
+        //         if (result.rawFiducials[0].ambiguity > 0.3) {
+        //             numTries++;
+        //             continue;
+        //         }
+        //         if (result.rawFiducials[0].distToCamera > 3) {
+        //             numTries++;
+        //             continue;
+        //         }
+        //     }
 
-            if (result.tagCount == 0) {
-                numTries++;
-                continue;
-            }
+        //     if (result.tagCount == 0) {
+        //         numTries++;
+        //         continue;
+        //     }
 
-            drivetrain.addVisionMeasurement(result.pose);
+        //     drivetrain.addVisionMeasurement(result.pose);
             
-            startupEstimations++;
-        }
+        //     startupEstimations++;
+        // }
 
-        resetIMU(drivetrain.getRotation3d());
-        drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 99999));
-        turnOnAprilTags();
+        // resetIMU(drivetrain.getRotation3d());
+        // drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 99999));
+        // turnOnAprilTags();
     }
 
     public double getTX() {
