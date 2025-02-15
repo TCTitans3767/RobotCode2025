@@ -37,6 +37,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.RobotMode;
@@ -50,6 +51,7 @@ public class RobotContainer {
     public final Climber climber = Robot.getClimber();
     public final Arm arm = Robot.getArm();
     public final Intake intake = Robot.getIntake();
+    public final Lights lights = Robot.getLights();
 
     public final CommandXboxController joystick = Robot.joystick;
 
@@ -71,6 +73,7 @@ public class RobotContainer {
 
     public RobotContainer() {
 
+        lights.setLights(Lights.colors.GREEN);
         configureBindings();
         configureChoreo();
 

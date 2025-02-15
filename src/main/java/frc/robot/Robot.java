@@ -31,6 +31,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.RobotMode;
@@ -51,6 +52,7 @@ public class Robot extends TimedRobot {
   public final static Manipulator manipulator = null;
   public final static Intake intake = null;
   public final static Arm arm = null;
+  public final static Lights lights = null;
   public final static Limelight limelight = new Limelight("", new Pose3d(Units.inchesToMeters(12), Units.inchesToMeters(0), Units.inchesToMeters(3), new Rotation3d(0, 0, 0)));
   // public final static Limelight limelight = null;
   
@@ -59,17 +61,7 @@ public class Robot extends TimedRobot {
   public final static RobotMode robotMode = new RobotMode();
 
   private final RobotContainer m_robotContainer;
-  AddressableLED m_led;
-  AddressableLEDBuffer m_ledBuffer;
   public Robot() {
-    m_led = new AddressableLED(9);
-    m_ledBuffer = new AddressableLEDBuffer(60);
-    m_led.setLength(m_ledBuffer.getLength());
-    m_led.setData(m_ledBuffer);
-      m_led.start();
-      LEDPattern red = LEDPattern.solid(Color.kRed);
-      red.applyTo(m_ledBuffer);
-      m_led.setData(m_ledBuffer);
     DogLog.setOptions(new DogLogOptions(
         () -> testMode, 
         false, 
@@ -169,6 +161,10 @@ public class Robot extends TimedRobot {
 
   public static Arm getArm() {
       return arm;
+  }
+
+  public static Lights getLights() {
+      return lights;
   }
 
   public static void enableTestMode() {
