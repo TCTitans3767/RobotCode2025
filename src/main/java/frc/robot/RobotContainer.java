@@ -56,7 +56,7 @@ public class RobotContainer {
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController joystick = new CommandXboxController(0);
-    private final CommandXboxController testController = new CommandXboxController(1);
+    // private final CommandXboxController testController = new CommandXboxController(1);
     // private final Joystick joystick = new Joystick(0);
 
     private AutoFactory autoFactory;
@@ -99,7 +99,7 @@ public class RobotContainer {
                                         .withRotationalRate(-joystick.getRightX() * MaxAngularRate), drivetrain) // Drive counterclockwise with negative X (left), drivetrain)
         );
 
-        joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // joystick.b().whileTrue(drivetrain.applyRequest(() ->
         //     point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
         // ));
@@ -116,10 +116,12 @@ public class RobotContainer {
         joystick.povUp().onTrue(limelight.runOnce(() -> limelight.initialPoseEstimates()));
         joystick.b().whileTrue(alignWithRightReef);
         joystick.x().whileTrue(alignWithLeftReef);
-
-        Robot.climber.setDefaultCommand(new RunCommand(() -> {
-            Robot.climber.setSpeed(testController.getLeftY() * 0.05);
-        }, Robot.climber));
+        joystick.a().whileTrue(new RunCommand(() -> {
+            Robot.climber.setSpeed(0.3);
+        }, Robot.climber).finallyDo(() -> {Robot.climber.setSpeed(0);}));
+        joystick.y().whileTrue(new RunCommand(() -> {
+            Robot.climber.setSpeed(-0.3);
+        }, Robot.climber).finallyDo(() -> {Robot.climber.setSpeed(0);}));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
