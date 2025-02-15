@@ -27,8 +27,8 @@ public class Constants {
     }
   
     public final class Climber {
-        public final static int leftMotorID = 0;
-        public final static int rightMotorID = 1;
+        public final static int leftMotorID = 18;
+        public final static int rightMotorID = 19;
       
         public final static double maxVelocity = 0.1;
         public final static double maxAcceleration = 0.1;
@@ -40,8 +40,8 @@ public class Constants {
   
     public final class Elevator {
         // CAN IDs
-        public final static int leftMotorID = 0;
-        public final static int rightMotorID = 1;
+        public final static int leftMotorID = 13;
+        public final static int rightMotorID = 14;
 
         // PID Constants
         public final static double kP = 0.1;

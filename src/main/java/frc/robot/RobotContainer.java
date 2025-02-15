@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Auton.Autos;
@@ -55,6 +56,7 @@ public class RobotContainer {
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController joystick = new CommandXboxController(0);
+    private final CommandXboxController testController = new CommandXboxController(1);
     // private final Joystick joystick = new Joystick(0);
 
     private AutoFactory autoFactory;
@@ -114,6 +116,10 @@ public class RobotContainer {
         joystick.povUp().onTrue(limelight.runOnce(() -> limelight.initialPoseEstimates()));
         joystick.b().whileTrue(alignWithRightReef);
         joystick.x().whileTrue(alignWithLeftReef);
+
+        Robot.climber.setDefaultCommand(new RunCommand(() -> {
+            Robot.climber.setSpeed(testController.getLeftY() * 0.05);
+        }, Robot.climber));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
