@@ -43,8 +43,8 @@ public class Constants {
     }
   
     public final class Climber {
-        public final static int leftMotorID = 0;
-        public final static int rightMotorID = 1;
+        public final static int leftMotorID = 18;
+        public final static int rightMotorID = 19;
       
         public final static double maxVelocity = 0.1;
         public final static double maxAcceleration = 0.1;
@@ -54,8 +54,8 @@ public class Constants {
   
     public final class Elevator {
         // CAN IDs
-        public final static int leftMotorID = 14;
-        public final static int rightMotorID = 15;
+        public final static int leftMotorID = 13;
+        public final static int rightMotorID = 14;
 
         // PID Constants
         public final static double kP = 0.1;
@@ -77,7 +77,7 @@ public class Constants {
 
     public final class Manipulator {
         // CAN IDs
-        public final static int motorID = 2;
+        public final static int motorID = 17;
 
         // PID Constants
         public final static double kP = 0.1;
@@ -98,7 +98,8 @@ public class Constants {
 
     public final class Arm {
         // CAN IDs
-        public final static int ArmMotorID = 16;
+        public final static int ArmMotorID = 15;
+        public static final int ArmEncoderID = 16;
         // PID Constants
         public final static double kP = 0.1;
         public final static double kI = 0.1;
@@ -114,7 +115,6 @@ public class Constants {
         public final static double angleMin = 0.1;
       
         public final static double conversionFactor = 1;
-        public static final int ArmEncoderID = 0;
     }
 
     public final class Intake {
