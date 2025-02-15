@@ -24,10 +24,13 @@ import frc.robot.Commands.StateCommands.CoralFloor;
 import frc.robot.Commands.StateCommands.CoralFloorPose;
 import frc.robot.Commands.StateCommands.CoralReef;
 import frc.robot.Commands.StateCommands.CoralReefAlignPose;
+import frc.robot.Commands.StateCommands.CoralReefAligned;
 import frc.robot.Commands.StateCommands.CoralReefPose;
+import frc.robot.Commands.StateCommands.CoralScorePose;
 import frc.robot.Commands.StateCommands.CoralStation;
 import frc.robot.Commands.StateCommands.CoralStationAlignPose;
 import frc.robot.Commands.StateCommands.CoralStationPose;
+import frc.robot.Commands.StateCommands.EjectCoralPose;
 import frc.robot.Commands.StateCommands.Transit;
 import frc.robot.Commands.StateCommands.TransitPose;
 import frc.robot.generated.TunerConstants;
@@ -84,9 +87,12 @@ public class RobotMode extends SubsystemBase {
     public final static CoralReefPose coralReefPose = new CoralReefPose();
     public final static CoralReef coralReef = new CoralReef();
     public final static CoralReefAlignPose coralReefAlignPose = new CoralReefAlignPose();
+    public final static CoralReefAligned coralReefAligned = new CoralReefAligned();
+    public final static CoralScorePose coralScorePose = new CoralScorePose();
+
+    public final static EjectCoralPose ejectCoralPose = new EjectCoralPose();
 
     public RobotMode() {
-        this.setDefaultCommand(transitPose);
     }
 
     @Override

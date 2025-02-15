@@ -16,6 +16,7 @@ public class CoralStationPose extends Command{
     public void initialize() {
         Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
         Robot.arm.setPositon(90);
+        Robot.manipulator.setSpeed(0.5);
         Robot.elevator.setPosition(0.5);
     }
 
@@ -26,10 +27,7 @@ public class CoralStationPose extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        if (interrupted || (!Robot.manipulator.hasGamePiece())) {
-            RobotMode.coralStation.cancel();
-        }
-        // RobotMode.CoralTransitPose.schedule();
+        Robot.robotMode.setCurrentMode(RobotMode.coralStation);
     }
     
 }

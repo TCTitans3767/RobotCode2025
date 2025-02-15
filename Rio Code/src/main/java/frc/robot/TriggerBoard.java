@@ -33,4 +33,6 @@ public class TriggerBoard {
     public static boolean isL4Selected() {return false;}
 
     public static boolean isLevelSelected() {return false;}
+
+    public static boolean isReefAligned() {return Robot.robotMode.currentDriveMode.getName() == "AlignWithLeftReef" || Robot.robotMode.currentDriveMode.getName() == "AlignWithRightReef";}
 }

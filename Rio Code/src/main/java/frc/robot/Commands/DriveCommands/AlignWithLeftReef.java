@@ -50,7 +50,7 @@ public class AlignWithLeftReef extends Command{
 
     private int targetReefTag;
     private Pose2d targetReefPose;
-    private Pose2d OdometryTargetPose;
+    private Pose2d odometryTargetPose;
     private final Field2d field = drivetrain.getField();
     
     public AlignWithLeftReef() {
@@ -94,7 +94,7 @@ public class AlignWithLeftReef extends Command{
                 break;
         }
 
-        OdometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(-9), new Rotation2d(0)));
+        odometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(-9), new Rotation2d(0)));
 
         headingController.setTolerance(0.2);
         headingController.setSetpoint(targetReefPose.getRotation().plus(Rotation2d.k180deg).getDegrees());
@@ -123,12 +123,12 @@ public class AlignWithLeftReef extends Command{
             //                         .withVelocityX(xController.calculate(drivetrain.getPose().getX(), OdometryTargetPose.getX()))
             //                         .withVelocityY(yController.calculate(drivetrain.getPose().getY(), OdometryTargetPose.getY()))                    
             // );
-            xVelocity = xController.calculate(drivetrain.getPose().getX(), OdometryTargetPose.getX());
-            yVelocity = yController.calculate(drivetrain.getPose().getY(), OdometryTargetPose.getY());
+            xVelocity = xController.calculate(drivetrain.getPose().getX(), odometryTargetPose.getX());
+            yVelocity = yController.calculate(drivetrain.getPose().getY(), odometryTargetPose.getY());
             rotationVelocity = headingController.calculate(rotation.getYaw().getValueAsDouble());
         }
 
-        field.getObject("targetObject").setPose(OdometryTargetPose);
+        field.getObject("targetObject").setPose(odometryTargetPose);
         
     }
 

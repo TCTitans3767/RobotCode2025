@@ -52,6 +52,7 @@ public class Climber extends SubsystemBase {
         rightMotor = new TalonFX(Constants.Climber.rightMotorID);
         rightMotor.getConfigurator().apply(rightConfig);
         rightMotor.setNeutralMode(NeutralModeValue.Brake);
+        rightMotor.setControl(new Follower(Constants.Climber.leftMotorID, true));
     }
 
     @Override
@@ -61,7 +62,6 @@ public class Climber extends SubsystemBase {
 
     public void setSpeed(double speed) {
        leftMotor.set(speed);
-       leftMotor.setControl(new Follower(Constants.Climber.leftMotorID,true));
         // Add code here to set the speed of the climber
     }
 

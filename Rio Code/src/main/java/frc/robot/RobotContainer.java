@@ -74,7 +74,7 @@ public class RobotContainer {
         configureBindings();
         configureChoreo();
 
-        Robot.robotMode.setCurrentMode(new InstantCommand());
+        Robot.robotMode.setCurrentMode(RobotMode.transitPose);
 
         limelight.initialPoseEstimates();
 
@@ -122,17 +122,17 @@ public class RobotContainer {
 
         // reset the field-centric heading on left bumper press
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-        joystick.rightBumper().onTrue(limelight.runOnce(() -> limelight.resetIMU(new Rotation3d())));
+        // joystick.rightBumper().onTrue(limelight.runOnce(() -> limelight.resetIMU(new Rotation3d())));
         // joystick.povUp().onTrue(limelight.runOnce(() -> limelight.initialPoseEstimates()));
-        joystick.povLeft().whileTrue(new RunCommand(() -> {manipulator.setSpeed(0.1);}, manipulator));
-        joystick.povRight().whileTrue(new RunCommand(() -> {manipulator.setSpeed(-0.1);}, manipulator));
+        // joystick.povLeft().whileTrue(new RunCommand(() -> {manipulator.setSpeed(0.1);}, manipulator));
+        // joystick.povRight().whileTrue(new RunCommand(() -> {manipulator.setSpeed(-0.1);}, manipulator));
         // joystick.leftTrigger(0.05).onTrue(new InstantCommand(() -> Robot.getElevator().setSpeed(Math.pow(joystick.getLeftTriggerAxis(), 2))));
         // joystick.leftTrigger(0.05).onFalse(new InstantCommand(() -> Robot.getElevator().setSpeed(0)));
         // joystick.rightTrigger(0.05).onTrue(new InstantCommand(() -> Robot.getElevator().setSpeed(-Math.pow(joystick.getRightTriggerAxis(), 2))));
         // joystick.rightTrigger(0.05).onFalse(new InstantCommand(() -> Robot.getElevator().setSpeed(0)));
         // joystick.povUp().onTrue(new InstantCommand(() -> Robot.getArm().setSpeed(0.1))).onFalse(new InstantCommand(() -> Robot.getArm().setSpeed(0)));
         // joystick.povDown().onTrue(new InstantCommand(() -> Robot.getArm().setSpeed(-0.1))).onFalse(new InstantCommand(() -> Robot.getArm().setSpeed(0)));
-        elevator.setDefaultCommand(new RunCommand(() -> {elevator.setSpeed((joystick.getLeftTriggerAxis() > 0.05) ? Math.pow(joystick.getLeftTriggerAxis(), 2) : -Math.pow(joystick.getRightTriggerAxis(), 2));}, elevator));
+        // elevator.setDefaultCommand(new RunCommand(() -> {elevator.setSpeed((joystick.getLeftTriggerAxis() > 0.05) ? Math.pow(joystick.getLeftTriggerAxis(), 2) : -Math.pow(joystick.getRightTriggerAxis(), 2));}, elevator));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }

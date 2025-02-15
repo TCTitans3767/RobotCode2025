@@ -9,19 +9,20 @@ import frc.robot.subsystems.RobotMode;
 public class TransitPose extends Command{
     
     public TransitPose() {
-        addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
+        addRequirements(Robot.arm, Robot.climber, Robot.manipulator, Robot.elevator);
     }
 
     @Override
     public void initialize() {
         if (TriggerBoard.isCoralInManipulator()) {
             Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-            Robot.arm.setPositon(0);
-            Robot.elevator.setPosition(0.5);
+            // Robot.arm.setPositon(0);
+            // Robot.elevator.setPosition(0.5);
         } else {
+            System.out.println("Transit Pose Intialize: controllerDrive\n arm @ 0\n elevator @ 0.5m");
             Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-            Robot.arm.setPositon(0);
-            Robot.elevator.setPosition(0.5);
+            // Robot.arm.setPositon(0);
+            // Robot.elevator.setPosition(0.5);
         }
     }
 
@@ -32,7 +33,8 @@ public class TransitPose extends Command{
 
     @Override
     public boolean isFinished() {
-        return Robot.arm.atPosition() && Robot.elevator.atPosition();
+        // return Robot.arm.atPosition() && Robot.elevator.atPosition();
+        return true;
     }
 
     @Override

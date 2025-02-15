@@ -1,33 +1,30 @@
 package frc.robot.Commands.StateCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Commands.DriveCommands.AlignWithCoralStation;
-import frc.robot.subsystems.RobotMode;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Robot;
+import frc.robot.TriggerBoard;
+import frc.robot.subsystems.RobotMode;
 
-public class CoralStationAlignPose extends Command{
-
-    private boolean isFinished = false;
-
-    public CoralStationAlignPose() {
+public class CoralScorePose extends Command{
+    
+    public CoralScorePose() {
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
     }
 
     @Override
     public void initialize() {
-        Robot.robotMode.setDriveModeCommand(RobotMode.alignWithCoralStation);
         Robot.manipulator.setSpeed(0.5);
-        isFinished = true;
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return !TriggerBoard.isCoralInManipulator();
     }
 
     @Override
     public void end(boolean interrupted) {
-        Robot.robotMode.setCurrentMode(RobotMode.coralStation);
+        Robot.robotMode.setCurrentMode(RobotMode.transitPose);
     }
-    
+
 }
