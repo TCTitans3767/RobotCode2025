@@ -27,6 +27,8 @@ public class Climber extends SubsystemBase {
         leftConfig = new TalonFXConfiguration();
         leftConfig.Feedback.SensorToMechanismRatio = Constants.Climber.conversonFactor;
         leftConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        leftConfig.CurrentLimits.StatorCurrentLimit = Constants.Climber.currentLimit;
+        leftConfig.CurrentLimits.StatorCurrentLimitEnable = true;
 
         slot0Config = new Slot0Configs();
         slot0Config.kP = 0.1;
@@ -61,7 +63,7 @@ public class Climber extends SubsystemBase {
 
     public void setSpeed(double speed) {
        leftMotor.set(speed);
-       leftMotor.setControl(new Follower(Constants.Climber.leftMotorID,true));
+       rightMotor.setControl(new Follower(Constants.Climber.leftMotorID,true));
         // Add code here to set the speed of the climber
     }
 

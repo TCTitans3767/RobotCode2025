@@ -34,6 +34,8 @@ public class Constants {
         public final static double maxAcceleration = 0.1;
 
         public final static double conversonFactor = 1;
+
+        public final static double currentLimit = 3;
     }
   
     public final class Elevator {
