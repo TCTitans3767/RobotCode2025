@@ -1,22 +1,25 @@
-package frc.robot.Commands.test;
+package frc.robot.Commands.StateCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
+import frc.robot.Commands.DriveCommands.ControllerDrive;
 import frc.robot.subsystems.RobotMode;
 
 public class TransitPose extends Command{
     
     public TransitPose() {
-        addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator);
+        addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
     }
 
     @Override
     public void initialize() {
         if (TriggerBoard.isCoralInManipulator()) {
+            Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
             Robot.arm.setPositon(0);
             Robot.elevator.setPosition(0.5);
         } else {
+            Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
             Robot.arm.setPositon(0);
             Robot.elevator.setPosition(0.5);
         }

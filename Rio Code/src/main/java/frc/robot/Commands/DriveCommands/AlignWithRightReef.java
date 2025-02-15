@@ -16,18 +16,21 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants;
+import frc.robot.Constants.ReefTagIDs;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.CommandTrigger;
+import frc.robot.utils.Utils;
 
 public class AlignWithRightReef extends Command{
     
@@ -46,8 +49,8 @@ public class AlignWithRightReef extends Command{
     private double yVelocity;
     private double rotationVelocity;
 
-    private int nearestReefTag;
-    private Pose2d nearestReefPose;
+    private int targetReefTag;
+    private Pose2d targetReefPose;
     private Pose2d OdometryTargetPose;
     private final Field2d field = drivetrain.getField();
     
@@ -60,17 +63,48 @@ public class AlignWithRightReef extends Command{
     @Override
     public void initialize() {
 
-        nearestReefTag = Limelight.getNearestReefTag();
+        switch (Utils.getSelectedReefPosition()) {
+            case B:
+                targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
+                targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefAB : ReefTagIDs.redReefAB;
+                break;
+        
+            case D:
+                targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefCD) : Limelight.getTagPose(ReefTagIDs.redReefCD);
+                targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefCD : ReefTagIDs.redReefCD;
+                break;
 
-        nearestReefPose = Limelight.getTagPose(nearestReefTag);
+            case F:
+                targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefEF) : Limelight.getTagPose(ReefTagIDs.redReefEF);
+                targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefEF : ReefTagIDs.redReefEF;
+                break;
 
-        OdometryTargetPose = nearestReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(9), new Rotation2d(0)));
+            case H:
+                targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefGH) : Limelight.getTagPose(ReefTagIDs.redReefGH);
+                targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefGH : ReefTagIDs.redReefGH;
+                break;
+
+            case J:
+                targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefIJ) : Limelight.getTagPose(ReefTagIDs.redReefIJ);
+                targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefIJ : ReefTagIDs.redReefIJ;
+                break;
+
+            case L:
+                targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefKL) : Limelight.getTagPose(ReefTagIDs.redReefKL);
+                targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefKL : ReefTagIDs.redReefKL;
+                break;
+                
+            default:
+                break;
+        }
+
+        OdometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(9), new Rotation2d(0)));
 
         headingController.setTolerance(0.2);
-        headingController.setSetpoint(Limelight.getTagAngle(nearestReefTag).plus(Rotation2d.k180deg).getDegrees());
+        headingController.setSetpoint(targetReefPose.getRotation().plus(Rotation2d.k180deg).getDegrees());
         headingController.reset();
 
-        camera.setTagFilter(new int[]{nearestReefTag});
+        camera.setTagFilter(new int[]{targetReefTag});
 
         Robot.robotMode.setDriveMode(DriveMode.RobotCentric);
         Robot.robotMode.setSwerveControl(() -> xVelocity, () -> yVelocity, () -> rotationVelocity);

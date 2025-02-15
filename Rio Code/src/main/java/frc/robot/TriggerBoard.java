@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+
 public class TriggerBoard {
     
     public static boolean isCoralButtonPressed() {return false;}
@@ -21,4 +23,14 @@ public class TriggerBoard {
     public static boolean isNearCage() {return false;}
 
     public static boolean isNearProcessor() {return false;}
+
+    public static boolean isL1Selected() {return false;}
+
+    public static boolean isL2Selected() {return false;}
+
+    public static boolean isL3Selected() {return false;}
+
+    public static boolean isL4Selected() {return false;}
+
+    public static boolean isLevelSelected() {return false;}
 }

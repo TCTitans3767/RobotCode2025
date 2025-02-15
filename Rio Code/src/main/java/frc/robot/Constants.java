@@ -8,6 +8,20 @@ public class Constants {
     
     public final class ReefTagIDs {
 
+        public final static int blueReefAB = 18;
+        public final static int blueReefCD = 19;
+        public final static int blueReefEF = 22;
+        public final static int blueReefGH = 21;
+        public final static int blueReefIJ = 20;
+        public final static int blueReefKL = 17;
+
+        public final static int redReefAB = 7;
+        public final static int redReefCD = 8;
+        public final static int redReefEF = 9;
+        public final static int redReefGH = 10;
+        public final static int redReefIJ = 11;
+        public final static int redReefKL = 6;
+
         public final static Integer[] blue = {
             17,
             18,

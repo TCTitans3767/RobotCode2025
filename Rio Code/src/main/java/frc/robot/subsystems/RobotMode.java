@@ -16,16 +16,20 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Commands.ZeroElevator;
-import frc.robot.Commands.StateCommands.DoNothing;
-import frc.robot.Commands.StateCommands.Idle;
-import frc.robot.Commands.StateCommands.ScoreLeft;
-import frc.robot.Commands.StateCommands.ScoreRight;
-import frc.robot.Commands.test.CoralFloor;
-import frc.robot.Commands.test.CoralFloorPose;
-import frc.robot.Commands.test.CoralStationActive;
-import frc.robot.Commands.test.CoralStationPose;
-import frc.robot.Commands.test.Transit;
-import frc.robot.Commands.test.TransitPose;
+import frc.robot.Commands.DriveCommands.AlignWithCoralStation;
+import frc.robot.Commands.DriveCommands.AlignWithLeftReef;
+import frc.robot.Commands.DriveCommands.AlignWithRightReef;
+import frc.robot.Commands.DriveCommands.ControllerDrive;
+import frc.robot.Commands.StateCommands.CoralFloor;
+import frc.robot.Commands.StateCommands.CoralFloorPose;
+import frc.robot.Commands.StateCommands.CoralReef;
+import frc.robot.Commands.StateCommands.CoralReefAlignPose;
+import frc.robot.Commands.StateCommands.CoralReefPose;
+import frc.robot.Commands.StateCommands.CoralStation;
+import frc.robot.Commands.StateCommands.CoralStationAlignPose;
+import frc.robot.Commands.StateCommands.CoralStationPose;
+import frc.robot.Commands.StateCommands.Transit;
+import frc.robot.Commands.StateCommands.TransitPose;
 import frc.robot.generated.TunerConstants;
 import frc.robot.utils.Logger;
 import pabeles.concurrency.IntOperatorTask.Max;
@@ -39,6 +43,8 @@ public class RobotMode extends SubsystemBase {
         Auton,
         Brake
     }
+
+    public Command currentDriveMode = null;
 
     public Command currentMode = null;
     public Command previousPose = null;
@@ -63,19 +69,21 @@ public class RobotMode extends SubsystemBase {
     private final Arm arm = Robot.arm;
     private final Intake intake = Robot.intake;
 
-    private final Idle idle = new Idle();
-    private final ScoreLeft scoreLeft = new ScoreLeft();
-    private final ScoreRight scoreRight = new ScoreRight();
+    public final static AlignWithCoralStation alignWithCoralStation = new AlignWithCoralStation();
+    public final static AlignWithLeftReef alignWithLeftReef = new AlignWithLeftReef();
+    public final static AlignWithRightReef alignWithRightReef = new AlignWithRightReef();
+    public final static ControllerDrive controllerDrive = new ControllerDrive();
 
-    private final ZeroElevator zeroElevator = new ZeroElevator();
-    private final DoNothing doNothing = new DoNothing();
-
-    public final static CoralStationActive coralStation = new CoralStationActive();
+    public final static CoralStation coralStation = new CoralStation();
     public final static TransitPose transitPose = new TransitPose();
     public final static Transit transit = new Transit();
     public final static CoralStationPose coralStationPose = new CoralStationPose();
+    public final static CoralStationAlignPose coralStationAlignPose = new CoralStationAlignPose();
     public final static CoralFloorPose coralFloorPose = new CoralFloorPose();
     public final static CoralFloor coralFloor = new CoralFloor();
+    public final static CoralReefPose coralReefPose = new CoralReefPose();
+    public final static CoralReef coralReef = new CoralReef();
+    public final static CoralReefAlignPose coralReefAlignPose = new CoralReefAlignPose();
 
     public RobotMode() {
         this.setDefaultCommand(transitPose);
@@ -126,8 +134,18 @@ public class RobotMode extends SubsystemBase {
 
     }
 
+    public void setDriveModeCommand(Command newDriveMode) {
+        if (currentDriveMode != null) {
+            currentDriveMode.cancel();
+        }
+        currentDriveMode = newDriveMode;
+        currentDriveMode.schedule();
+    }
+
     public void setCurrentMode(Command newMode) {
-        currentMode.cancel();
+        if (currentMode != null) {
+            currentMode.cancel();
+        }
         currentMode = newMode;
         currentMode.schedule();
     }
@@ -142,29 +160,8 @@ public class RobotMode extends SubsystemBase {
         this.SwerveRotationSupplier = swerveRotationSupplier;
     }
 
-    public void idle() {
-        idle.schedule();
-    }
-
-    public ScoreLeft ScoreLeft() {
-        return scoreLeft;
-    }
-
-    public ScoreRight ScoreRight() {
-        return scoreRight;
-    }
-
     public void cancelAll() {
         CommandScheduler.getInstance().cancelAll();
-    }
-
-    public void resetAllEncoders() {
-        doNothing.schedule();
-        new SequentialCommandGroup(
-            zeroElevator
-        ).andThen(() -> {
-            doNothing.cancel();
-        });
     }
     
 }
