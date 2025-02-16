@@ -17,19 +17,23 @@ public class CoralReefPose extends Command{
 
     @Override
     public void initialize() {
-        if (TriggerBoard.isL1Selected()) {
+        // if (TriggerBoard.isL1Selected()) {
 
-        } else if (TriggerBoard.isL2Selected()) {
+        // } else if (TriggerBoard.isL2Selected()) {
 
-        } else if (TriggerBoard.isL3Selected()) {
+        // } else if (TriggerBoard.isL3Selected()) {
 
-        } else if (TriggerBoard.isL4Selected()) {
+        // } else if (TriggerBoard.isL4Selected()) {
 
-        } else {
-            Robot.joystick.setRumble(RumbleType.kBothRumble, 1);
-            Robot.joystick.setRumble(RumbleType.kBothRumble, 0);
-            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
-        }
+        // } else {
+        //     Robot.joystick.setRumble(RumbleType.kBothRumble, 1);
+        //     Robot.joystick.setRumble(RumbleType.kBothRumble, 0);
+        //     Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+        // }
+
+        Robot.manipulator.setSpeed(0);
+        Robot.elevator.setPosition(1.05);
+        Robot.arm.setPositon(-0.45);
     }
 
     @Override

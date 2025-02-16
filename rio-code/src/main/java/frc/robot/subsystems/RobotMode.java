@@ -53,7 +53,7 @@ public class RobotMode extends SubsystemBase {
     public Command previousPose = null;
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.25).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     private Supplier<Double> SwerveXSupplier;
     private Supplier<Double> SwerveYSupplier;
@@ -120,6 +120,8 @@ public class RobotMode extends SubsystemBase {
 
     @Override
     public void periodic() {
+
+        Logger.log("current mode", currentMode.getName());
 
         if (driveMode != null) {
             switch (driveMode) {

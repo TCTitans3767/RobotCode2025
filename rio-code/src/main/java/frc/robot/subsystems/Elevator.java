@@ -34,6 +34,10 @@ public class Elevator extends SubsystemBase{
         leftConfig = new TalonFXConfiguration();
         leftConfig.Feedback.SensorToMechanismRatio = Constants.Elevator.conversionFactor;
         leftConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        leftConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Elevator.maximumHeightRotations;
+        leftConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Elevator.minimumHeightRotations;
+        leftConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        leftConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         
         // Slot 0 PID setup
         slot0Config = new Slot0Configs();
@@ -72,6 +76,8 @@ public class Elevator extends SubsystemBase{
         Logger.log("Elevator/Set Speed", leftMotor.get());
         Logger.log("Elevator/Speed", leftMotor.getVelocity().getValueAsDouble());
         Logger.log("Elevator/height meters", leftMotor.getPosition().getValueAsDouble() / Constants.Elevator.RotationsPerMeter);
+        Logger.log("Elevator/velocity", leftMotor.getVelocity().getValueAsDouble());
+        Logger.log("Elevator/at position", atPosition());
 
         // if (leftMotor.getPosition().getValueAsDouble() <= 0.5 || leftMotor.getPosition().getValueAsDouble() >= 99999 ) {
         //     leftMotor.set(0);

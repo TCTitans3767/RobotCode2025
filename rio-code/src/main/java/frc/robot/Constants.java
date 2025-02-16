@@ -58,21 +58,24 @@ public class Constants {
         public final static int rightMotorID = 14;
 
         // PID Constants
-        public final static double kP = 0.1;
-        public final static double kI = 0.1;
-        public final static double kD = 0.1;
-        public final static double kG = 0.1;
-        public final static double kV = 0.1;
-        public final static double kS = 0.1;
+        public final static double kP = 13;
+        public final static double kI = 0;
+        public final static double kD = 0;
+        public final static double kG = 0.185;
+        public final static double kV = 0;
+        public final static double kS = 0.5;
         
         // Motion Magic Constants
-        public final static double maxVelocity = 0.1;
-        public final static double maxAcceleration = 0.1;
+        public final static double maxVelocity = 300;
+        public final static double maxAcceleration = 150;
 
         // Conversion Factor
         public final static double conversionFactor = 1;
 
         public final static double RotationsPerMeter = 39.997;
+
+        public final static double maximumHeightRotations = 45;
+        public final static double minimumHeightRotations = 2;
     }
 
     public final class Manipulator {
@@ -101,18 +104,18 @@ public class Constants {
         public final static int ArmMotorID = 15;
         public static final int ArmEncoderID = 16;
         // PID Constants
-        public final static double kP = 0.1;
-        public final static double kI = 0.1;
-        public final static double kD = 0.1;
-        public final static double kG = 0.1;
-        public final static double kV = 0.1;
-        public final static double kS = 0.1;
+        public final static double kP = 58;
+        public final static double kI = 0;
+        public final static double kD = 0;
+        public final static double kG = 0.4;
+        public final static double kV = 0;
+        public final static double kS = 0.9;
       
         // Motion Magic Constants
-        public final static double maxVelocity = 0.1;
-        public final static double maxAcceleration = 0.1;
-        public final static double angleMax = 0.1;
-        public final static double angleMin = 0.1;
+        public final static double maxVelocity = 4;
+        public final static double maxAcceleration = 3.5;
+        public final static double angleMax = 0.6;
+        public final static double angleMin = -0.6;
       
         public final static double conversionFactor = 1;
     }

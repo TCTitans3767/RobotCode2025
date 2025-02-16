@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class TriggerBoard {
     
-    public static boolean isCoralButtonPressed() {return false;}
+    public static boolean isCoralButtonPressed() {return Robot.joystick.rightTrigger().getAsBoolean();}
 
     public static boolean isAlgaeButtonPressed() {return false;}
 
@@ -12,7 +12,7 @@ public class TriggerBoard {
 
     public static boolean isResetButtonPressed() {return false;}
 
-    public static boolean isCoralInManipulator() {return false;}
+    public static boolean isCoralInManipulator() {return Robot.joystick.leftTrigger().getAsBoolean();}
 
     public static boolean isAlgaeInIntake() {return false;}
 

@@ -19,14 +19,15 @@ public class CoralStation extends Command{
 
     @Override
     public void execute() {
+
         if (TriggerBoard.isCoralInManipulator()) {
-            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+            Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
             return;
         }
 
-        if (TriggerBoard.isCoralButtonPressed()) {
-            Robot.robotMode.setCurrentMode(RobotMode.coralStationAlignPose);
-        }
+        // if (TriggerBoard.isCoralButtonPressed()) {
+        //     Robot.robotMode.setCurrentMode(RobotMode.coralStationAlignPose);
+        // }
     }
 
 }

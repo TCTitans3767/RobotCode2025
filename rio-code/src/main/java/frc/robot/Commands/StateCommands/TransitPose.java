@@ -16,13 +16,14 @@ public class TransitPose extends Command{
     public void initialize() {
         if (TriggerBoard.isCoralInManipulator()) {
             Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-            // Robot.arm.setPositon(0);
-            // Robot.elevator.setPosition(0.5);
+            Robot.manipulator.setSpeed(0);
+            Robot.arm.setPositon(0.128);
+            Robot.elevator.setPosition(0.5);
         } else {
             System.out.println("Transit Pose Intialize: controllerDrive\n arm @ 0\n elevator @ 0.5m");
             Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-            // Robot.arm.setPositon(0);
-            // Robot.elevator.setPosition(0.5);
+            Robot.arm.setPositon(0.128);
+            Robot.elevator.setPosition(0.5);
         }
     }
 

@@ -40,7 +40,11 @@ public class Arm extends SubsystemBase {
         ArmConfig.Feedback.SensorToMechanismRatio = Constants.Arm.conversionFactor;
         ArmConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
         ArmConfig.Feedback.FeedbackRemoteSensorID = Constants.Arm.ArmEncoderID;
-        ArmConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        ArmConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        ArmConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Arm.angleMax;
+        ArmConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        ArmConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Arm.angleMin;
+        ArmConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         
         // Slot 0 PID setup
         slot0Config = new Slot0Configs();
@@ -52,10 +56,10 @@ public class Arm extends SubsystemBase {
         slot0Config.kS = Constants.Arm.kS;
         slot0Config.GravityType = GravityTypeValue.Arm_Cosine;
 
-         // Motion Magic setup
-         motionMagicConfig = new MotionMagicConfigs();
-         motionMagicConfig.MotionMagicCruiseVelocity = Constants.Arm.maxVelocity;
-         motionMagicConfig.MotionMagicAcceleration = Constants.Arm.maxAcceleration;
+        // Motion Magic setup
+        motionMagicConfig = new MotionMagicConfigs();
+        motionMagicConfig.MotionMagicCruiseVelocity = Constants.Arm.maxVelocity;
+        motionMagicConfig.MotionMagicAcceleration = Constants.Arm.maxAcceleration;
 
            // Set the configurations
         armMotor.getConfigurator().apply(ArmConfig);
@@ -67,24 +71,24 @@ public class Arm extends SubsystemBase {
     
     @Override
     public void periodic() {
-      Logger.log("Arm/Absolute Position", Units.rotationsToDegrees(armEncoder.getPosition().getValueAsDouble()));
+      Logger.log("Arm/Absolute Degrees", armEncoder.getAbsolutePosition().getValueAsDouble());
+      Logger.log("Arm/motor position", armMotor.getPosition().getValueAsDouble());
+      Logger.log("Arm/motor speed", armMotor.get());
+      Logger.log("Arm/velocity", armMotor.getVelocity().getValueAsDouble());
+      Logger.log("Arm/at position", atPosition());
     }
 
     public void setSpeed(double speed) {
-        armMotor.set(speed);
+      armMotor.set(speed);
     }
 
     public void setPositon(double angle) {
       targetAngle = angle;
-      if (angle < Constants.Arm.angleMax && angle > Constants.Arm.angleMin) {
-        armMotor.setControl(new MotionMagicVoltage(Units.degreesToRotations(angle)));
-      } else {
-          SignalLogger.writeString("Arm position out of bounds", String.valueOf(angle));
-      }
+      armMotor.setControl(new MotionMagicVoltage(angle));
     }
 
     public boolean atPosition() {
-      return (targetAngle - getAngle() < 0.1) && (targetAngle - getAngle() > -0.1);
+      return (targetAngle - armMotor.getPosition().getValueAsDouble() < 0.1) && (targetAngle - armMotor.getPosition().getValueAsDouble() > -0.1);
     }
 
     public double getAngle() {
