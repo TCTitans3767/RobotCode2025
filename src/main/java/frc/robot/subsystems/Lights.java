@@ -15,6 +15,7 @@ public class Lights extends SubsystemBase{
         ledBuffer = new AddressableLEDBuffer(9);
         leds.setLength(ledBuffer.getLength());
         leds.setData(ledBuffer);
+        setLights(colors.GREEN);
     }
 
     public enum colors {
