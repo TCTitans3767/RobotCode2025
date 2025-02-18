@@ -4,15 +4,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.ctre.phoenix6.SignalLogger;
+import com.ctre.phoenix6.configs.CANrangeConfiguration;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.UpdateModeValue;
 
 
 public class Intake extends SubsystemBase{
@@ -21,6 +24,9 @@ public class Intake extends SubsystemBase{
 
     private final Slot0Configs slot0Config;
     private final MotionMagicConfigs motionMagicConfig;
+    
+    private final CANrange intakeSensor;
+    private final CANrangeConfiguration intakeSensorConfig;
 
     public Intake() {
         // Motor basic setup
@@ -52,6 +58,12 @@ public class Intake extends SubsystemBase{
         wheelMotor.getConfigurator().apply(motionMagicConfig);
         wheelMotor.setNeutralMode(NeutralModeValue.Brake);
 
+        intakeSensor = new CANrange(Constants.Intake.sensorID);
+        intakeSensorConfig = new CANrangeConfiguration();
+        intakeSensorConfig.ProximityParams.ProximityThreshold = Constants.Intake.detectionRange;
+        intakeSensorConfig.ProximityParams.ProximityHysteresis = Constants.Intake.sensorDebounce;
+        intakeSensorConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRange100Hz;
+        intakeSensor.getConfigurator().apply(intakeSensorConfig);
         
     }
 
@@ -71,5 +83,9 @@ public class Intake extends SubsystemBase{
         } else {
             SignalLogger.writeString("Intake position out of bounds", String.valueOf(position));
         }
+    }
+
+    public boolean hasGamePiece() {
+        return intakeSensor.getIsDetected().getValue();
     }
 }

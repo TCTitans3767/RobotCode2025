@@ -3,15 +3,18 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.ctre.phoenix6.configs.CANrangeConfiguration;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.UpdateModeValue;
 
 
 public class Manipulator extends SubsystemBase{
@@ -20,6 +23,9 @@ public class Manipulator extends SubsystemBase{
 
     private final Slot0Configs slot0Config;
     private final MotionMagicConfigs motionMagicConfig;
+
+    private final CANrange manipulatorSensor;
+    private final CANrangeConfiguration manipulatorSensorConfig;
 
     public Manipulator() {
         // Motor setup
@@ -48,6 +54,13 @@ public class Manipulator extends SubsystemBase{
         motor.getConfigurator().apply(slot0Config);
         motor.getConfigurator().apply(motionMagicConfig);
         motor.setNeutralMode(NeutralModeValue.Brake);
+
+        manipulatorSensor = new CANrange(Constants.Manipulator.sensorID);
+        manipulatorSensorConfig = new CANrangeConfiguration();
+        manipulatorSensorConfig.ProximityParams.ProximityThreshold = Constants.Manipulator.detectionRange;
+        manipulatorSensorConfig.ProximityParams.ProximityHysteresis = Constants.Manipulator.sensorDebounce;
+        manipulatorSensorConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRange100Hz;
+        manipulatorSensor.getConfigurator().apply(manipulatorSensorConfig);
     }
 
     @Override
@@ -61,6 +74,6 @@ public class Manipulator extends SubsystemBase{
     }
 
     public boolean hasGamePiece() {
-        return true;
+        return manipulatorSensor.getIsDetected().getValue();
     }
 }

@@ -2,6 +2,9 @@ package frc.robot;
 
 import com.ctre.phoenix6.signals.GravityTypeValue;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
@@ -40,6 +43,14 @@ public class Constants {
             11
         };
 
+    }
+
+    public final class Field {
+        public final static Translation2d reefCenter = new Translation2d(0, 0);
+        public final static Translation2d blueRightCoralStation = new Translation2d(0, 0);
+        public final static Translation2d redRightCoralStation = new Translation2d(0, 0);
+        public final static Translation2d blueLeftCoralStation = new Translation2d(0, 0);
+        public final static Translation2d redLeftCoralStation = new Translation2d(0, 0);
     }
   
     public final class Climber {
@@ -96,6 +107,10 @@ public class Constants {
 
         // Conversion Factor
         public final static double conversionFactor = 1;
+
+        public static final double detectionRange = 0.1;
+        public static final double sensorDebounce = 0.01;
+        public static final int sensorID = 18;
     }
 
 
@@ -145,6 +160,10 @@ public class Constants {
       
         // Conversion Factor
         public final static double conversionFactor = 1;
+
+        public static final double detectionRange = 0.1;
+        public static final double sensorDebounce = 0.01;
+        public static final int sensorID = 19;
 
     }
   
