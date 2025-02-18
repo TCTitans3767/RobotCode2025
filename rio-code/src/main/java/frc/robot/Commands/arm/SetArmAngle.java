@@ -14,12 +14,12 @@ public class SetArmAngle extends Command{
 
     @Override
     public void initialize() {
-        Robot.arm.setPositon(angle);
+        Robot.arm.setPosition(angle);
     }
 
     @Override
     public boolean isFinished() {
-        return Robot.arm.atPosition();
+        return Robot.arm.isAtPosition();
     }
     
 }
