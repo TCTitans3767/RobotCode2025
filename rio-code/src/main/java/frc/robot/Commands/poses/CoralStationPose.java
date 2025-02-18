@@ -15,14 +15,14 @@ public class CoralStationPose extends Command{
     @Override
     public void initialize() {
         Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-        Robot.arm.setPositon(0.128);
+        Robot.arm.setPosition(0.128);
         Robot.manipulator.setSpeed(-0.1);
         Robot.elevator.setPosition(0.5);
     }
 
     @Override
     public boolean isFinished() {
-        return Robot.arm.atPosition() && Robot.elevator.isAtPosition();
+        return Robot.arm.isAtPosition() && Robot.elevator.isAtPosition();
     }
 
     @Override

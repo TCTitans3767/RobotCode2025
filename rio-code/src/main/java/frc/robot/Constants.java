@@ -105,6 +105,7 @@ public class Constants {
         // CAN IDs
         public final static int ArmMotorID = 15;
         public static final int ArmEncoderID = 16;
+
         // PID Constants
         public final static double kP = 58;
         public final static double kI = 0;
@@ -116,10 +117,12 @@ public class Constants {
         // Motion Magic Constants
         public final static double maxVelocity = 4;
         public final static double maxAcceleration = 3.5;
-        public final static double angleMax = 0.6;
-        public final static double angleMin = -0.6;
+        public final static double rotationsMax = 0.6;
+        public final static double rotationsMin = -0.6;
       
         public final static double conversionFactor = 1;
+
+        public final static double errorTolerance = 0.1;
     }
 
     public final class Intake {

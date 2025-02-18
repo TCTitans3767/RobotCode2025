@@ -33,12 +33,12 @@ public class CoralReefPose extends Command{
 
         Robot.manipulator.setSpeed(0);
         Robot.elevator.setPosition(1.05);
-        Robot.arm.setPositon(-0.45);
+        Robot.arm.setPosition(-0.45);
     }
 
     @Override
     public boolean isFinished() {
-        return Robot.elevator.isAtPosition() && Robot.arm.atPosition();
+        return Robot.elevator.isAtPosition() && Robot.arm.isAtPosition();
     }
 
     @Override
