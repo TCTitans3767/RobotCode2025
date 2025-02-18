@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -28,6 +29,8 @@ public class Intake extends SubsystemBase{
     private final CANrange intakeSensor;
     private final CANrangeConfiguration intakeSensorConfig;
 
+    private double targetRotations = 0;
+
     public Intake() {
         // Motor basic setup
         wheelMotor = new TalonFX(Constants.Intake.wheelMotorID);
@@ -36,6 +39,8 @@ public class Intake extends SubsystemBase{
         wheelConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         pivotMotor = new TalonFX(Constants.Intake.pivotMotorID);
         pivotConfig = new TalonFXConfiguration();
+        pivotConfig.Feedback.SensorToMechanismRatio = Constants.Intake.conversionFactor;
+        pivotConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
          
         // Slot 0 PID setup 
         slot0Config = new Slot0Configs();
@@ -54,8 +59,6 @@ public class Intake extends SubsystemBase{
 
         // Set the configurations
         wheelMotor.getConfigurator().apply(wheelConfig);
-        wheelMotor.getConfigurator().apply(slot0Config);
-        wheelMotor.getConfigurator().apply(motionMagicConfig);
         wheelMotor.setNeutralMode(NeutralModeValue.Brake);
 
         intakeSensor = new CANrange(Constants.Intake.sensorID);
@@ -65,6 +68,10 @@ public class Intake extends SubsystemBase{
         intakeSensorConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRange100Hz;
         intakeSensor.getConfigurator().apply(intakeSensorConfig);
         
+        pivotMotor.getConfigurator().apply(slot0Config);
+        pivotMotor.getConfigurator().apply(motionMagicConfig);
+        pivotMotor.setNeutralMode(NeutralModeValue.Brake);
+        
     }
 
     @Override
@@ -72,17 +79,21 @@ public class Intake extends SubsystemBase{
         // This method will be called once per scheduler run
     }
     
-    public void setSpeed(double speed) {
-        wheelMotor.set(speed);
-    
-     }
+    public void setPivotSpeed(double speed) {
+        pivotMotor.set(speed);
+    }
 
-     public void setPosition(double position) {
-        if (position < Constants.Intake.angleMax && position > Constants.Intake.angleMin) {
-            pivotMotor.setControl(new MotionMagicVoltage(position));
-        } else {
-            SignalLogger.writeString("Intake position out of bounds", String.valueOf(position));
-        }
+    public void setWheelSpeed(double speed) {
+        wheelMotor.set(speed);
+    }
+
+    public void setPivotPosition(double rotations) {
+        targetRotations = rotations;
+        pivotMotor.setControl(new MotionMagicVoltage(rotations));
+    }
+
+    public boolean isPivotAtPosition() {
+        return MathUtil.isNear(targetRotations, pivotMotor.getPosition().getValueAsDouble(), Constants.Intake.pivotErrorTolerance);
     }
 
     public boolean hasGamePiece() {

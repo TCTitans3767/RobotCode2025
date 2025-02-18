@@ -20,11 +20,13 @@ import frc.robot.Commands.drive.AlignWithLeftReef;
 import frc.robot.Commands.drive.AlignWithRightReef;
 import frc.robot.Commands.drive.ControllerDrive;
 import frc.robot.Commands.elevator.ZeroElevator;
+import frc.robot.Commands.modes.AlgaePickup;
 import frc.robot.Commands.modes.CoralFloor;
 import frc.robot.Commands.modes.CoralReef;
 import frc.robot.Commands.modes.CoralReefAligned;
 import frc.robot.Commands.modes.CoralStation;
 import frc.robot.Commands.modes.Transit;
+import frc.robot.Commands.poses.AlgaePickupPose;
 import frc.robot.Commands.poses.CoralFloorPose;
 import frc.robot.Commands.poses.CoralReefAlignPose;
 import frc.robot.Commands.poses.CoralReefPose;
@@ -89,8 +91,9 @@ public class RobotMode extends SubsystemBase {
     public static CoralReefAlignPose coralReefAlignPose;
     public static CoralReefAligned coralReefAligned;
     public static CoralScorePose coralScorePose;
-
     public static EjectCoralPose ejectCoralPose;
+    public static AlgaePickupPose algaePickupPose;
+    public static AlgaePickup algaePickup;
 
     public RobotMode() {
         SwerveXSupplier = () -> 0.0;
@@ -114,8 +117,9 @@ public class RobotMode extends SubsystemBase {
         coralReefAlignPose = new CoralReefAlignPose();
         coralReefAligned = new CoralReefAligned();
         coralScorePose = new CoralScorePose();
-    
         ejectCoralPose = new EjectCoralPose();
+        algaePickupPose = new AlgaePickupPose();
+        algaePickup = new AlgaePickup();
     }
 
     @Override

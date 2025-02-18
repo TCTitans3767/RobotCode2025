@@ -164,6 +164,7 @@ public class Constants {
       
         // Conversion Factor
         public final static double conversionFactor = 1;
+        public static final double pivotErrorTolerance = 0.1;
 
         public static final double detectionRange = 0.1;
         public static final double sensorDebounce = 0.01;
