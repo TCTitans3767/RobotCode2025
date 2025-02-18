@@ -68,6 +68,10 @@ public class Manipulator extends SubsystemBase{
         // This method will be called once per scheduler run
     }
 
+    public double torqueCurrent() {
+        return motor.getTorqueCurrent().getValueAsDouble();
+    }
+
     public void setSpeed(double speed) {
         // Move the manipulator at the given speed
         motor.set(speed);

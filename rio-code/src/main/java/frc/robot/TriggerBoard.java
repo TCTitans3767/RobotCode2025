@@ -15,7 +15,8 @@ public class TriggerBoard {
 
     public static boolean isCoralInManipulator() {
         // return Robot.manipulator.hasGamePiece();
-        return Robot.joystick.leftTrigger().getAsBoolean();
+        return Robot.manipulator.torqueCurrent() > 50;
+        // return Robot.joystick.leftTrigger().getAsBoolean();
     }
 
     public static boolean isAlgaeInIntake() {
