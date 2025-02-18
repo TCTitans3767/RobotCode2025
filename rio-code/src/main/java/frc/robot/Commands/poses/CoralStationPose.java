@@ -22,7 +22,7 @@ public class CoralStationPose extends Command{
 
     @Override
     public boolean isFinished() {
-        return Robot.arm.atPosition() && Robot.elevator.atPosition();
+        return Robot.arm.atPosition() && Robot.elevator.isAtPosition();
     }
 
     @Override

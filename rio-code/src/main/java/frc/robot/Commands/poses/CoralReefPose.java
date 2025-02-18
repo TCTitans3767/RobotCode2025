@@ -38,7 +38,7 @@ public class CoralReefPose extends Command{
 
     @Override
     public boolean isFinished() {
-        return Robot.elevator.atPosition() && Robot.arm.atPosition();
+        return Robot.elevator.isAtPosition() && Robot.arm.atPosition();
     }
 
     @Override

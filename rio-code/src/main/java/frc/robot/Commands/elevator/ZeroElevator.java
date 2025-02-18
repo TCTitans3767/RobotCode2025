@@ -16,12 +16,14 @@ public class ZeroElevator extends Command{
     @Override
     public void initialize() {
         elevator.setSpeed(0);
+        elevator.disableSoftwareLimits();
     }
 
     @Override
     public void execute() {
         elevator.setSpeed(-0.05);
         if (elevator.getMotorTourque() > 120) {
+            elevator.setSpeed(0);
             elevator.resetEncoder();
             zeroed = true;
         }
@@ -34,7 +36,7 @@ public class ZeroElevator extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        
+        elevator.enableSoftwareLimits();
     }
 
 }

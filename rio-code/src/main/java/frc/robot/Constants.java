@@ -74,8 +74,10 @@ public class Constants {
 
         public final static double RotationsPerMeter = 39.997;
 
-        public final static double maximumHeightRotations = 45;
-        public final static double minimumHeightRotations = 2;
+        public final static double rotationsMax = 45;
+        public final static double rotationsMin = 2;
+
+        public final static double errorTolerance = 0.01;
     }
 
     public final class Manipulator {
