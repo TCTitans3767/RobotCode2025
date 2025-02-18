@@ -47,22 +47,22 @@ public class Limelight extends SubsystemBase{
         this.limelightName = limelightName;
         this.robotToLimelight = robotToLimelight;
 
-        // try {
-        //     LimelightHelpers.setCameraPose_RobotSpace(
-        //         limelightName, 
-        //         robotToLimelight.getX(),
-        //         robotToLimelight.getY(), 
-        //         robotToLimelight.getZ(), 
-        //         robotToLimelight.getRotation().getX(), 
-        //         robotToLimelight.getRotation().getY(), 
-        //         robotToLimelight.getRotation().getZ()
-        //     );
-        //     robotToLimelightSet = true;
-        // } catch (Exception e) {
-        //     System.out.println("failed to set camera pose");
-        //     Logger.logFault(limelightName + " failed to set camera pose");
-        //     robotToLimelightSet = false;
-        // }
+        try {
+            LimelightHelpers.setCameraPose_RobotSpace(
+                limelightName, 
+                robotToLimelight.getX(),
+                robotToLimelight.getY(), 
+                robotToLimelight.getZ(), 
+                robotToLimelight.getRotation().getX(), 
+                robotToLimelight.getRotation().getY(), 
+                robotToLimelight.getRotation().getZ()
+            );
+            robotToLimelightSet = true;
+        } catch (Exception e) {
+            System.out.println("failed to set camera pose");
+            Logger.logFault(limelightName + " failed to set camera pose");
+            robotToLimelightSet = false;
+        }
 
         drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 999999));
 
@@ -71,41 +71,42 @@ public class Limelight extends SubsystemBase{
     @Override
     public void periodic() {
 
-        // if (robotToLimelightSet == false) {
-        //     try {
-        //         LimelightHelpers.setCameraPose_RobotSpace(
-        //             limelightName, 
-        //             robotToLimelight.getX(),
-        //             robotToLimelight.getY(), 
-        //             robotToLimelight.getZ(), 
-        //             robotToLimelight.getRotation().getX(), 
-        //             robotToLimelight.getRotation().getY(), 
-        //             robotToLimelight.getRotation().getZ()
-        //         );
-        //         Logger.clearFault(limelightName + " failed to set camera pose");
-        //         robotToLimelightSet = true;
-        //         initialPoseEstimates();
-        //     } catch (Exception e) {
-        //         System.out.println("failed to set camera pose");
-        //         Logger.logFault(limelightName + " failed to set camera pose");
-        //         robotToLimelightSet = false;
-        //         doEstimation = false;
-        //     }
-        // }
+        if (robotToLimelightSet == false) {
+            try {
+                LimelightHelpers.setCameraPose_RobotSpace(
+                    limelightName, 
+                    robotToLimelight.getX(),
+                    robotToLimelight.getY(), 
+                    robotToLimelight.getZ(), 
+                    robotToLimelight.getRotation().getX(), 
+                    robotToLimelight.getRotation().getY(), 
+                    robotToLimelight.getRotation().getZ()
+                );
+                Logger.clearFault(limelightName + " failed to set camera pose");
+                robotToLimelightSet = true;
+                initialPoseEstimates();
+            } catch (Exception e) {
+                System.out.println("failed to set camera pose");
+                Logger.logFault(limelightName + " failed to set camera pose");
+                robotToLimelightSet = false;
+                doEstimation = false;
+            }
+        }
 
-        // goodEstimationFrame = true;
+        goodEstimationFrame = true;
 
-        // PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
-        // if (Math.abs(drivetrain.getPigeon2().getAngularVelocityZDevice().getValueAsDouble()) > 720) {
-        //     goodEstimationFrame = false;
-        // }
-        // if (estimatedPose.tagCount == 0) {
-        //     goodEstimationFrame = false;
-        // }
+        PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
+        if (Math.abs(drivetrain.getPigeon2().getAngularVelocityZDevice().getValueAsDouble()) > 720) {
+            goodEstimationFrame = false;
+        }
+        if (estimatedPose.tagCount == 0) {
+            goodEstimationFrame = false;
+        }
 
-        // if (goodEstimationFrame && doEstimation && doEstimationAll) {
-        //     drivetrain.addVisionMeasurement(estimatedPose.pose);
-        // }
+        if (goodEstimationFrame && doEstimation && doEstimationAll) {
+            drivetrain.addVisionMeasurement(estimatedPose.pose);
+            Logger.logCameraEstimatedPose(this.limelightName, estimatedPose.pose);
+        }
 
         // SmartDashboard.putNumber(limelightName + "/Target Pose X", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[0]);
         // SmartDashboard.putNumber(limelightName + "/Target Pose Y", LimelightHelpers.getTargetPose_RobotSpace(limelightName)[1]);
@@ -131,10 +132,12 @@ public class Limelight extends SubsystemBase{
     }
 
     public void setTagFilter(int[] ids) {
+        Logger.logCameraTagFilter(limelightName, ids);
         LimelightHelpers.SetFiducialIDFiltersOverride(limelightName, ids);
     }
 
     public void resetTagFilter() {
+        Logger.logCameraTagFilter(limelightName, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22});
         LimelightHelpers.SetFiducialIDFiltersOverride(limelightName, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22});
     }
 
@@ -155,37 +158,37 @@ public class Limelight extends SubsystemBase{
     }
 
     public void initialPoseEstimates() {
-        // if (robotToLimelightSet) {
-        //     doEstimation = false;
-        //     drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.1, 0.1, 0.5));
-        //     int numTries = 0;
-        //     while (startupEstimations < 10 && numTries < 40) {
-        //         PoseEstimate result = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
-        //         if (result.tagCount == 1) {
-        //             if (result.rawFiducials[0].ambiguity > 0.3) {
-        //                 numTries++;
-        //                 continue;
-        //             }
-        //             if (result.rawFiducials[0].distToCamera > 3) {
-        //                 numTries++;
-        //                 continue;
-        //             }
-        //         }
+        if (robotToLimelightSet) {
+            doEstimation = false;
+            drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.1, 0.1, 0.5));
+            int numTries = 0;
+            while (startupEstimations < 10 && numTries < 40) {
+                PoseEstimate result = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+                if (result.tagCount == 1) {
+                    if (result.rawFiducials[0].ambiguity > 0.3) {
+                        numTries++;
+                        continue;
+                    }
+                    if (result.rawFiducials[0].distToCamera > 3) {
+                        numTries++;
+                        continue;
+                    }
+                }
     
-        //         if (result.tagCount == 0) {
-        //             numTries++;
-        //             continue;
-        //         }
+                if (result.tagCount == 0) {
+                    numTries++;
+                    continue;
+                }
     
-        //         drivetrain.addVisionMeasurement(result.pose);
+                drivetrain.addVisionMeasurement(result.pose);
                 
-        //         startupEstimations++;
-        //     }
+                startupEstimations++;
+            }
     
-        //     resetIMU(drivetrain.getRotation3d());
-        //     drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 99999));
-        //     turnOnAprilTags();
-        // }
+            resetIMU(drivetrain.getRotation3d());
+            drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 99999));
+            turnOnAprilTags();
+        }
     }
 
     public double getTX() {
@@ -212,7 +215,7 @@ public class Limelight extends SubsystemBase{
         doEstimationAll = true;
     }
 
-        public static Rotation2d getTagAngle(int tagID) {
+    public static Rotation2d getTagAngle(int tagID) {
         return fieldLayout.getTagPose(tagID).get().toPose2d().getRotation();
     }
 
@@ -296,6 +299,10 @@ public class Limelight extends SubsystemBase{
 
             return nearestTags.get(0);
         }
+    }
+
+    public void logCamera() {
+
     }
     
 }

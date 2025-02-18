@@ -1,6 +1,7 @@
 package frc.robot.utils;
 
 import dev.doglog.DogLog;
+import edu.wpi.first.math.geometry.Pose2d;
 
 public class Logger extends DogLog {
     public static void logLimitError(String message) {
@@ -30,4 +31,21 @@ public class Logger extends DogLog {
     public static void logArmAtPosition(boolean isAtPosition) {
         DogLog.log("Arm/at position", isAtPosition);
     }
+
+    public static void logCameraTagFilter(String cameraName, int[] filter) {
+        DogLog.log(cameraName + "/Tag Filter", filter);
+    }
+
+    public static void logCameraEstimatedPose(String cameraName, Pose2d estimatedPose) {
+        DogLog.log(cameraName + "/Estimated Pose", estimatedPose);
+    }
+
+    public static void logCameraTagsVisible(String cameraName, int[] visibleTags) {
+        DogLog.log(cameraName + "/Visible Tags", visibleTags);
+    }
+
+    public static void logCameraEstimationEnabled(String cameraName, boolean estimationEnabled) {
+        DogLog.log(cameraName + "/Estimation Enabled", estimationEnabled);
+    }
+    
 }
