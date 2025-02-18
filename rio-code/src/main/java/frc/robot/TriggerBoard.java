@@ -28,9 +28,9 @@ public class TriggerBoard {
         return false;
     }
 
-    public static boolean isNearReef() {return Robot.drivetrain.isCoseToReef();} 
+    public static boolean isNearReef() {return Robot.drivetrain.isNearToReef();} 
 
-    public static boolean isNearCoralStation() {return Robot.drivetrain.isCloseToCoralStation();}
+    public static boolean isNearCoralStation() {return Robot.drivetrain.isNearToCoralStation();}
 
     public static boolean isNearCage() {return Robot.drivetrain.isNearCage();}
 

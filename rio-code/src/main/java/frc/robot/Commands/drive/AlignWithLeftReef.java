@@ -100,8 +100,8 @@ public class AlignWithLeftReef extends Command{
         headingController.setSetpoint(targetReefPose.getRotation().plus(Rotation2d.k180deg).getDegrees());
         headingController.reset();
 
-        xController.setTolerance(0.02);
-        yController.setTolerance(0.02); 
+        xController.setTolerance(Constants.Drive.alignmentTolerance);
+        yController.setTolerance(Constants.Drive.alignmentTolerance); 
 
         camera.setTagFilter(new int[]{targetReefTag});
 

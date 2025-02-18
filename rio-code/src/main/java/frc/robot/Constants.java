@@ -108,8 +108,8 @@ public class Constants {
         // Conversion Factor
         public final static double conversionFactor = 1;
 
-        public static final double detectionRange = 0.1;
-        public static final double sensorDebounce = 0.01;
+        public static final double detectionRange = 0.02;
+        public static final double sensorDebounce = 0.001;
         public static final int sensorID = 18;
     }
 
@@ -170,6 +170,10 @@ public class Constants {
     public final class Robot {
         public final static double chassisWidthMeters = Units.inchesToMeters(26.0);
         public final static double chassisDepthMeters = Units.inchesToMeters(26.0);
+    }
+
+    public final class Drive {
+        public final static double alignmentTolerance = 0.02;
     }
 
 }
