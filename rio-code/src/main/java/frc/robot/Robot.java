@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
   public final static Manipulator manipulator = new Manipulator();
   public final static Intake intake = new Intake();
   public final static Arm arm = new Arm();
-  public final static Limelight limelight = new Limelight("", new Pose3d(Units.inchesToMeters(12), Units.inchesToMeters(0), Units.inchesToMeters(3), new Rotation3d(0, 0, 0)));
+  public final static Limelight limelight = new Limelight("", new Pose3d(Units.inchesToMeters(-0.548596), Units.inchesToMeters(9.720909), Units.inchesToMeters(-28.228805), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(23), Units.degreesToRadians(10))));
   // public final static Limelight limelight = null;
   
   public final static CommandXboxController joystick = new CommandXboxController(0);
