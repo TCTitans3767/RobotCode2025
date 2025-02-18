@@ -36,8 +36,8 @@ public class Elevator extends SubsystemBase{
         leftConfig = new TalonFXConfiguration();
         leftConfig.Feedback.SensorToMechanismRatio = Constants.Elevator.conversionFactor;
         leftConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-        leftConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Elevator.rotationsMax;
-        leftConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Elevator.rotationsMin;
+        leftConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Elevator.metersMax * Constants.Elevator.RotationsPerMeter;
+        leftConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Elevator.metersMin * Constants.Elevator.RotationsPerMeter;
         leftConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         leftConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         
@@ -98,7 +98,7 @@ public class Elevator extends SubsystemBase{
     }
 
     public void setPosition(double meters) {
-        if (meters * Constants.Elevator.RotationsPerMeter < Constants.Elevator.rotationsMin || meters * Constants.Elevator.RotationsPerMeter > Constants.Elevator.rotationsMax ) {
+        if (meters < Constants.Elevator.metersMin || meters > Constants.Elevator.metersMax ) {
             Logger.logLimitError("Invalid Elevator Height: " + meters);
             return;
         }
@@ -131,7 +131,7 @@ public class Elevator extends SubsystemBase{
         Logger.logElevatorAtPosition(isAtPosition());
     }
 
-    public double getMotorTourque() {
+    public double getMotorTorque() {
         return leftMotor.getTorqueCurrent().getValueAsDouble();
     }
 
@@ -139,8 +139,8 @@ public class Elevator extends SubsystemBase{
         leftMotor.getConfigurator().refresh(new SoftwareLimitSwitchConfigs()
                                             .withReverseSoftLimitEnable(false)
                                             .withForwardSoftLimitEnable(false)
-                                            .withForwardSoftLimitThreshold(Constants.Elevator.rotationsMax)
-                                            .withReverseSoftLimitThreshold(Constants.Elevator.rotationsMin)
+                                            .withForwardSoftLimitThreshold(Constants.Elevator.metersMax)
+                                            .withReverseSoftLimitThreshold(Constants.Elevator.metersMin)
                                         );
     }
 
@@ -148,8 +148,12 @@ public class Elevator extends SubsystemBase{
         leftMotor.getConfigurator().refresh(new SoftwareLimitSwitchConfigs()
                                             .withReverseSoftLimitEnable(true)
                                             .withForwardSoftLimitEnable(true)
-                                            .withForwardSoftLimitThreshold(Constants.Elevator.rotationsMax)
-                                            .withReverseSoftLimitThreshold(Constants.Elevator.rotationsMin)
+                                            .withForwardSoftLimitThreshold(Constants.Elevator.metersMax)
+                                            .withReverseSoftLimitThreshold(Constants.Elevator.metersMin)
                                         );
+    }
+
+    public double getSpeed() {
+        return leftMotor.get();
     }
 }

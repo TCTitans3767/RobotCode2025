@@ -25,7 +25,8 @@ public class Logger extends DogLog{
 
     public static void logElevatorAtPosition(boolean isAtPosition) {
         DogLog.log("Elevator/Is At Position", isAtPosition);
-        
+    }
+
     public static void logArmSetPosition(double rotations) {
         DogLog.log("Arm/Set Position", rotations);
     }

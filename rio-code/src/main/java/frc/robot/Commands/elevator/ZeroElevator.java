@@ -22,7 +22,7 @@ public class ZeroElevator extends Command{
     @Override
     public void execute() {
         elevator.setSpeed(-0.05);
-        if (elevator.getMotorTourque() > 120) {
+        if (elevator.getSpeed() > -0.01) {
             elevator.setSpeed(0);
             elevator.resetEncoder();
             zeroed = true;

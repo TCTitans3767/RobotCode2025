@@ -74,8 +74,8 @@ public class Constants {
 
         public final static double RotationsPerMeter = 39.997;
 
-        public final static double rotationsMax = 45;
-        public final static double rotationsMin = 2;
+        public final static double metersMax = 1.125;
+        public final static double metersMin = 0.050;
 
         public final static double errorTolerance = 0.01;
     }
