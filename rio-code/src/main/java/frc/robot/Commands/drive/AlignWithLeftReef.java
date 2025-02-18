@@ -1,4 +1,4 @@
-package frc.robot.Commands.DriveCommands;
+package frc.robot.Commands.drive;
 
 import java.util.function.BooleanSupplier;
 

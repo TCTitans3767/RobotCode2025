@@ -1,4 +1,4 @@
-package frc.robot.Commands.StateCommands;
+package frc.robot.Commands.poses;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
