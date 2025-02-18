@@ -78,6 +78,8 @@ public class Constants {
         public final static double metersMin = 0.050;
 
         public final static double errorTolerance = 0.01;
+        public final static double zeroingSpeed = -0.05;
+        public final static double zeroingThreshold = 0.01;
     }
 
     public final class Manipulator {

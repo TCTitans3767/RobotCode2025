@@ -1,6 +1,8 @@
 package frc.robot.Commands.elevator;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 
@@ -21,8 +23,8 @@ public class ZeroElevator extends Command{
 
     @Override
     public void execute() {
-        elevator.setSpeed(-0.05);
-        if (elevator.getSpeed() > -0.01) {
+        elevator.setSpeed(Constants.Elevator.zeroingSpeed);
+        if (MathUtil.isNear(0, elevator.getSpeed(), Constants.Elevator.zeroingThreshold)) {
             elevator.setSpeed(0);
             elevator.resetEncoder();
             zeroed = true;
