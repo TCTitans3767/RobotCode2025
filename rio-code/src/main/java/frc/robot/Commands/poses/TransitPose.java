@@ -1,9 +1,9 @@
-package frc.robot.Commands.StateCommands;
+package frc.robot.Commands.poses;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
-import frc.robot.Commands.DriveCommands.ControllerDrive;
+import frc.robot.Commands.drive.ControllerDrive;
 import frc.robot.subsystems.RobotMode;
 
 public class TransitPose extends Command{

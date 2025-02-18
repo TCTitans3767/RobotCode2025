@@ -1,9 +1,9 @@
-package frc.robot.Commands.StateCommands;
+package frc.robot.Commands.poses;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Commands.DriveCommands.AlignWithCoralStation;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.Robot;
+import frc.robot.Commands.drive.AlignWithCoralStation;
 
 public class CoralStationAlignPose extends Command{
 

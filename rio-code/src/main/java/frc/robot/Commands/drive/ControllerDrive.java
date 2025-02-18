@@ -1,4 +1,4 @@
-package frc.robot.Commands.DriveCommands;
+package frc.robot.Commands.drive;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
