@@ -29,7 +29,7 @@ public class SetElevatorPosition extends Command{
 
     @Override
     public boolean isFinished() {
-        return Robot.elevator.atPosition();
+        return Robot.elevator.isAtPosition();
     }
     
 }
