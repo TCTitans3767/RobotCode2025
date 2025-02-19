@@ -137,7 +137,7 @@ public class AlignWithLeftReef extends Command{
 
     @Override
     public boolean isFinished() {
-        return false;
+        return isAligned();
     }
 
     @Override
@@ -146,6 +146,6 @@ public class AlignWithLeftReef extends Command{
     }
 
     public boolean isAligned() {
-        return this.isScheduled() ? xController.atSetpoint() && yController.atSetpoint() && headingController.atSetpoint() : false;
+        return xController.atSetpoint() && yController.atSetpoint() && headingController.atSetpoint();
     }
 }
