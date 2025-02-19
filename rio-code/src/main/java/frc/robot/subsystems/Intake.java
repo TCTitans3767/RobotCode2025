@@ -20,8 +20,8 @@ import com.ctre.phoenix6.signals.UpdateModeValue;
 
 
 public class Intake extends SubsystemBase{
-    private final TalonFX wheelMotor, pivotMotor;
-    private final TalonFXConfiguration wheelConfig, pivotConfig;
+    private final TalonFX leftWheelMotor, rightWheelMotor, pivotMotor;
+    private final TalonFXConfiguration leftWheelConfig, rightWheelConfig, pivotConfig;
 
     private final Slot0Configs slot0Config;
     private final MotionMagicConfigs motionMagicConfig;
@@ -33,13 +33,19 @@ public class Intake extends SubsystemBase{
 
     public Intake() {
         // Motor basic setup
-        wheelMotor = new TalonFX(Constants.Intake.wheelMotorID);
-        wheelConfig = new TalonFXConfiguration();
-        wheelConfig.Feedback.SensorToMechanismRatio = Constants.Intake.conversionFactor;
-        wheelConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        leftWheelMotor = new TalonFX(Constants.Intake.leftWheelMotorID);
+        leftWheelConfig = new TalonFXConfiguration();
+        leftWheelConfig.Feedback.SensorToMechanismRatio = Constants.Intake.wheelConversionFactor;
+        leftWheelConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
+        rightWheelMotor = new TalonFX(Constants.Intake.rightWheelMotorID);
+        rightWheelConfig = new TalonFXConfiguration();
+        rightWheelConfig.Feedback.SensorToMechanismRatio = Constants.Intake.wheelConversionFactor;
+        rightWheelConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+
         pivotMotor = new TalonFX(Constants.Intake.pivotMotorID);
         pivotConfig = new TalonFXConfiguration();
-        pivotConfig.Feedback.SensorToMechanismRatio = Constants.Intake.conversionFactor;
+        pivotConfig.Feedback.SensorToMechanismRatio = Constants.Intake.pivotConversionFactor;
         pivotConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
          
         // Slot 0 PID setup 
@@ -58,8 +64,12 @@ public class Intake extends SubsystemBase{
         motionMagicConfig.MotionMagicAcceleration = Constants.Intake.maxAcceleration;
 
         // Set the configurations
-        wheelMotor.getConfigurator().apply(wheelConfig);
-        wheelMotor.setNeutralMode(NeutralModeValue.Brake);
+        leftWheelMotor.getConfigurator().apply(leftWheelConfig);
+        leftWheelMotor.setNeutralMode(NeutralModeValue.Brake);
+
+        rightWheelMotor.getConfigurator().apply(rightWheelConfig);
+        rightWheelMotor.setNeutralMode(NeutralModeValue.Brake);
+        rightWheelMotor.setControl(new Follower(Constants.Intake.leftWheelMotorID, true));
 
         intakeSensor = new CANrange(Constants.Intake.sensorID);
         intakeSensorConfig = new CANrangeConfiguration();
@@ -84,7 +94,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void setWheelSpeed(double speed) {
-        wheelMotor.set(speed);
+        leftWheelMotor.set(speed);
     }
 
     public void setPivotPosition(double rotations) {

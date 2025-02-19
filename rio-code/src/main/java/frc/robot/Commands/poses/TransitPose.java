@@ -18,7 +18,7 @@ public class TransitPose extends Command{
         if (TriggerBoard.isCoralInManipulator() && !TriggerBoard.isAlgaeInIntake()) {
             Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
             Robot.manipulator.setSpeed(0);
-            Robot.arm.setPosition(0.128);
+            Robot.arm.setPosition(-0.128);
             Robot.elevator.setPosition(0.5);
         } else if (TriggerBoard.isCoralInManipulator() && TriggerBoard.isAlgaeInIntake()) {
             Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
