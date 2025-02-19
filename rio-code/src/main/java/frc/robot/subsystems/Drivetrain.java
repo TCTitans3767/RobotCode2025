@@ -273,8 +273,20 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         
     }
 
-    public boolean closeToCoralStation() {
+    public boolean isNearToReef() {
+        return getState().Pose.getTranslation().getDistance(Constants.Field.reefCenter) < 3;
+    }
+
+    public boolean isNearToCoralStation() {
         return true;
+    }
+
+    public boolean isNearCage() {
+        return false;
+    }
+
+    public boolean isNearProcessor() {
+        return false;
     }
 
     public Field2d getField() {

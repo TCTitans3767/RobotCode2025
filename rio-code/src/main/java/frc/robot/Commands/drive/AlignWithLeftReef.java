@@ -100,6 +100,9 @@ public class AlignWithLeftReef extends Command{
         headingController.setSetpoint(targetReefPose.getRotation().plus(Rotation2d.k180deg).getDegrees());
         headingController.reset();
 
+        xController.setTolerance(Constants.Drive.alignmentTolerance);
+        yController.setTolerance(Constants.Drive.alignmentTolerance); 
+
         camera.setTagFilter(new int[]{targetReefTag});
 
         Robot.robotMode.setDriveMode(DriveMode.RobotCentric);
@@ -134,7 +137,7 @@ public class AlignWithLeftReef extends Command{
 
     @Override
     public boolean isFinished() {
-        return false;
+        return isAligned();
     }
 
     @Override
@@ -142,4 +145,7 @@ public class AlignWithLeftReef extends Command{
         camera.resetTagFilter();
     }
 
+    public boolean isAligned() {
+        return xController.atSetpoint() && yController.atSetpoint() && headingController.atSetpoint();
+    }
 }
