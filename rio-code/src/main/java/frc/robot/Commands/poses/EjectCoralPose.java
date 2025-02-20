@@ -31,7 +31,7 @@ public class EjectCoralPose extends SequentialCommandGroup{
             })
         );
 
-        addRequirements(Robot.arm, Robot.climber, Robot.manipulator, Robot.elevator);
+        addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
     }
 
 }
