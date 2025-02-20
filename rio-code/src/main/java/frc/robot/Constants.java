@@ -144,26 +144,29 @@ public class Constants {
 
     public final class Intake {
         // CAN IDs
-        public final static int wheelMotorID = 2;
-        public final static int pivotMotorID = 3;
+        public final static int leftWheelMotorID = 21;
+        public static final int rightWheelMotorID = 22;
+        public final static int pivotMotorID = 20;
 
         // PID Constants
-        public final static double kP = 0.1;
-        public final static double kI = 0.1;
-        public final static double kD = 0.1;
-        public final static double kG = 0.1;
-        public final static double kV = 0.1;
-        public final static double kS = 0.1;
+        public final static double kP = 0;
+        public final static double kI = 0;
+        public final static double kD = 0;
+        public final static double kG = 0;
+        public final static double kV = 0;
+        public final static double kS = 0;
 
 
-         // Motion Magic Constants
-        public final static double maxVelocity = 0.1;
-        public final static double maxAcceleration = 0.1;
+        // Motion Magic Constants
+        public final static double maxVelocity = 4;
+        public final static double maxAcceleration = 3.5;
         public final static double angleMax = 0.1;
         public final static double angleMin = 0.1;
       
         // Conversion Factor
-        public final static double conversionFactor = 1;
+        public final static double pivotConversionFactor = 1;
+        public final static double wheelConversionFactor = 1;
+        public static final double pivotErrorTolerance = 0.1;
 
         public static final double detectionRange = 0.1;
         public static final double sensorDebounce = 0.01;
