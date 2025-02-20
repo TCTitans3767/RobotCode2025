@@ -46,7 +46,8 @@ public class Constants {
     }
 
     public final class Field {
-        public final static Translation2d reefCenter = new Translation2d(0, 0);
+        public final static Translation2d blueReefCenter = new Translation2d(4.5, 4.03);
+        public final static Translation2d redReefCenter = new Translation2d(0, 0);
         public final static Translation2d blueRightCoralStation = new Translation2d(0, 0);
         public final static Translation2d redRightCoralStation = new Translation2d(0, 0);
         public final static Translation2d blueLeftCoralStation = new Translation2d(0, 0);
@@ -164,7 +165,7 @@ public class Constants {
         public final static double angleMin = 0.1;
       
         // Conversion Factor
-        public final static double pivotConversionFactor = 1;
+        public final static double pivotConversionFactor = 85.5;
         public final static double wheelConversionFactor = 1;
         public static final double pivotErrorTolerance = 0.1;
 
@@ -181,6 +182,7 @@ public class Constants {
 
     public final class Drive {
         public final static double alignmentTolerance = 0.02;
+        public final static double reefDistanceThreshold = 1.7;
     }
 
 }
