@@ -159,6 +159,9 @@ public class DashboardButtonBox {
         table.getBooleanTopic("L4").publish();
 
         table.getBooleanTopic("Knock Off Algae").publish();
+
+        A.set(true);
+        L4.set(true);
         
     }
 
@@ -351,6 +354,10 @@ public class DashboardButtonBox {
 
     public static int getSelectedReefLevel() {
         return selectedLevel;
+    }
+
+    public static String getSelectedLevelString() {
+        return String.valueOf(selectedLevel);
     }
 
 }
