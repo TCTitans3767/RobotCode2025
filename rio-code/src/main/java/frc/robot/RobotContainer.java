@@ -73,7 +73,7 @@ public class RobotContainer {
         configureBindings();
         configureChoreo();
 
-        Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+        Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
         Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
 
         limelight.initialPoseEstimates();

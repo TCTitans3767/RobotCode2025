@@ -10,7 +10,7 @@ import frc.robot.subsystems.RobotMode;
 public class TransitPose extends Command{
     
     public TransitPose() {
-        addRequirements(Robot.arm, Robot.climber, Robot.manipulator, Robot.elevator);
+        addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
     }
 
     @Override

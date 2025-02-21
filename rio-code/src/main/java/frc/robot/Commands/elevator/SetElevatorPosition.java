@@ -16,7 +16,7 @@ public class SetElevatorPosition extends Command{
 
     @Override
     public void initialize() {
-        Robot.elevator.setPosition(Utils.metersToRotations(positionMeters, Constants.Elevator.RotationsPerMeter));
+        Robot.elevator.setPosition(positionMeters);
     }
 
     @Override
@@ -30,6 +30,11 @@ public class SetElevatorPosition extends Command{
     @Override
     public boolean isFinished() {
         return Robot.elevator.isAtPosition();
+    }
+
+    @Override
+    public boolean runsWhenDisabled() {
+        return true;
     }
     
 }

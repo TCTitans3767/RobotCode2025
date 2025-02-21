@@ -5,14 +5,18 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.subsystems.RobotMode;
 
-public class SetDriveModeCommand extends InstantCommand{
+public class SetDriveModeCommand extends Command{
+
+    Command newDriveCommand;
     
     public SetDriveModeCommand(Command newDriveCommand) {
-        super(() -> {
-                Robot.robotMode.setDriveModeCommand(newDriveCommand);
-            }, 
-            Robot.robotMode
-        );
+        this.newDriveCommand = newDriveCommand;
+        addRequirements(Robot.robotMode);
+    }
+
+    @Override
+    public void initialize() {
+        Robot.robotMode.setDriveModeCommand(newDriveCommand);
     }
 
 }

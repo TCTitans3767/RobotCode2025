@@ -21,5 +21,10 @@ public class SetArmAngle extends Command{
     public boolean isFinished() {
         return Robot.arm.isAtPosition();
     }
+
+    @Override
+    public boolean runsWhenDisabled() {
+        return true;
+    }
     
 }
