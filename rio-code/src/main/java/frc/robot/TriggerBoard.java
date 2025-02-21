@@ -14,8 +14,8 @@ public class TriggerBoard {
     public static boolean isResetButtonPressed() {return Robot.joystick.x().getAsBoolean();}
 
     public static boolean isCoralInManipulator() {
-        // return Robot.manipulator.hasGamePiece();
-        return Robot.manipulator.torqueCurrent() > 50;
+        return Robot.manipulator.hasGamePiece();
+        // return Robot.manipulator.torqueCurrent() > 50;/
         // return Robot.joystick.leftTrigger().getAsBoolean();
     }
 
