@@ -14,7 +14,7 @@ public class Transit extends Command{
 
     
     public Transit() {
-        addRequirements(Robot.arm, Robot.climber, Robot.manipulator, Robot.elevator);
+        addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
     }
 
     @Override
@@ -54,15 +54,19 @@ public class Transit extends Command{
         //     Robot.climber.setSpeed(0);
         // }
 
+        // if (Robot.joystick.rightBumper().getAsBoolean()) {
+        //     Robot.intake.setPivotPosition(0.45);
+        // }
+
         if (Robot.joystick.rightBumper().getAsBoolean()) {
-            Robot.intake.setWheelSpeed(0.5);
+            Robot.intake.setWheelSpeed(0.75);
         } else {
             Robot.intake.setWheelSpeed(0);
         }
 
         if (Robot.joystick.povDown().getAsBoolean()) {
             Robot.robotMode.setDriveMode(DriveMode.Brake);
-            Robot.intake.setPivotSpeed(Robot.joystick.getRightY() * 0.1);
+            Robot.intake.setPivotSpeed(Robot.joystick.getRightY() * 0.3);
         } else {
             Robot.intake.setPivotSpeed(0);
             Robot.robotMode.setDriveMode(DriveMode.TeleopDrive);

@@ -4,14 +4,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Robot;
 
-public class SetModeCommand extends InstantCommand{
+public class SetModeCommand extends Command{
     
+    Command newMode;
+
     public SetModeCommand(Command newMode) {
-        super(() -> {
-                Robot.robotMode.setCurrentMode(newMode);
-            },
-            Robot.robotMode
-        );
+        this.newMode = newMode;
+        addRequirements(Robot.robotMode);
+    }
+
+    @Override
+    public void initialize() {
+        Robot.robotMode.setCurrentMode(newMode);
     }
 
 }

@@ -32,6 +32,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.subsystems.RobotMode;
+import frc.robot.utils.Logger;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -57,6 +58,8 @@ public class Robot extends TimedRobot {
 
   public final static RobotMode robotMode = new RobotMode();
 
+  public final static DashboardButtonBox dashboardButtonBox = new DashboardButtonBox();
+
   private final RobotContainer m_robotContainer;
 
   public Robot() {
@@ -71,11 +74,13 @@ public class Robot extends TimedRobot {
     );
     m_robotContainer = new RobotContainer();
     SmartDashboard.putData(drivetrain.getField());
+    addPeriodic(dashboardButtonBox::buttonBoxPeriodic, 0.1);
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
+    Logger.log("Selected Level", DashboardButtonBox.getSelectedReefLevel());
   }
 
   @Override

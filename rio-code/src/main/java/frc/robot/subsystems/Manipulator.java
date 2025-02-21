@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.utils.Logger;
 
 import com.ctre.phoenix6.configs.CANrangeConfiguration;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
@@ -66,6 +67,8 @@ public class Manipulator extends SubsystemBase{
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        Logger.log("Manipulator/Has Game Piece", hasGamePiece());
+        Logger.log("Manipulator/Sensor Measured Distance", manipulatorSensor.getDistance().getValueAsDouble());
     }
 
     public double torqueCurrent() {

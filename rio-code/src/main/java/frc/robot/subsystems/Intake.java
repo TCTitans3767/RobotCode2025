@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.utils.Logger;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.configs.CANrangeConfiguration;
@@ -81,11 +82,13 @@ public class Intake extends SubsystemBase{
         pivotMotor.getConfigurator().apply(slot0Config);
         pivotMotor.getConfigurator().apply(motionMagicConfig);
         pivotMotor.setNeutralMode(NeutralModeValue.Brake);
+        pivotMotor.setPosition(0);
         
     }
 
     @Override
     public void periodic() {
+        Logger.log("Intake/Pivot Position", pivotMotor.getPosition().getValueAsDouble());
         // This method will be called once per scheduler run
     }
     

@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.Commands.SetDriveModeCommand;
+import frc.robot.Commands.SetModeCommand;
 import frc.robot.Commands.drive.AlignWithCoralStation;
 import frc.robot.Commands.drive.AlignWithLeftReef;
 import frc.robot.Commands.drive.AlignWithRightReef;
@@ -34,6 +36,7 @@ import frc.robot.Commands.poses.CoralScorePose;
 import frc.robot.Commands.poses.CoralStationAlignPose;
 import frc.robot.Commands.poses.CoralStationPose;
 import frc.robot.Commands.poses.EjectCoralPose;
+import frc.robot.Commands.poses.InitialTransitPose;
 import frc.robot.Commands.poses.TransitPose;
 import frc.robot.generated.TunerConstants;
 import frc.robot.utils.Logger;
@@ -94,6 +97,10 @@ public class RobotMode extends SubsystemBase {
     public static EjectCoralPose ejectCoralPose;
     public static AlgaePickupPose algaePickupPose;
     public static AlgaePickup algaePickup;
+    public static InitialTransitPose initialTransitPose;
+
+    public static SetDriveModeCommand setDriveModeCommand;
+    public static SetModeCommand setModeCommand;
 
     public RobotMode() {
         SwerveXSupplier = () -> 0.0;
@@ -120,6 +127,7 @@ public class RobotMode extends SubsystemBase {
         ejectCoralPose = new EjectCoralPose();
         algaePickupPose = new AlgaePickupPose();
         algaePickup = new AlgaePickup();
+        initialTransitPose = new InitialTransitPose();
     }
 
     @Override
