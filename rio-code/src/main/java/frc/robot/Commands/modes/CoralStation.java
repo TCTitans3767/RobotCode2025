@@ -21,13 +21,13 @@ public class CoralStation extends Command{
     public void execute() {
 
         if (TriggerBoard.isCoralInManipulator()) {
-            Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+            Robot.robotMode.setCurrentMode(RobotMode.coralRecievedPose);
             return;
         }
 
-        // if (TriggerBoard.isCoralButtonPressed()) {
-        //     Robot.robotMode.setCurrentMode(RobotMode.coralStationAlignPose);
-        // }
+        if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isNearCoralStation()) {
+            Robot.robotMode.setCurrentMode(RobotMode.coralStationAlignPose);
+        }
     }
 
 }

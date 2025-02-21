@@ -30,9 +30,9 @@ public class AlignWithLeftReef extends Command{
     private final FieldCentric driveWithOdometry = new FieldCentric();
     private final Pigeon2 rotation = drivetrain.getPigeon2();
 
-    private final PIDController xController = new PIDController(1.6, 0, 0);
-    private final PIDController yController = new PIDController(1.6, 0, 0);
-    private final PIDController headingController = new PIDController(0.11, 0, 0);
+    private final PIDController xController = new PIDController(Constants.Drive.translationAlignementPIDkP, Constants.Drive.translationAlignementPIDkI, Constants.Drive.translationAlignementPIDkD);
+    private final PIDController yController = new PIDController(Constants.Drive.translationAlignementPIDkP, Constants.Drive.translationAlignementPIDkI, Constants.Drive.translationAlignementPIDkD);
+    private final PIDController headingController = new PIDController(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
     private double xVelocity;
     private double yVelocity;
@@ -84,12 +84,13 @@ public class AlignWithLeftReef extends Command{
 
             default:
                 Logger.logSystemError("AlignWithLeftReef: Invalid branch: " + ButtonBox.getSelectedBranch());
+                this.cancel();
                 break;
         }
 
         odometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(-9), new Rotation2d(0)));
 
-        headingController.setTolerance(0.2);
+        headingController.setTolerance(0.1);
         headingController.setSetpoint(targetReefPose.getRotation().plus(Rotation2d.k180deg).getDegrees());
         headingController.reset();
 

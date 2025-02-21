@@ -30,6 +30,7 @@ import frc.robot.Commands.modes.CoralStation;
 import frc.robot.Commands.modes.Transit;
 import frc.robot.Commands.poses.AlgaePickupPose;
 import frc.robot.Commands.poses.CoralFloorPose;
+import frc.robot.Commands.poses.CoralRecievedPose;
 import frc.robot.Commands.poses.CoralReefAlignPose;
 import frc.robot.Commands.poses.CoralReefPose;
 import frc.robot.Commands.poses.CoralScorePose;
@@ -98,6 +99,7 @@ public class RobotMode extends SubsystemBase {
     public static AlgaePickupPose algaePickupPose;
     public static AlgaePickup algaePickup;
     public static InitialTransitPose initialTransitPose;
+    public static CoralRecievedPose coralRecievedPose;
 
     public static SetDriveModeCommand setDriveModeCommand;
     public static SetModeCommand setModeCommand;
@@ -128,6 +130,7 @@ public class RobotMode extends SubsystemBase {
         algaePickupPose = new AlgaePickupPose();
         algaePickup = new AlgaePickup();
         initialTransitPose = new InitialTransitPose();
+        coralRecievedPose = new CoralRecievedPose();
     }
 
     @Override

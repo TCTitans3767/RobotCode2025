@@ -7,8 +7,6 @@ import frc.robot.Commands.drive.AlignWithCoralStation;
 
 public class CoralStationAlignPose extends Command{
 
-    private boolean isFinished = false;
-
     public CoralStationAlignPose() {
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
     }
@@ -16,13 +14,12 @@ public class CoralStationAlignPose extends Command{
     @Override
     public void initialize() {
         Robot.robotMode.setDriveModeCommand(RobotMode.alignWithCoralStation);
-        Robot.manipulator.setSpeed(0.5);
-        isFinished = true;
+        Robot.manipulator.setSpeed(-0.2);
     }
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return true;
     }
 
     @Override
