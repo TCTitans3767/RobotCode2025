@@ -81,6 +81,6 @@ public class Manipulator extends SubsystemBase{
     }
 
     public boolean hasGamePiece() {
-        return manipulatorSensor.getIsDetected().getValue();
+        return manipulatorSensor.getIsDetected().getValue() && manipulatorSensor.getDistance().getValueAsDouble() > 0;
     }
 }

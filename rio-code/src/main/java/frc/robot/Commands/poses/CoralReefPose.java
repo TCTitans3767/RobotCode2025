@@ -1,49 +1,120 @@
 package frc.robot.Commands.poses;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ejml.dense.row.decomposition.hessenberg.TridiagonalDecompositionHouseholderOrig_FDRM;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SelectCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.DashboardButtonBox;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
+import frc.robot.Commands.arm.SetArmAngle;
+import frc.robot.Commands.elevator.SetElevatorPosition;
+import frc.robot.Constants.Manipulator;
 import frc.robot.subsystems.RobotMode;
 
-public class CoralReefPose extends Command{
+public class CoralReefPose extends SequentialCommandGroup{
+
+    public class L1 extends SequentialCommandGroup{
+        public L1() {
+            addCommands();
+        }
+    }
+
+    public class L2 extends SequentialCommandGroup{
+        public L2() {
+            addCommands(
+                new InstantCommand(() -> {Robot.manipulator.setSpeed(-0.1);}),
+                new SetArmAngle(-0.42),
+                new SetElevatorPosition(0.08)
+            );
+        }
+    }
+
+    public class L3 extends SequentialCommandGroup{
+        public L3() {
+            addCommands(
+                new InstantCommand(() -> {Robot.manipulator.setSpeed(-0.1);}),
+                new SetArmAngle(-0.43),
+                new SetElevatorPosition(0.44)
+            );
+        }
+    }
+
+    public class L4 extends SequentialCommandGroup{
+        public L4() {
+            addCommands(
+                new InstantCommand(() -> {Robot.manipulator.setSpeed(-0.1);}),
+                new SetArmAngle(-0.45),
+                new SetElevatorPosition(1.05)
+            );
+        }
+    }
+
+    private Map<String, Command> commandMap = new HashMap<String, Command>();
     
     public CoralReefPose() {
+
+        commandMap.put("1", new L1());
+        commandMap.put("2", new L2());
+        commandMap.put("3", new L3());
+        commandMap.put("4", new L4());
+
+
+        addCommands(
+            new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
+            new InstantCommand(() -> {Robot.manipulator.setSpeed(0);}),
+            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReef);})
+        );
+
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
     }
 
-    @Override
-    public void initialize() {
-        // if (TriggerBoard.isL1Selected()) {
+    // @Override
+    // public void initialize() {
+    //     if (TriggerBoard.isL1Selected()) {
 
-        // } else if (TriggerBoard.isL2Selected()) {
+    //     } else if (TriggerBoard.isL2Selected()) {
 
-        // } else if (TriggerBoard.isL3Selected()) {
+    //         Robot.manipulator.setSpeed(-0.1);
+    //         Robot.elevator.setPosition(0.05);
+    //         Robot.arm.setPosition(-0.42);
 
-        // } else if (TriggerBoard.isL4Selected()) {
+    //     } else if (TriggerBoard.isL3Selected()) {
 
-        // } else {
-        //     Robot.joystick.setRumble(RumbleType.kBothRumble, 1);
-        //     Robot.joystick.setRumble(RumbleType.kBothRumble, 0);
-        //     Robot.robotMode.setCurrentMode(RobotMode.transitPose);
-        // }
+    //         Robot.manipulator.setSpeed(-0.1);
+    //         Robot.elevator.setPosition(0.44);
+    //         Robot.arm.setPosition(-0.43);
 
-        Robot.manipulator.setSpeed(0);
-        Robot.elevator.setPosition(1.05);
-        Robot.arm.setPosition(-0.45);
-    }
+    //     } else if (TriggerBoard.isL4Selected()) {
 
-    @Override
-    public boolean isFinished() {
-        return Robot.elevator.isAtPosition() && Robot.arm.isAtPosition();
-    }
+    //         Robot.manipulator.setSpeed(-0.1);
+    //         Robot.elevator.setPosition(1.05);
+    //         Robot.arm.setPosition(-0.45);
 
-    @Override
-    public void end(boolean interrupted) {
-        Robot.robotMode.setCurrentMode(RobotMode.coralReef);
-    }
+    //     } else {
+    //         Robot.joystick.setRumble(RumbleType.kBothRumble, 1);
+    //         Robot.joystick.setRumble(RumbleType.kBothRumble, 0);
+    //         Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+    //     }
+
+    // }
+
+    // @Override
+    // public boolean isFinished() {
+    //     return Robot.elevator.isAtPosition() && Robot.arm.isAtPosition();
+    // }
+
+    // @Override
+    // public void end(boolean interrupted) {
+    //     Robot.manipulator.setSpeed(0);
+    //     Robot.robotMode.setCurrentMode(RobotMode.coralReef);
+    // }
 
 }

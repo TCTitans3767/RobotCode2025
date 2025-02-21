@@ -113,8 +113,8 @@ public class Constants {
         // Conversion Factor
         public final static double conversionFactor = 1;
 
-        public static final double detectionRange = 0.02;
-        public static final double sensorDebounce = 0.001;
+        public static final double detectionRange = 0.066;
+        public static final double sensorDebounce = 0.004;
         public static final int sensorID = 18;
     }
 

@@ -16,7 +16,7 @@ public class CoralStationPose extends Command{
     public void initialize() {
         Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
         Robot.arm.setPosition(0.128);
-        Robot.manipulator.setSpeed(-0.1);
+        Robot.manipulator.setSpeed(-0.2);
         Robot.elevator.setPosition(0.5);
     }
 
