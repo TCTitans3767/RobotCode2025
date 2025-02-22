@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.ReefTagIDs;
+import frc.robot.ButtonBox;
 import frc.robot.Robot;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.utils.Logger;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.ButtonBox;
 
 public class AlignWithRightReef extends Command{
     
