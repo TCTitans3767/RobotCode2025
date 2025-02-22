@@ -91,8 +91,10 @@ public class ButtonBox {
 
         @Override
         protected void setActive(boolean active) {
-            super.setActive(active);
-            setSelectedLevel(ReefLevel.fromString(getName()));
+            if (isActive() != active) {
+                super.setActive(active);
+                setSelectedLevel(ReefLevel.fromString(getName()));
+            }
         }
     }
 
@@ -208,21 +210,29 @@ public class ButtonBox {
         selectedReefBranchTopic = new SelectedReefBranchTopic();
         selectedReefLevelTopic = new SelectedReefLevelTopic();
 
+        // Create Network Table Topics for each button
         for (ReefBranch branch : ReefBranch.values()) {
             ButtonTopic topic = new BranchButtonTopic(branch.toString());
             branchButtonTopics.put(branch, topic);
-
-            int buttonNumber = Constants.ButtonBoxButtons.branchButtonMap.get(branch);
-            BooleanEvent event = controller.button(buttonNumber, eventLoop).debounce(Constants.ButtonBoxButtons.debounceSeconds);
-            event.ifHigh(() -> { topic.setActive(true); });
         }
         for (ReefLevel level : ReefLevel.values()) {
             ButtonTopic topic = new LevelButtonTopic(level.toString());
             levelButtonTopics.put(level, topic);
 
+        }
+
+        // Bind buttons to each topic
+        for (ReefBranch branch : ReefBranch.values()) {
+            ButtonTopic topic = branchButtonTopics.get(branch);
+            int buttonNumber = Constants.ButtonBoxButtons.branchButtonMap.get(branch);
+            BooleanEvent event = controller.button(buttonNumber, eventLoop).debounce(Constants.ButtonBoxButtons.debounceSeconds);
+            // event.rising().ifHigh(() -> { topic.setActive(true); });
+        }
+        for (ReefLevel level : ReefLevel.values()) {
+            ButtonTopic topic = levelButtonTopics.get(level);
             int buttonNumber = Constants.ButtonBoxButtons.levelButtonMap.get(level);
             BooleanEvent event = controller.button(buttonNumber, eventLoop).debounce(Constants.ButtonBoxButtons.debounceSeconds);
-            event.ifHigh(() -> { topic.setActive(true); });
+            // event.rising().ifHigh(() -> { topic.setActive(true); });
         }
     }
 
@@ -253,7 +263,10 @@ public class ButtonBox {
     public static void setSelectedBranch(ReefBranch branch) {
         ReefBranch lastBranch = getSelectedBranch();
 
-        instance.branchButtonTopics.get(lastBranch).setActive(false);
+        if (lastBranch != null) {
+            instance.branchButtonTopics.get(lastBranch).setActive(false);
+        }
+
         instance.branchButtonTopics.get(branch).setActive(true);
         instance.selectedReefBranchTopic.setBranch(branch);
     }
@@ -263,10 +276,11 @@ public class ButtonBox {
     }
 
     public static void setSelectedLevel(ReefLevel level) {
-        instance.selectedReefLevelTopic.setLevel(level);
         ReefLevel lastLevel = getSelectedLevel();
 
-        instance.levelButtonTopics.get(lastLevel).setActive(false);
+        if (lastLevel != null) {
+            instance.levelButtonTopics.get(lastLevel).setActive(false);
+        }
         instance.levelButtonTopics.get(level).setActive(true);
         instance.selectedReefLevelTopic.setLevel(level);
     }

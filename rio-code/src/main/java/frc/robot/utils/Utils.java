@@ -1,6 +1,12 @@
 package frc.robot.utils;
 
+import frc.robot.Robot;
+
 public class Utils {
+
+    public enum ReefPosition {
+        A, B, C, D, E, F, G, H, I, J, K, L
+    }
 
     /**
      * converts rotations to meters using input conversion factor
@@ -22,5 +28,13 @@ public class Utils {
      */
     public static double metersToRotations(double meters, double conversionFactor) {
         return meters * conversionFactor;
+    }
+    
+    public static ReefPosition getSelectedReefPosition() {
+        if (Robot.buttonBoxController.getRawButton(0)) {
+            return ReefPosition.A;
+        } else {
+            return null;
+        }
     }
 }

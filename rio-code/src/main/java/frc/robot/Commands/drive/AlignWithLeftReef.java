@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.ButtonBox;
 import frc.robot.Constants;
+import frc.robot.DashboardButtonBox;
 import frc.robot.Robot;
 import frc.robot.Constants.ReefTagIDs;
 import frc.robot.subsystems.Limelight;
@@ -54,7 +55,7 @@ public class AlignWithLeftReef extends Command{
 
     @Override
     public void initialize() {
-        switch (ButtonBox.getSelectedBranch()) {
+        switch (DashboardButtonBox.getSelectedReefBranch()) {
             case A:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefAB : ReefTagIDs.redReefAB;
@@ -86,7 +87,7 @@ public class AlignWithLeftReef extends Command{
                 break;
 
             default:
-                Logger.logSystemError("AlignWithLeftReef: Invalid branch: " + ButtonBox.getSelectedBranch());
+                Logger.logSystemError("AlignWithLeftReef: Invalid branch: " + DashboardButtonBox.getSelectedReefBranch());
                 this.cancel();
                 break;
         }

@@ -51,12 +51,13 @@ public class Robot extends TimedRobot {
   public final static Manipulator manipulator = new Manipulator();
   public final static Intake intake = new Intake();
   public final static Arm arm = new Arm();
-  public final static Limelight limelight = new Limelight("", new Pose3d(Units.inchesToMeters(-0.548596), Units.inchesToMeters(9.720909), Units.inchesToMeters(28.228805), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-10), Units.degreesToRadians(23))));
+  public final static Limelight limelight = new Limelight("limelight-front", new Pose3d(Units.inchesToMeters(-0.548596), Units.inchesToMeters(9.720909), Units.inchesToMeters(28.228805), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-10), Units.degreesToRadians(23))));
   // public final static Limelight limelight = null;
   
   public final static CommandXboxController joystick = new CommandXboxController(0);
   public final static GenericHID buttonBoxController = new GenericHID(1);
-  public final static ButtonBox buttonBox = new ButtonBox(buttonBoxController);
+  // public final static ButtonBox buttonBox = new ButtonBox(buttonBoxController);
+  public final static DashboardButtonBox buttonBox = new DashboardButtonBox();
 
   public final static RobotMode robotMode = new RobotMode();
 
@@ -73,14 +74,15 @@ public class Robot extends TimedRobot {
       )
     );
     m_robotContainer = new RobotContainer();
+    addPeriodic(buttonBox::buttonBoxPeriodic, 0.1);
     SmartDashboard.putData(drivetrain.getField());
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
-    buttonBox.periodic();
-    Logger.log("Selected Level", ButtonBox.getSelectedLevel());
+    // buttonBox.periodic();
+    // Logger.log("Selected Level", ButtonBox.getSelectedLevel());
     drivetrain.getField().setRobotPose(drivetrain.getPose());
   }
 

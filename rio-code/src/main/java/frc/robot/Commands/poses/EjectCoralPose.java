@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.DashboardButtonBox;
 import frc.robot.Robot;
+import frc.robot.TriggerBoard;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.subsystems.RobotMode.DriveMode;
 
@@ -18,7 +20,13 @@ public class EjectCoralPose extends SequentialCommandGroup{
     public EjectCoralPose() {
 
         addCommands(
-            new InstantCommand(() -> {Robot.manipulator.setSpeed(0.25);}),
+            new InstantCommand(() -> {
+                if (DashboardButtonBox.getSelectedLevelString() == "1") {
+                    Robot.manipulator.setSpeed(0.05);
+                } else {
+                    Robot.manipulator.setSpeed(0.25);
+                }
+            }),
             new WaitCommand(0.4),
             new InstantCommand(() -> {
                 Robot.robotMode.setDriveMode(DriveMode.Brake);
@@ -28,8 +36,8 @@ public class EjectCoralPose extends SequentialCommandGroup{
             new InstantCommand(() -> {
                 Robot.manipulator.setSpeed(0);
                 Robot.robotMode.setCurrentMode(RobotMode.transitPose);
-            })
-        );
+            }
+        ));
 
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
     }

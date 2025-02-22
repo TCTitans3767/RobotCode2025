@@ -25,9 +25,9 @@ public class CoralStation extends Command{
             return;
         }
 
-        if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isNearCoralStation()) {
-            Robot.robotMode.setCurrentMode(RobotMode.coralStationAlignPose);
-        }
+        // if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isNearCoralStation()) {
+        //     Robot.robotMode.setCurrentMode(RobotMode.coralStationAlignPose);
+        // }
     }
 
 }

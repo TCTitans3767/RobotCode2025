@@ -30,6 +30,8 @@ import frc.robot.utils.LimelightHelpers.PoseEstimate;
 
 public class Limelight extends SubsystemBase{
 
+    private int currentIMUMode = 1;
+
     private final String limelightName;
     private final Pose3d robotToLimelight;
 
@@ -95,7 +97,26 @@ public class Limelight extends SubsystemBase{
 
         goodEstimationFrame = true;
 
-        PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+        if (LimelightHelpers.getIMUData(limelightName).Yaw != drivetrain.getPigeon2().getYaw().getValueAsDouble()) {
+            currentIMUMode = 1;
+            LimelightHelpers.SetIMUMode(limelightName, 1);
+            LimelightHelpers.SetRobotOrientation(limelightName, 
+            drivetrain.getPigeon2().getYaw().getValueAsDouble(),
+                0, 
+                0, 
+                0, 
+                0,
+                0
+            );
+        } else {
+            if (currentIMUMode != 2) {
+                currentIMUMode = 2;
+                LimelightHelpers.SetIMUMode(limelightName, 2);
+            }
+        }
+
+
+        PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
         if (Math.abs(drivetrain.getPigeon2().getAngularVelocityZDevice().getValueAsDouble()) > 720) {
             goodEstimationFrame = false;
         }

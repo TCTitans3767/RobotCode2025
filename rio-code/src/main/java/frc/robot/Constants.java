@@ -10,7 +10,7 @@ import edu.wpi.first.math.util.Units;
 
 public class Constants {
     public static final class NetworkTables {
-        public static final String buttonBoxTable = "ButtonBox";
+        public static final String buttonBoxTable = "Dashboard ButtonBox";
         public static final String coralStationAlignRightTopic = "CoralStationAlignRight";
         public static final String ejectAlgaeTopic = "EjectAlgae";
         public static final String selectedReefBranchTopic = "SelectedReefBranch";
@@ -139,7 +139,7 @@ public class Constants {
         public final static double RotationsPerMeter = 39.997;
 
         public final static double metersMax = 1.125;
-        public final static double metersMin = 0.050;
+        public final static double metersMin = 0.020;
 
         public final static double errorTolerance = 0.01;
         public final static double zeroingSpeed = -0.05;
@@ -245,6 +245,26 @@ public class Constants {
         public final static double rotationAlignementPIDkP = 0.11;
         public final static double rotationAlignementPIDkI = 0;
         public final static double rotationAlignementPIDkD = 0;
+    }
+
+    public final static class ButtonBoxBindings {
+        public final static int A = 1;
+        public final static int B = 2;
+        public final static int C = 3;
+        public final static int D = 4;
+        public final static int E = 5;
+        public final static int F = 6;
+        public final static int G = 7;
+        public final static int H = 8;
+        public final static int I = 9;
+        public final static int J = 10;
+        public final static int K = 11;
+        public final static int L = 12;
+
+        public final static int L1 = 13;
+        public final static int L2 = 14;
+        public final static int L3 = 15;
+        public final static int L4 = 16;
     }
 
 }
