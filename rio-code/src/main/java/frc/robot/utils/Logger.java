@@ -4,6 +4,15 @@ import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Pose2d;
 
 public class Logger extends DogLog{
+    public static void logSystemError(String message) {
+        DogLog.log("SystemError", message);
+        System.err.println("SystemError:" + message);
+    }
+
+    public static void logButtonBox(String message) {
+        DogLog.log("ButtonBox", message);
+    }
+
     public static void logLimitError(String message) {
         DogLog.log("Error/Limit", message);
     }

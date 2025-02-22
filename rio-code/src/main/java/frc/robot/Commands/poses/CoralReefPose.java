@@ -3,20 +3,15 @@ package frc.robot.Commands.poses;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ejml.dense.row.decomposition.hessenberg.TridiagonalDecompositionHouseholderOrig_FDRM;
-
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.DashboardButtonBox;
+import frc.robot.ButtonBox;
+import frc.robot.ReefLevel;
 import frc.robot.Robot;
-import frc.robot.TriggerBoard;
 import frc.robot.Commands.arm.SetArmAngle;
 import frc.robot.Commands.elevator.SetElevatorPosition;
-import frc.robot.Constants.Manipulator;
 import frc.robot.subsystems.RobotMode;
 
 public class CoralReefPose extends SequentialCommandGroup{
@@ -57,18 +52,18 @@ public class CoralReefPose extends SequentialCommandGroup{
         }
     }
 
-    private Map<String, Command> commandMap = new HashMap<String, Command>();
+    private Map<ReefLevel, Command> commandMap = new HashMap<ReefLevel, Command>();
     
     public CoralReefPose() {
 
-        commandMap.put("1", new L1());
-        commandMap.put("2", new L2());
-        commandMap.put("3", new L3());
-        commandMap.put("4", new L4());
+        commandMap.put(ReefLevel.L1, new L1());
+        commandMap.put(ReefLevel.L2, new L2());
+        commandMap.put(ReefLevel.L3, new L3());
+        commandMap.put(ReefLevel.L4, new L4());
 
 
         addCommands(
-            new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
+            new SelectCommand<ReefLevel>(commandMap, ButtonBox::getSelectedLevel),
             new InstantCommand(() -> {Robot.manipulator.setSpeed(0);}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReef);})
         );

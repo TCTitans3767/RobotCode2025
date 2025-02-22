@@ -1,16 +1,58 @@
 package frc.robot;
 
-import com.ctre.phoenix6.signals.GravityTypeValue;
+import java.util.HashMap;
+import java.util.Map;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
-    
-    public final class ReefTagIDs {
+    public static final class NetworkTables {
+        public static final String buttonBoxTable = "ButtonBox";
+        public static final String coralStationAlignRightTopic = "CoralStationAlignRight";
+        public static final String ejectAlgaeTopic = "EjectAlgae";
+        public static final String selectedReefBranchTopic = "SelectedReefBranch";
+        public static final String selectedReefLevelTopic = "SelectedReefLevel";
+        public static final boolean initialCoralStationAlignRight = false;
+        public static final boolean initialEjectAlgae = true;
+        public static final ReefBranch initialReefBranch = ReefBranch.A;
+        public static final ReefLevel initialReefLevel = ReefLevel.L4;
+    }
 
+    public final class ButtonBoxButtons {
+        public final static double debounceSeconds = 0.2;
+
+        public final static Map<ReefBranch, Integer> branchButtonMap;
+        public final static Map<ReefLevel, Integer> levelButtonMap;
+
+        static {
+            branchButtonMap = new HashMap<ReefBranch, Integer>();
+            branchButtonMap.put(ReefBranch.A, 1);
+            branchButtonMap.put(ReefBranch.B, 2);
+            branchButtonMap.put(ReefBranch.C, 3);
+            branchButtonMap.put(ReefBranch.D, 4);
+            branchButtonMap.put(ReefBranch.E, 5);
+            branchButtonMap.put(ReefBranch.F, 6);
+            branchButtonMap.put(ReefBranch.G, 7);
+            branchButtonMap.put(ReefBranch.H, 8);
+            branchButtonMap.put(ReefBranch.I, 9);
+            branchButtonMap.put(ReefBranch.J, 10);
+            branchButtonMap.put(ReefBranch.K, 11);
+            branchButtonMap.put(ReefBranch.L, 12);
+
+            levelButtonMap = new HashMap<ReefLevel, Integer>();
+            levelButtonMap.put(ReefLevel.L1, 13);
+            levelButtonMap.put(ReefLevel.L2, 14);
+            levelButtonMap.put(ReefLevel.L3, 15);
+            levelButtonMap.put(ReefLevel.L4, 16);
+        }
+
+        public final static int algaeEject = 17;
+        public final static int coralStationAlignRight = 18;
+        public final static int climb = 19;
+    }
+
+    public static final class ReefTagIDs {
         public final static int blueReefAB = 18;
         public final static int blueReefCD = 19;
         public final static int blueReefEF = 22;
@@ -45,7 +87,7 @@ public class Constants {
 
     }
 
-    public final class Field {
+    public static final class Field {
         public final static Translation2d blueReefCenter = new Translation2d(4.5, 4.03);
         public final static Translation2d redReefCenter = new Translation2d(0, 0);
         public final static Translation2d blueRightCoralStation = new Translation2d(0, 0);
@@ -54,7 +96,7 @@ public class Constants {
         public final static Translation2d redLeftCoralStation = new Translation2d(0, 0);
     }
   
-    public final class Climber {
+    public static final class Climber {
         public final static int leftMotorID = 18;
         public final static int rightMotorID = 19;
       
@@ -64,7 +106,7 @@ public class Constants {
         public final static double conversonFactor = 1;
     }
   
-    public final class Elevator {
+    public static final class Elevator {
         // CAN IDs
         public final static int leftMotorID = 13;
         public final static int rightMotorID = 14;
@@ -94,7 +136,7 @@ public class Constants {
         public final static double zeroingThreshold = 0.01;
     }
 
-    public final class Manipulator {
+    public static final class Manipulator {
         // CAN IDs
         public final static int motorID = 17;
 
@@ -119,7 +161,7 @@ public class Constants {
     }
 
 
-    public final class Arm {
+    public static final class Arm {
         // CAN IDs
         public final static int ArmMotorID = 15;
         public static final int ArmEncoderID = 16;
@@ -143,7 +185,7 @@ public class Constants {
         public final static double errorTolerance = 0.1;
     }
 
-    public final class Intake {
+    public static final class Intake {
         // CAN IDs
         public final static int leftWheelMotorID = 21;
         public static final int rightWheelMotorID = 22;
@@ -175,14 +217,13 @@ public class Constants {
 
     }
   
-    public final class Robot {
+    public static final class Robot {
         public final static double chassisWidthMeters = Units.inchesToMeters(26.0);
         public final static double chassisDepthMeters = Units.inchesToMeters(26.0);
     }
 
-    public final class Drive {
+    public static final class Drive {
         public final static double alignmentTolerance = 0.02;
         public final static double reefDistanceThreshold = 1.7;
     }
-
 }
