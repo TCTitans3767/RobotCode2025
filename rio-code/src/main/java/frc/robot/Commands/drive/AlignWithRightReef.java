@@ -1,36 +1,25 @@
 package frc.robot.Commands.drive;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.Supplier;
-
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric;
 import com.ctre.phoenix6.swerve.SwerveRequest.RobotCentric;
 
-import edu.wpi.first.apriltag.AprilTag;
-import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.ReefTagIDs;
 import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.RobotMode.DriveMode;
+import frc.robot.utils.Logger;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.utils.CommandTrigger;
-import frc.robot.utils.Utils;
+import frc.robot.ButtonBox;
 
 public class AlignWithRightReef extends Command{
     
@@ -62,8 +51,7 @@ public class AlignWithRightReef extends Command{
 
     @Override
     public void initialize() {
-
-        switch (Utils.getSelectedReefPosition()) {
+        switch (ButtonBox.getSelectedBranch()) {
             case B:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefAB : ReefTagIDs.redReefAB;
@@ -95,6 +83,7 @@ public class AlignWithRightReef extends Command{
                 break;
                 
             default:
+                Logger.logSystemError("AlignWithRightReef: Invalid branch: " + ButtonBox.getSelectedBranch());
                 break;
         }
 

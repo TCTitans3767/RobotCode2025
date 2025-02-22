@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -54,11 +55,10 @@ public class Robot extends TimedRobot {
   // public final static Limelight limelight = null;
   
   public final static CommandXboxController joystick = new CommandXboxController(0);
-  public final static GenericHID buttonBox = new GenericHID(1);
+  public final static GenericHID buttonBoxController = new GenericHID(1);
+  public final static ButtonBox buttonBox = new ButtonBox(buttonBoxController);
 
   public final static RobotMode robotMode = new RobotMode();
-
-  public final static DashboardButtonBox dashboardButtonBox = new DashboardButtonBox();
 
   private final RobotContainer m_robotContainer;
 
@@ -74,13 +74,12 @@ public class Robot extends TimedRobot {
     );
     m_robotContainer = new RobotContainer();
     SmartDashboard.putData(drivetrain.getField());
-    addPeriodic(dashboardButtonBox::buttonBoxPeriodic, 0.1);
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
-    Logger.log("Selected Level", DashboardButtonBox.getSelectedReefLevel());
+    buttonBox.periodic();
   }
 
   @Override
