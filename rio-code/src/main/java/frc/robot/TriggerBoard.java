@@ -30,7 +30,7 @@ public class TriggerBoard {
 
     public static boolean isNearReef() {return Robot.drivetrain.isNearToReef();} 
 
-    public static boolean isNearCoralStation() {return Robot.drivetrain.isNearToCoralStation();}
+    public static boolean isNearCoralStation() {return Robot.drivetrain.isNearToBlueCoralStation() || Robot.drivetrain.isNearToRedCoralStation();}
 
     public static boolean isNearCage() {return Robot.drivetrain.isNearCage();}
 

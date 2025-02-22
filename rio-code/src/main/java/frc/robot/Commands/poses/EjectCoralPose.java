@@ -19,7 +19,7 @@ public class EjectCoralPose extends SequentialCommandGroup{
 
         addCommands(
             new InstantCommand(() -> {Robot.manipulator.setSpeed(0.25);}),
-            new WaitCommand(0.5),
+            new WaitCommand(0.4),
             new InstantCommand(() -> {
                 Robot.robotMode.setDriveMode(DriveMode.Brake);
                 Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.25));

@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.ReefTagIDs;
+import frc.robot.ButtonBox;
 import frc.robot.Robot;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.utils.Logger;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.ButtonBox;
 
 public class AlignWithRightReef extends Command{
     
@@ -30,17 +30,17 @@ public class AlignWithRightReef extends Command{
     private final FieldCentric driveWithOdometry = new FieldCentric();
     private final Pigeon2 rotation = drivetrain.getPigeon2();
 
-    private final PIDController xController = new PIDController(1.6, 0, 0);
-    private final PIDController yController = new PIDController(1.6, 0, 0);
-    private final PIDController headingController = new PIDController(0.11, 0, 0);
+    private final PIDController xController = new PIDController(Constants.Drive.translationAlignementPIDkP, Constants.Drive.translationAlignementPIDkI, Constants.Drive.translationAlignementPIDkD);
+    private final PIDController yController = new PIDController(Constants.Drive.translationAlignementPIDkP, Constants.Drive.translationAlignementPIDkI, Constants.Drive.translationAlignementPIDkD);
+    private final PIDController headingController = new PIDController(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
     private double xVelocity;
     private double yVelocity;
     private double rotationVelocity;
 
     private int targetReefTag;
-    private Pose2d targetReefPose;
-    private Pose2d OdometryTargetPose;
+    private Pose2d targetReefPose = new Pose2d();
+    private Pose2d OdometryTargetPose = new Pose2d();
     private final Field2d field = drivetrain.getField();
     
     public AlignWithRightReef() {
@@ -84,6 +84,7 @@ public class AlignWithRightReef extends Command{
                 
             default:
                 Logger.logSystemError("AlignWithRightReef: Invalid branch: " + ButtonBox.getSelectedBranch());
+                this.cancel();
                 break;
         }
 

@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.utils.Logger;
@@ -269,16 +270,26 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             });
         }
         
-        field.setRobotPose(getPose());
-        
     }
 
     public boolean isNearToReef() {
         return getState().Pose.getTranslation().getDistance(Constants.Field.blueReefCenter) < Constants.Drive.reefDistanceThreshold || getState().Pose.getTranslation().getDistance(Constants.Field.redReefCenter) < Constants.Drive.reefDistanceThreshold;
     }
 
-    public boolean isNearToCoralStation() {
-        return true;
+    public boolean isNearToBlueCoralStation() {
+        return getState().Pose.getTranslation().getDistance(Constants.Field.blueLeftCoralStation) < Constants.Drive.coralStationDistanceThreshold || getState().Pose.getTranslation().getDistance(Constants.Field.blueRightCoralStation) < Constants.Drive.coralStationDistanceThreshold;
+    }
+
+    public boolean isNearToRedCoralStation() {
+        return getState().Pose.getTranslation().getDistance(Constants.Field.redLeftCoralStation) < Constants.Drive.coralStationDistanceThreshold || getState().Pose.getTranslation().getDistance(Constants.Field.redRightCoralStation) < Constants.Drive.coralStationDistanceThreshold;
+    }
+
+    public boolean isRightStationCloser() {
+        if (Robot.getAlliance() == Alliance.Red) {
+            return getState().Pose.getTranslation().getDistance(Constants.Field.redRightCoralStation) < getState().Pose.getTranslation().getDistance(Constants.Field.redLeftCoralStation);
+        } else {
+            return getState().Pose.getTranslation().getDistance(Constants.Field.blueRightCoralStation) < getState().Pose.getTranslation().getDistance(Constants.Field.blueLeftCoralStation);
+        }
     }
 
     public boolean isNearCage() {

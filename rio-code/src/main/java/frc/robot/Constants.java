@@ -3,6 +3,8 @@ package frc.robot;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
@@ -90,10 +92,18 @@ public class Constants {
     public static final class Field {
         public final static Translation2d blueReefCenter = new Translation2d(4.5, 4.03);
         public final static Translation2d redReefCenter = new Translation2d(0, 0);
-        public final static Translation2d blueRightCoralStation = new Translation2d(0, 0);
+        public final static Translation2d blueRightCoralStation = new Translation2d(0.9, 0.6);
+        public final static Pose2d blueRightCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 0.6), new Rotation2d(Units.degreesToRadians(126.5)));
+        public final static Pose2d blueRightCoralStationLeftAlignment = new Pose2d(new Translation2d(0.9, 0.6), new Rotation2d(Units.degreesToRadians(126.5)));
         public final static Translation2d redRightCoralStation = new Translation2d(0, 0);
-        public final static Translation2d blueLeftCoralStation = new Translation2d(0, 0);
+        public final static Pose2d redRightCoralStationRightAlignment = new Pose2d(new Translation2d(0, 0), new Rotation2d());
+        public final static Pose2d redRightCoralStationLeftAlignment  = new Pose2d(new Translation2d(0, 0), new Rotation2d());
+        public final static Translation2d blueLeftCoralStation = new Translation2d(0.9, 7.41);
+        public final static Pose2d blueLeftCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 7.41), new Rotation2d(Units.degreesToRadians(233.5)));
+        public final static Pose2d blueLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(0.9, 7.41), new Rotation2d(Units.degreesToRadians(233.5)));
         public final static Translation2d redLeftCoralStation = new Translation2d(0, 0);
+        public final static Pose2d redLeftCoralStationRightAlignment = new Pose2d(new Translation2d(0, 0), new Rotation2d());
+        public final static Pose2d redLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(0, 0), new Rotation2d());
     }
   
     public static final class Climber {
@@ -217,13 +227,24 @@ public class Constants {
 
     }
   
+
     public static final class Robot {
-        public final static double chassisWidthMeters = Units.inchesToMeters(26.0);
-        public final static double chassisDepthMeters = Units.inchesToMeters(26.0);
+        public final static double chassisWidthMeters = Units.inchesToMeters(32.5);
+        public final static double chassisDepthMeters = Units.inchesToMeters(32.5);
     }
 
     public static final class Drive {
         public final static double alignmentTolerance = 0.02;
-        public final static double reefDistanceThreshold = 1.7;
+        public final static double reefDistanceThreshold = 3;
+        public final static double coralStationDistanceThreshold = 1.5;
+
+        public final static double translationAlignementPIDkP = 1.6;
+        public final static double translationAlignementPIDkI = 0;
+        public final static double translationAlignementPIDkD = 0;
+
+        public final static double rotationAlignementPIDkP = 0.11;
+        public final static double rotationAlignementPIDkI = 0;
+        public final static double rotationAlignementPIDkD = 0;
     }
+
 }

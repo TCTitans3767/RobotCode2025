@@ -95,7 +95,7 @@ public class Limelight extends SubsystemBase{
 
         goodEstimationFrame = true;
 
-        PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
+        PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
         if (Math.abs(drivetrain.getPigeon2().getAngularVelocityZDevice().getValueAsDouble()) > 720) {
             goodEstimationFrame = false;
         }
@@ -160,7 +160,7 @@ public class Limelight extends SubsystemBase{
     public void initialPoseEstimates() {
         if (robotToLimelightSet) {
             doEstimation = false;
-            drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.1, 0.1, 0.5));
+            drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.1, 0.1, 0));
             int numTries = 0;
             while (startupEstimations < 10 && numTries < 40) {
                 PoseEstimate result = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
