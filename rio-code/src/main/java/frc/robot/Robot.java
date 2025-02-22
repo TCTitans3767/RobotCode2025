@@ -56,7 +56,8 @@ public class Robot extends TimedRobot {
   
   public final static CommandXboxController joystick = new CommandXboxController(0);
   public final static GenericHID buttonBoxController = new GenericHID(1);
-  public final static ButtonBox buttonBox = new ButtonBox(buttonBoxController);
+  // public final static ButtonBox buttonBox = new ButtonBox(buttonBoxController);
+  public final static DashboardButtonBox buttonBox = new DashboardButtonBox();
 
   public final static RobotMode robotMode = new RobotMode();
 
@@ -73,14 +74,15 @@ public class Robot extends TimedRobot {
       )
     );
     m_robotContainer = new RobotContainer();
+    addPeriodic(buttonBox::buttonBoxPeriodic, 0.1);
     SmartDashboard.putData(drivetrain.getField());
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
-    buttonBox.periodic();
-    Logger.log("Selected Level", ButtonBox.getSelectedLevel());
+    // buttonBox.periodic();
+    // Logger.log("Selected Level", ButtonBox.getSelectedLevel());
     drivetrain.getField().setRobotPose(drivetrain.getPose());
   }
 

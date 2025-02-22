@@ -16,14 +16,26 @@ public class CoralReef extends Command{
     @Override
     public void execute() {
 
+        // if (TriggerBoard.isCoralButtonPressed()) {
+        //     Robot.robotMode.setCurrentMode(RobotMode.ejectCoralPose);
+        // }
+
+        if (TriggerBoard.hasSelectedLevelChanged()) {
+            Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+            return;
+        } else if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isNearReef()) {
+            Robot.robotMode.setCurrentMode(RobotMode.coralReefAlignPose);
+            return;
+        }
+
         if (Robot.joystick.leftTrigger().getAsBoolean()) {
             Robot.robotMode.setCurrentMode(RobotMode.ejectCoralPose);
         }
 
-        if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isNearReef()) {
-            Robot.robotMode.setCurrentMode(RobotMode.coralReefAlignPose);
-            return;
-        } 
+        // if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isNearReef()) {
+        //     Robot.robotMode.setCurrentMode(RobotMode.coralReefAlignPose);
+        //     return;
+        // } 
         //   else if (TriggerBoard.isCoralButtonPressed() && !TriggerBoard.isNearReef()) {
         //     Robot.joystick.setRumble(RumbleType.kBothRumble, 1);
         //     Robot.joystick.setRumble(RumbleType.kBothRumble, 0);

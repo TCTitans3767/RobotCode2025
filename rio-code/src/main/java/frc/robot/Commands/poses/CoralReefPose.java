@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.ButtonBox;
+import frc.robot.DashboardButtonBox;
 import frc.robot.ReefLevel;
 import frc.robot.Robot;
 import frc.robot.Commands.arm.SetArmAngle;
@@ -19,15 +20,18 @@ public class CoralReefPose extends SequentialCommandGroup{
 
     public class L1 extends ParallelCommandGroup{
         public L1() {
-            addCommands();
+            addCommands(
+                new SetArmAngle(0.02),
+                new SetElevatorPosition(0.34)
+            );
         }
     }
 
     public class L2 extends SequentialCommandGroup{
         public L2() {
             addCommands(
-                new SetArmAngle(-0.42),
-                new SetElevatorPosition(0.08)
+                new SetArmAngle(-0.44),
+                new SetElevatorPosition(0.02)
             );
         }
     }
@@ -45,22 +49,22 @@ public class CoralReefPose extends SequentialCommandGroup{
         public L4() {
             addCommands(
                 new SetArmAngle(-0.45),
-                new SetElevatorPosition(1.05)
+                new SetElevatorPosition(1.06)
             );
         }
     }
 
-    private Map<ReefLevel, Command> commandMap = new HashMap<ReefLevel, Command>();
+    private Map<String, Command> commandMap = new HashMap<String, Command>();
     
     public CoralReefPose() {
 
-        commandMap.put(ReefLevel.L1, new L1());
-        commandMap.put(ReefLevel.L2, new L2());
-        commandMap.put(ReefLevel.L3, new L3());
-        commandMap.put(ReefLevel.L4, new L4());
+        commandMap.put("1", new L1());
+        commandMap.put("2", new L2());
+        commandMap.put("3", new L3());
+        commandMap.put("4", new L4());
 
         addCommands(
-            new SelectCommand<ReefLevel>(commandMap, ButtonBox::getSelectedLevel),
+            new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
             new InstantCommand(() -> {Robot.manipulator.setSpeed(0);}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReef);})
         );

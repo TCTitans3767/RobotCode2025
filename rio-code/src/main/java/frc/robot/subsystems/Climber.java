@@ -63,7 +63,7 @@ public class Climber extends SubsystemBase {
 
     public void setSpeed(double speed) {
         Logger.log("Climber/target speed", speed);
-        // leftMotor.set(speed);
+        leftMotor.set(speed);
         // Add code here to set the speed of the climber
     }
 
