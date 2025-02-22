@@ -5,6 +5,9 @@
 #include "Robot.h"
 
 #include <frc2/command/CommandScheduler.h>
+#include "subsystems/Drivetrain.h"
+#include <frc/TimedRobot.h>
+#include <frc/Joystick.h>
 
 Robot::Robot() {}
 
@@ -34,14 +37,17 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-  m_autonomousCommand = m_container.GetAutonomousCommand();
-
-  if (m_autonomousCommand) {
-    m_autonomousCommand->Schedule();
-  }
+  
 }
 
-void Robot::AutonomousPeriodic() {}
+void Robot::AutonomousPeriodic() {
+  // Drive for 2 seconds
+  if (m_timer.Get() < 2_s) {
+    m_drivetrain.Drive(0.5, 0.5);  // Drive forwards half speed
+  } else {
+    m_drivetrain.Stop();  // Stop robot
+  }
+}
 
 void Robot::TeleopInit() {
   // This makes sure that the autonomous stops running when
@@ -56,8 +62,11 @@ void Robot::TeleopInit() {
 /**
  * This function is called periodically during operator control.
  */
-void Robot::TeleopPeriodic() {}
-
+void Robot::TeleopPeriodic() {
+  double leftSpeed = -m_joystick.GetRawAxis(1);
+  double rightSpeed = -m_joystick.GetRawAxis(5);  
+  m_drivetrain.Drive(leftSpeed, rightSpeed);
+}
 /**
  * This function is called periodically during test mode.
  */
