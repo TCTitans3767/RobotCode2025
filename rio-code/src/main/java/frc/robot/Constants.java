@@ -10,7 +10,7 @@ import edu.wpi.first.math.util.Units;
 
 public class Constants {
     public static final class NetworkTables {
-        public static final String buttonBoxTable = "ButtonBox";
+        public static final String buttonBoxTable = "Dashboard ButtonBox";
         public static final String coralStationAlignRightTopic = "CoralStationAlignRight";
         public static final String ejectAlgaeTopic = "EjectAlgae";
         public static final String selectedReefBranchTopic = "SelectedReefBranch";
