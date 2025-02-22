@@ -137,6 +137,7 @@ public class RobotMode extends SubsystemBase {
     public void periodic() {
 
         Logger.log("current mode", currentMode.getName());
+        Logger.log("Drivetrain/Is Near Reef", Robot.drivetrain.isNearToReef());
 
         if (driveMode != null) {
             switch (driveMode) {

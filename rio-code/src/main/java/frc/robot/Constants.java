@@ -235,7 +235,7 @@ public class Constants {
 
     public static final class Drive {
         public final static double alignmentTolerance = 0.02;
-        public final static double reefDistanceThreshold = 1.7;
+        public final static double reefDistanceThreshold = 3;
         public final static double coralStationDistanceThreshold = 1.5;
 
         public final static double translationAlignementPIDkP = 1.6;

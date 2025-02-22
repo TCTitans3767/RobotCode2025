@@ -270,8 +270,6 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             });
         }
         
-        field.setRobotPose(getPose());
-        
     }
 
     public boolean isNearToReef() {

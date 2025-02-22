@@ -66,7 +66,9 @@ public class Logger extends DogLog{
     }
 
     public static void logCameraEstimatedPose(String cameraName, Pose2d estimatedPose) {
-        DogLog.log(cameraName + "/Estimated Pose", estimatedPose);
+        DogLog.log(cameraName + "/Estimated Pose X", estimatedPose.getX());
+        DogLog.log(cameraName + "/Estimated Pose Y", estimatedPose.getY());
+        DogLog.log(cameraName + "/Estimated Pose Rotation", estimatedPose.getRotation().getDegrees());
     }
 
     public static void logCameraTagsVisible(String cameraName, int[] visibleTags) {

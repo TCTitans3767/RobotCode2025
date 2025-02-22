@@ -39,8 +39,8 @@ public class AlignWithRightReef extends Command{
     private double rotationVelocity;
 
     private int targetReefTag;
-    private Pose2d targetReefPose;
-    private Pose2d OdometryTargetPose;
+    private Pose2d targetReefPose = new Pose2d();
+    private Pose2d OdometryTargetPose = new Pose2d();
     private final Field2d field = drivetrain.getField();
     
     public AlignWithRightReef() {

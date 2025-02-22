@@ -20,6 +20,9 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.utils.Logger;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.utils.CommandTrigger;
+import frc.robot.utils.Logger;
+import frc.robot.utils.Utils;
 
 public class AlignWithLeftReef extends Command{
     
@@ -87,6 +90,8 @@ public class AlignWithLeftReef extends Command{
                 this.cancel();
                 break;
         }
+
+        Logger.log("Target Pose", targetReefPose.toString());
 
         odometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(-9), new Rotation2d(0)));
 
