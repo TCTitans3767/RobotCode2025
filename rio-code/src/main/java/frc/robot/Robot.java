@@ -80,6 +80,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
     buttonBox.periodic();
+    Logger.log("Selected Level", ButtonBox.getSelectedLevel());
     drivetrain.getField().setRobotPose(drivetrain.getPose());
   }
 
