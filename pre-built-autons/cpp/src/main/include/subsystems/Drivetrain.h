@@ -4,12 +4,12 @@
 #include <frc/drive/DifferentialDrive.h>
 #include <frc/Joystick.h>
 #include <rev/SparkMax.h>
+#include <rev/SparkLowLevel.h>
 
 class Drivetrain {
 public:
     Drivetrain();
     void Drive(double leftSpeed, double rightSpeed);
-    void ArcadeDrive(double speed, double rotation);
     void Stop();
     
 private:
