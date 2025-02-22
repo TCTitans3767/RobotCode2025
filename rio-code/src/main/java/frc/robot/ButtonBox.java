@@ -208,18 +208,29 @@ public class ButtonBox {
         selectedReefBranchTopic = new SelectedReefBranchTopic();
         selectedReefLevelTopic = new SelectedReefLevelTopic();
 
+        // Create Network Table Topics for each button
         for (ReefBranch branch : ReefBranch.values()) {
             ButtonTopic topic = new BranchButtonTopic(branch.toString());
             branchButtonTopics.put(branch, topic);
-
-            int buttonNumber = Constants.ButtonBoxButtons.branchButtonMap.get(branch);
-            BooleanEvent event = controller.button(buttonNumber, eventLoop).debounce(Constants.ButtonBoxButtons.debounceSeconds);
-            event.ifHigh(() -> { topic.setActive(true); });
         }
         for (ReefLevel level : ReefLevel.values()) {
             ButtonTopic topic = new LevelButtonTopic(level.toString());
             levelButtonTopics.put(level, topic);
 
+            int buttonNumber = Constants.ButtonBoxButtons.levelButtonMap.get(level);
+            BooleanEvent event = controller.button(buttonNumber, eventLoop).debounce(Constants.ButtonBoxButtons.debounceSeconds);
+            event.ifHigh(() -> { topic.setActive(true); });
+        }
+
+        // Bind buttons to each topic
+        for (ReefBranch branch : ReefBranch.values()) {
+            ButtonTopic topic = branchButtonTopics.get(branch);
+            int buttonNumber = Constants.ButtonBoxButtons.branchButtonMap.get(branch);
+            BooleanEvent event = controller.button(buttonNumber, eventLoop).debounce(Constants.ButtonBoxButtons.debounceSeconds);
+            event.ifHigh(() -> { topic.setActive(true); });
+        }
+        for (ReefLevel level : ReefLevel.values()) {
+            ButtonTopic topic = levelButtonTopics.get(level);
             int buttonNumber = Constants.ButtonBoxButtons.levelButtonMap.get(level);
             BooleanEvent event = controller.button(buttonNumber, eventLoop).debounce(Constants.ButtonBoxButtons.debounceSeconds);
             event.ifHigh(() -> { topic.setActive(true); });
