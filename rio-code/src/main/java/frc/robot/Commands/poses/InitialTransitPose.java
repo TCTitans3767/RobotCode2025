@@ -15,8 +15,11 @@ public class InitialTransitPose extends SequentialCommandGroup{
 
         addCommands(
             // new SetIntakePosition(0),
+            new SetElevatorPosition(Robot.elevator.getHeightMeters() + 0.06),
+            new SetArmAngle(-0.3),
             new SetElevatorPosition(0.5),
             new SetArmAngle(0.128),
+            new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.transit);}).ignoringDisable(true)
         );
 

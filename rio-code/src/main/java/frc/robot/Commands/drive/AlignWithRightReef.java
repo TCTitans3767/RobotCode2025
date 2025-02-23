@@ -18,6 +18,7 @@ import frc.robot.Constants.ReefTagIDs;
 import frc.robot.ButtonBox;
 import frc.robot.Robot;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.RobotMode;
 import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.utils.Logger;
 import frc.robot.subsystems.Drivetrain;
@@ -31,8 +32,8 @@ public class AlignWithRightReef extends Command{
     private final FieldCentric driveWithOdometry = new FieldCentric();
     private final Pigeon2 rotation = drivetrain.getPigeon2();
 
-    private final PIDController xController = new PIDController(Constants.Drive.translationAlignementPIDkP, Constants.Drive.translationAlignementPIDkI, Constants.Drive.translationAlignementPIDkD);
-    private final PIDController yController = new PIDController(Constants.Drive.translationAlignementPIDkP, Constants.Drive.translationAlignementPIDkI, Constants.Drive.translationAlignementPIDkD);
+    private final PIDController xController = new PIDController(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
+    private final PIDController yController = new PIDController(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
     private final PIDController headingController = new PIDController(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
     private double xVelocity;
@@ -41,7 +42,7 @@ public class AlignWithRightReef extends Command{
 
     private int targetReefTag;
     private Pose2d targetReefPose = new Pose2d();
-    private Pose2d OdometryTargetPose = new Pose2d();
+    private Pose2d targetPose = new Pose2d();
     private final Field2d field = drivetrain.getField();
     
     public AlignWithRightReef() {
@@ -89,18 +90,18 @@ public class AlignWithRightReef extends Command{
                 break;
         }
 
-        OdometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(9), new Rotation2d(0)));
+        targetPose = targetReefPose.transformBy(new Transform2d(Constants.Robot.chassisDepthMeters - Units.inchesToMeters(3), Units.inchesToMeters(7.5), targetReefPose.getRotation().plus(Rotation2d.k180deg)));
 
-        headingController.setTolerance(0.2);
-        headingController.setSetpoint(targetReefPose.getRotation().plus(Rotation2d.k180deg).getDegrees());
+        headingController.setTolerance(Constants.Drive.headingAlignmentTolerance);
+        headingController.setSetpoint(targetReefPose.getRotation().getDegrees());
         headingController.reset();
 
-        xController.setTolerance(Constants.Drive.alignmentTolerance);
-        yController.setTolerance(Constants.Drive.alignmentTolerance); 
+        xController.setTolerance(Constants.Drive.XAlignmentTolerance);
+        yController.setTolerance(Constants.Drive.YAlignmentTolerance);
 
         camera.setTagFilter(new int[]{targetReefTag});
 
-        Robot.robotMode.setDriveMode(DriveMode.RobotCentric);
+        Robot.robotMode.setDriveMode(DriveMode.FieldCentric);
         Robot.robotMode.setSwerveControl(() -> xVelocity, () -> yVelocity, () -> rotationVelocity);
 
     }
@@ -108,26 +109,12 @@ public class AlignWithRightReef extends Command{
     @Override
     public void execute() {
 
-        if (camera.tagIsVisible()) {
-            // drivetrain.setControl(driveWithTag.withRotationalRate(headingController.calculate(rotation.getYaw().getValueAsDouble()))
-            //                         .withVelocityX(-xController.calculate(camera.getZFromTag(), (Constants.Robot.chassisDepthMeters/2)))
-            //                         .withVelocityY(yController.calculate(camera.getXFromTag(), Units.inchesToMeters(-9)))
-            //                     );
-            xVelocity = -xController.calculate(camera.getZFromTag(), (Constants.Robot.chassisDepthMeters/2));
-            yVelocity = yController.calculate(camera.getXFromTag(), Units.inchesToMeters(-9));
-            rotationVelocity = headingController.calculate(rotation.getYaw().getValueAsDouble());
-        } else {
-            // drivetrain.setControl(driveWithOdometry.withRotationalRate(headingController.calculate(rotation.getYaw().getValueAsDouble()))
-            //                         .withVelocityX(xController.calculate(drivetrain.getPose().getX(), OdometryTargetPose.getX()))
-            //                         .withVelocityY(yController.calculate(drivetrain.getPose().getY(), OdometryTargetPose.getY()))                    
-            // );
-            xVelocity = xController.calculate(drivetrain.getPose().getX(), OdometryTargetPose.getX());
-            yVelocity = yController.calculate(drivetrain.getPose().getY(), OdometryTargetPose.getY());
-            rotationVelocity = headingController.calculate(rotation.getYaw().getValueAsDouble());
-        }
+        xVelocity = -xController.calculate(drivetrain.getPose().getX(), targetPose.getX()) + (xController.getError() < 0 ? Constants.Drive.XFeedForward : -Constants.Drive.XFeedForward);
+        yVelocity = -yController.calculate(drivetrain.getPose().getY(), targetPose.getY()) + (yController.getError() < 0 ? Constants.Drive.YFeedForward : -Constants.Drive.YFeedForward);
+        rotationVelocity = -headingController.calculate(drivetrain.getPose().getRotation().getDegrees()) + (headingController.getError() < 0 ? Constants.Drive.rotationalFeedForward : -Constants.Drive.rotationalFeedForward);
 
-        field.getObject("targetObject").setPose(OdometryTargetPose);
-        
+        Logger.log("Alignment/Is Aligned", isAligned());
+
     }
 
     @Override
@@ -135,13 +122,17 @@ public class AlignWithRightReef extends Command{
         return isAligned();
     }
 
+
     @Override
     public void end(boolean interrupted) {
+        Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
         camera.resetTagFilter();
     }
 
     public boolean isAligned() {
-        return xController.atSetpoint() && yController.atSetpoint() && headingController.atSetpoint();
+        Logger.log("Alignment/Distance X", xController.getError());
+        Logger.log("Alignment/Distance Y", yController.getError());
+        return xController.atSetpoint() && yController.atSetpoint();
     }
 
 }
