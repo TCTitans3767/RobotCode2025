@@ -1,6 +1,7 @@
 # what code needs to do
 
-![what code needs to do](detectorSpecs.jpg)
+<!-- ![what code needs to do](detectorSpecs.jpg) -->
+<img src="detectorSpecs.jpg" height="400" width="300">
 
 # aproxemet frequence steps
 
