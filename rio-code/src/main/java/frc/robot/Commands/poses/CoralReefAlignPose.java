@@ -6,12 +6,15 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.ButtonBox;
 import frc.robot.DashboardButtonBox;
 import frc.robot.Robot;
+import frc.robot.TriggerBoard;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.utils.Utils;
@@ -27,7 +30,10 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
 
         addCommands(
             new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
-            new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed),
+            new ParallelRaceGroup(
+                new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed),
+                new WaitCommand(2)
+            ),
             new InstantCommand(() -> {
                 Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.6));
             }),

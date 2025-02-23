@@ -237,17 +237,17 @@ public class Constants {
         public final static double reefDistanceThreshold = 3;
         public final static double coralStationDistanceThreshold = 1.5;
 
-        public final static double YAlignmentTolerance = 0.04;
-        public final static double YAlignementPIDkP = 1.05;
+        public final static double YAlignmentTolerance = 0.021;
+        public final static double YAlignementPIDkP = 1.07;
         public final static double YAlignementPIDkI = 0;
         public final static double YAlignementPIDkD = 0;
-        public final static double YFeedForward = 0.02;
+        public final static double YFeedForward = 0;
 
-        public final static double XAlignmentTolerance = 0.04;
-        public final static double XAlignementPIDkP = 0.65;
+        public final static double XAlignmentTolerance = 0.021;
+        public final static double XAlignementPIDkP = 0.67;
         public final static double XAlignementPIDkI = 0;
         public final static double XAlignementPIDkD = 0;
-        public final static double XFeedForward = 0.02;
+        public final static double XFeedForward = 0;
 
         public final static double rotationAlignementPIDkP = 0.014;
         public final static double rotationAlignementPIDkI = 0;

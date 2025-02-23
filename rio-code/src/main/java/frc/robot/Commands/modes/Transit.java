@@ -24,8 +24,10 @@ public class Transit extends Command{
             Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);
         }
         
-        if (Robot.joystick.leftTrigger().getAsBoolean()) {
+        if (Robot.joystick.a().getAsBoolean()) {
             Robot.climber.setSpeed(0.3);
+        } else if (Robot.joystick.y().getAsBoolean()) {
+            Robot.climber.setSpeed(-0.3);
         } else {
             Robot.climber.setSpeed(0);
         }
