@@ -13,11 +13,13 @@ import edu.wpi.first.epilogue.logging.EpilogueBackend;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.net.WebServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -51,7 +53,7 @@ public class Robot extends TimedRobot {
   public final static Manipulator manipulator = new Manipulator();
   public final static Intake intake = new Intake();
   public final static Arm arm = new Arm();
-  public final static Limelight limelight = new Limelight("limelight-front", new Pose3d(Units.inchesToMeters(-0.548596), Units.inchesToMeters(9.720909), Units.inchesToMeters(28.228805), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-10), Units.degreesToRadians(23))));
+  public final static Limelight limelight = new Limelight("limelight-front", new Pose3d(Units.inchesToMeters(-0.548596), Units.inchesToMeters(9.66), Units.inchesToMeters(28.228805), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-23), Units.degreesToRadians(10))));
   // public final static Limelight limelight = null;
   
   public final static CommandXboxController joystick = new CommandXboxController(0);
@@ -76,6 +78,11 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     addPeriodic(buttonBox::buttonBoxPeriodic, 0.1);
     SmartDashboard.putData(drivetrain.getField());
+  }
+
+  @Override
+  public void robotInit() {
+    WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
   }
 
   @Override

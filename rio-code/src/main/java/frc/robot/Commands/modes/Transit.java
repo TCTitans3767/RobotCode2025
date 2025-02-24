@@ -24,8 +24,10 @@ public class Transit extends Command{
             Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);
         }
         
-        if (Robot.joystick.leftTrigger().getAsBoolean()) {
+        if (Robot.joystick.a().getAsBoolean()) {
             Robot.climber.setSpeed(0.3);
+        } else if (Robot.joystick.y().getAsBoolean()) {
+            Robot.climber.setSpeed(-0.3);
         } else {
             Robot.climber.setSpeed(0);
         }
@@ -78,13 +80,19 @@ public class Transit extends Command{
             Robot.robotMode.setDriveMode(DriveMode.TeleopDrive);
         }
 
-        if (Robot.joystick.povUp().getAsBoolean()) {
-            Robot.robotMode.setDriveMode(DriveMode.Brake);
-            Robot.elevator.setSpeed(Robot.joystick.getRightY() * 0.2);
+        if (Robot.joystick.b().getAsBoolean()) {
+            Robot.intake.setWheelSpeed(0.8);
         } else {
-            Robot.elevator.setSpeed(0);
-            Robot.robotMode.setDriveMode(DriveMode.TeleopDrive);
+            Robot.intake.setWheelSpeed(0);
         }
+
+        // if (Robot.joystick.povUp().getAsBoolean()) {
+        //     Robot.robotMode.setDriveMode(DriveMode.Brake);
+        //     Robot.elevator.setSpeed(Robot.joystick.getRightY() * 0.2);
+        // } else {
+        //     Robot.elevator.setSpeed(0);
+        //     Robot.robotMode.setDriveMode(DriveMode.TeleopDrive);
+        // }
 
         // if (Robot.joystick.rightBumper().getAsBoolean()) {
         //     Robot.arm.setPositon(-0.45);

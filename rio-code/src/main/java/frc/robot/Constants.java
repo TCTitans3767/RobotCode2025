@@ -56,11 +56,11 @@ public class Constants {
 
     public static final class ReefTagIDs {
         public final static int blueReefAB = 18;
-        public final static int blueReefCD = 19;
+        public final static int blueReefCD = 17;
         public final static int blueReefEF = 22;
         public final static int blueReefGH = 21;
         public final static int blueReefIJ = 20;
-        public final static int blueReefKL = 17;
+        public final static int blueReefKL = 19;
 
         public final static int redReefAB = 7;
         public final static int redReefCD = 8;
@@ -177,7 +177,7 @@ public class Constants {
         public static final int ArmEncoderID = 16;
 
         // PID Constants
-        public final static double kP = 58;
+        public final static double kP = 68;
         public final static double kI = 0;
         public final static double kD = 0;
         public final static double kG = 0.4;
@@ -234,17 +234,27 @@ public class Constants {
     }
 
     public static final class Drive {
-        public final static double alignmentTolerance = 0.02;
         public final static double reefDistanceThreshold = 3;
         public final static double coralStationDistanceThreshold = 1.5;
 
-        public final static double translationAlignementPIDkP = 1.6;
-        public final static double translationAlignementPIDkI = 0;
-        public final static double translationAlignementPIDkD = 0;
+        public final static double YAlignmentTolerance = 0.021;
+        public final static double YAlignementPIDkP = 1.07;
+        public final static double YAlignementPIDkI = 0;
+        public final static double YAlignementPIDkD = 0;
+        public final static double YFeedForward = 0;
 
-        public final static double rotationAlignementPIDkP = 0.11;
+        public final static double XAlignmentTolerance = 0.021;
+        public final static double XAlignementPIDkP = 0.67;
+        public final static double XAlignementPIDkI = 0;
+        public final static double XAlignementPIDkD = 0;
+        public final static double XFeedForward = 0;
+
+        public final static double rotationAlignementPIDkP = 0.014;
         public final static double rotationAlignementPIDkI = 0;
         public final static double rotationAlignementPIDkD = 0;
+        public static final double rotationalFeedForward = 0.0015;
+        public final static double headingAlignmentTolerance = 0.01;
+
     }
 
     public final static class ButtonBoxBindings {
