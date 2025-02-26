@@ -22,8 +22,10 @@ public class Transit extends Command{
 
         if (TriggerBoard.isCoralButtonPressed() && !TriggerBoard.isCoralInManipulator()) {
             Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);
+            return;
         } else if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator()) {
             Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+            return;
         }
         
         if (Robot.joystick.a().getAsBoolean()) {

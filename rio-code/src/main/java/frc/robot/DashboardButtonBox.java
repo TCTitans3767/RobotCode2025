@@ -341,33 +341,33 @@ public class DashboardButtonBox {
         }
 
         if (L1Value.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L1): false) {
+            previousSelectedLevel = selectedLevel;
             selectedLevel = 1;
             L1.set(true);
             L2.set(false);
             L3.set(false);
             L4.set(false);
-            hasLevelChanged = true;
         } else if (L2Value.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L2) : false) {
+            previousSelectedLevel = selectedLevel;
             selectedLevel = 2;
             L1.set(false);
             L2.set(true);
             L3.set(false);
             L4.set(false);
-            hasLevelChanged = true;
         } else if (L3Value.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L3) : false) {
+            previousSelectedLevel = selectedLevel;
             selectedLevel = 3;
             L1.set(false);
             L2.set(false);
             L3.set(true);
             L4.set(false);
-            hasLevelChanged = true;
         } else if (L4Value.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L4) : false) {
+            previousSelectedLevel = selectedLevel;
             selectedLevel = 4;
             L1.set(false);
             L2.set(false);
             L3.set(false);
             L4.set(true);
-            hasLevelChanged = true;
         }
 
         if (Robot.buttonBoxController.isConnected() && Robot.buttonBoxController.getRawButton(Constants.ButtonBoxButtons.algaeEject)) {
@@ -395,7 +395,7 @@ public class DashboardButtonBox {
     }
 
     public static boolean hasSelectedLevelChanged() {
-        return hasLevelChanged;
+        return previousSelectedLevel != selectedLevel;
     }
 
 }
