@@ -13,11 +13,11 @@ import frc.robot.TriggerBoard;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.subsystems.RobotMode.DriveMode;
 
-public class EjectCoralPose extends SequentialCommandGroup{
+public class ScoreCoralPose extends SequentialCommandGroup{
 
     private double timer = 0;
 
-    public EjectCoralPose() {
+    public ScoreCoralPose() {
 
         addCommands(
             new InstantCommand(() -> {
