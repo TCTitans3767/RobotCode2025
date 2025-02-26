@@ -35,6 +35,14 @@ public class Transit extends Command{
         if (Robot.joystick.b().getAsBoolean()) {
             Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
         }
+
+        if (TriggerBoard.isAlgaeButtonPressed()) {
+            Robot.intake.setPivotPosition(0);
+        }
+
+        if (Robot.joystick.x().getAsBoolean()) {
+            Robot.intake.setPivotPosition(0.2);
+        }
         
         // if (TriggerBoard.isNearCoralStation() && !TriggerBoard.isCoralInManipulator()) {
         //     Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);

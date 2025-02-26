@@ -45,8 +45,8 @@ public class TransitPose extends Command{
 
     @Override
     public boolean isFinished() {
-        // return Robot.arm.atPosition() && Robot.elevator.atPosition();
-        return true;
+        return Robot.arm.isAtPosition() && Robot.elevator.isAtPosition();
+        // return true;
     }
 
     @Override

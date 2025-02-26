@@ -15,6 +15,8 @@ public class AlgaePickup extends Command{
     public void execute() {
         if (TriggerBoard.isAlgaeInIntake()) {
             Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+        } else if (TriggerBoard.isAlgaeButtonPressed()) {
+            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
         }
     }
 

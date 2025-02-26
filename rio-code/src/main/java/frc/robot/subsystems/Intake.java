@@ -12,8 +12,10 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -30,6 +32,8 @@ public class Intake extends SubsystemBase{
     private final CANrange intakeSensor;
     private final CANrangeConfiguration intakeSensorConfig;
 
+    private final CANcoder pivotEncoder;
+
     private double targetRotations = 0;
 
     public Intake() {
@@ -44,10 +48,15 @@ public class Intake extends SubsystemBase{
         rightWheelConfig.Feedback.SensorToMechanismRatio = Constants.Intake.wheelConversionFactor;
         rightWheelConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
+        pivotEncoder = new CANcoder(Constants.Intake.pivotEncoderID);
+
         pivotMotor = new TalonFX(Constants.Intake.pivotMotorID);
         pivotConfig = new TalonFXConfiguration();
-        pivotConfig.Feedback.SensorToMechanismRatio = Constants.Intake.pivotConversionFactor;
+        pivotConfig.Feedback.FeedbackRemoteSensorID = Constants.Intake.pivotEncoderID;
+        pivotConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
+        pivotConfig.Feedback.RotorToSensorRatio = Constants.Intake.pivotConversionFactor;
         pivotConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        
          
         // Slot 0 PID setup 
         slot0Config = new Slot0Configs();
@@ -80,6 +89,7 @@ public class Intake extends SubsystemBase{
         intakeSensor.getConfigurator().apply(intakeSensorConfig);
         
         pivotMotor.getConfigurator().apply(slot0Config);
+        pivotMotor.getConfigurator().apply(pivotConfig);
         pivotMotor.getConfigurator().apply(motionMagicConfig);
         pivotMotor.setNeutralMode(NeutralModeValue.Brake);
         pivotMotor.setPosition(0);
@@ -89,6 +99,7 @@ public class Intake extends SubsystemBase{
     @Override
     public void periodic() {
         Logger.log("Intake/Pivot Position", pivotMotor.getPosition().getValueAsDouble());
+        Logger.log("Intake/Pivot Absolute Position", pivotEncoder.getPosition().getValueAsDouble());
         // This method will be called once per scheduler run
     }
     
@@ -103,6 +114,7 @@ public class Intake extends SubsystemBase{
     public void setPivotPosition(double rotations) {
         targetRotations = rotations;
         pivotMotor.setControl(new MotionMagicVoltage(rotations));
+        Logger.log("Intake/Pivot Target", rotations);
     }
 
     public boolean isPivotAtPosition() {

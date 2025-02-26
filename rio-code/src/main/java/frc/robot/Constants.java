@@ -167,7 +167,7 @@ public class Constants {
 
         public static final double detectionRange = 0.066;
         public static final double sensorDebounce = 0.004;
-        public static final int sensorID = 18;
+        public static final int sensorID = 24;
     }
 
 
@@ -200,12 +200,13 @@ public class Constants {
         public final static int leftWheelMotorID = 21;
         public static final int rightWheelMotorID = 22;
         public final static int pivotMotorID = 20;
+        public final static int pivotEncoderID = 23;
 
         // PID Constants
         public final static double kP = 0;
         public final static double kI = 0;
         public final static double kD = 0;
-        public final static double kG = 0;
+        public final static double kG = 0.1;
         public final static double kV = 0;
         public final static double kS = 0;
 
@@ -217,13 +218,13 @@ public class Constants {
         public final static double angleMin = 0.1;
       
         // Conversion Factor
-        public final static double pivotConversionFactor = 85.5;
+        public final static double pivotConversionFactor = 1;
         public final static double wheelConversionFactor = 1;
         public static final double pivotErrorTolerance = 0.1;
 
         public static final double detectionRange = 0.1;
         public static final double sensorDebounce = 0.01;
-        public static final int sensorID = 19;
+        public static final int sensorID = 25;
 
     }
   
