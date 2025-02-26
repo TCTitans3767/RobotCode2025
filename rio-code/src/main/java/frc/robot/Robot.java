@@ -34,6 +34,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.RobotLights;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.utils.Logger;
 
@@ -60,6 +61,8 @@ public class Robot extends TimedRobot {
   public final static GenericHID buttonBoxController = new GenericHID(1);
   // public final static ButtonBox buttonBox = new ButtonBox(buttonBoxController);
   public final static DashboardButtonBox buttonBox = new DashboardButtonBox();
+
+  public final static RobotLights lights = new RobotLights();
 
   public final static RobotMode robotMode = new RobotMode();
 
