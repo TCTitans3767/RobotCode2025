@@ -20,14 +20,16 @@ public class Transit extends Command{
     @Override
     public void execute() {
 
-        if (TriggerBoard.isCoralButtonPressed()) {
+        if (TriggerBoard.isCoralButtonPressed() && !TriggerBoard.isCoralInManipulator()) {
             Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);
+        } else if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator()) {
+            Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
         }
         
         if (Robot.joystick.a().getAsBoolean()) {
-            Robot.climber.setSpeed(0.3);
+            Robot.climber.setSpeed(0.6);
         } else if (Robot.joystick.y().getAsBoolean()) {
-            Robot.climber.setSpeed(-0.3);
+            Robot.climber.setSpeed(-0.6);
         } else {
             Robot.climber.setSpeed(0);
         }
