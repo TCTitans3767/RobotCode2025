@@ -134,6 +134,10 @@ public class RobotContainer {
         // joystick.povDown().onTrue(new InstantCommand(() -> Robot.getArm().setSpeed(-0.1))).onFalse(new InstantCommand(() -> Robot.getArm().setSpeed(0)));
         // elevator.setDefaultCommand(new RunCommand(() -> {elevator.setSpeed((joystick.getLeftTriggerAxis() > 0.05) ? Math.pow(joystick.getLeftTriggerAxis(), 2) : -Math.pow(joystick.getRightTriggerAxis(), 2));}, elevator));
 
+        // joystick.x().whileTrue(RobotMode.alignWithLeftReef);
+
+        joystick.start().onTrue(Robot.robotMode.runOnce(() -> Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose)));
+
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 

@@ -1,0 +1,1225 @@
+{
+  "version": 1.0,
+  "grid_size": 15,
+  "tabs": [
+    {
+      "name": "Teleoperated",
+      "grid_layout": {
+        "layouts": [],
+        "containers": []
+      }
+    },
+    {
+      "name": "Autonomous",
+      "grid_layout": {
+        "layouts": [],
+        "containers": []
+      }
+    },
+    {
+      "name": "debug",
+      "grid_layout": {
+        "layouts": [
+          {
+            "title": "shooter",
+            "x": 1200.0,
+            "y": 120.0,
+            "width": 300.0,
+            "height": 720.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Distance To Speaker",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/shooter/Distance To Speaker",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Goal State",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/shooter/Goal State",
+                  "period": 0.06,
+                  "data_type": "string",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Last State",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/shooter/Last State",
+                  "period": 0.06,
+                  "data_type": "string",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Position Volts",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/shooter/Position Volts",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Voltage",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/shooter/Voltage",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "areEncodersSynched",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/shooter/areEncodersSynched",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "atGoal",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/shooter/atGoal",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "getAbsolutePosition",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/shooter/getAbsolutePosition",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "getPosition",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/shooter/getPosition",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "getWheelSpeed",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/shooter/getWheelSpeed",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "hasGamePiece",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/shooter/hasGamePiece",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              }
+            ]
+          },
+          {
+            "title": "intake",
+            "x": 900.0,
+            "y": 120.0,
+            "width": 300.0,
+            "height": 690.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "At Goal",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/intake/At Goal",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "Digital Sensor",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/intake/Digital Sensor",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "Has Game Piece",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/intake/Has Game Piece",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "Last State",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/intake/Last State",
+                  "period": 0.06,
+                  "data_type": "string",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Position Volts",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/intake/Position Volts",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Sensor Distance",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/intake/Sensor Distance",
+                  "period": 0.06,
+                  "data_type": "int",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Target Position",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/intake/Target Position",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "areEncodersSynched",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/intake/areEncodersSynched",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "getAbsolutePosition",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/intake/getAbsolutePosition",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "getPosition",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/intake/getPosition",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "goalState",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/intake/goalState",
+                  "period": 0.06,
+                  "data_type": "string",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "hasGamePiece",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/intake/hasGamePiece",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              }
+            ]
+          },
+          {
+            "title": "elevator",
+            "x": 630.0,
+            "y": 120.0,
+            "width": 270.0,
+            "height": 690.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Measured Position",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/elevator/Measured Position",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Velocity",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/elevator/Velocity",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "getPosition",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/elevator/getPosition",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "climber",
+            "x": 150.0,
+            "y": 120.0,
+            "width": 256.0,
+            "height": 690.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Climber Actual Output",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/climber/Climber Actual Output",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Climber Limit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/climber/Climber Limit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "Climber Target Output",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/climber/Climber Target Output",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "getPosition",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/climber/getPosition",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "drivetrain",
+            "x": 390.0,
+            "y": 120.0,
+            "width": 256.0,
+            "height": 690.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Omega",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/drivetrain/Omega",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "heading",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/drivetrain/heading",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "vX",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/drivetrain/vX",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "vY",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/drivetrain/vY",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "xPose",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/drivetrain/xPose",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "yPose",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/drivetrain/yPose",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              }
+            ]
+          }
+        ],
+        "containers": []
+      }
+    },
+    {
+      "name": "Tab 4",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Pose",
+            "x": 780.0,
+            "y": 0.0,
+            "width": 750.0,
+            "height": 540.0,
+            "type": "Field",
+            "properties": {
+              "topic": "/Pose",
+              "period": 0.06,
+              "field_game": "Reefscape",
+              "robot_width": 0.85,
+              "robot_length": 0.85,
+              "show_other_objects": true,
+              "show_trajectories": true,
+              "field_rotation": 0.0,
+              "robot_color": 4294198070,
+              "trajectory_color": 4294967295
+            }
+          },
+          {
+            "title": "field",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 780.0,
+            "height": 540.0,
+            "type": "Field",
+            "properties": {
+              "topic": "/SmartDashboard/field",
+              "period": 0.06,
+              "field_game": "Reefscape",
+              "robot_width": 0.85,
+              "robot_length": 0.85,
+              "show_other_objects": true,
+              "show_trajectories": true,
+              "field_rotation": 0.0,
+              "robot_color": 4294198070,
+              "trajectory_color": 4294967295
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tab 5",
+      "grid_layout": {
+        "layouts": [
+          {
+            "title": "Intake",
+            "x": 1200.0,
+            "y": 210.0,
+            "width": 270.0,
+            "height": 270.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Pivot Position",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/Intake/Pivot Position",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Elevator",
+            "x": 660.0,
+            "y": 0.0,
+            "width": 270.0,
+            "height": 480.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Height",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/Elevator/Height",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Motor Speed",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/Elevator/Motor Speed",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Motor Velocity",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/Elevator/Motor Velocity",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Set Height",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/Elevator/Set Height",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Is At Position",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/Elevator/Is At Position",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              }
+            ]
+          },
+          {
+            "title": "Arm",
+            "x": 930.0,
+            "y": 0.0,
+            "width": 270.0,
+            "height": 480.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Absolute Degrees",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/Arm/Absolute Degrees",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Motor Position",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/Arm/Motor Position",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Motor Speed",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/Arm/Motor Speed",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "Motor Velocity",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/Arm/Motor Velocity",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "at position",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/Arm/at position",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "Set Position",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/Arm/Set Position",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              }
+            ]
+          }
+        ],
+        "containers": [
+          {
+            "title": "current mode",
+            "x": 1200.0,
+            "y": 0.0,
+            "width": 270.0,
+            "height": 210.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/current mode",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Is Near Reef",
+            "x": 0.0,
+            "y": 15.0,
+            "width": 660.0,
+            "height": 135.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Robot/Drivetrain/Is Near Reef",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Target Pose",
+            "x": 0.0,
+            "y": 150.0,
+            "width": 660.0,
+            "height": 135.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Target Pose",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "robotPose",
+            "x": 0.0,
+            "y": 285.0,
+            "width": 660.0,
+            "height": 135.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Pose/robotPose",
+              "period": 0.06,
+              "data_type": "double[]",
+              "show_submit_button": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dashboard Button Box",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "A",
+            "x": 585.0,
+            "y": 495.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/A",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "B",
+            "x": 675.0,
+            "y": 495.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/B",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "C",
+            "x": 795.0,
+            "y": 420.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/C",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "D",
+            "x": 885.0,
+            "y": 330.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/D",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "E",
+            "x": 885.0,
+            "y": 195.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/E",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "F",
+            "x": 795.0,
+            "y": 105.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/F",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "G",
+            "x": 675.0,
+            "y": 30.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/G",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "H",
+            "x": 585.0,
+            "y": 30.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/H",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "I",
+            "x": 465.0,
+            "y": 120.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/I",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "J",
+            "x": 375.0,
+            "y": 210.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/J",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "K",
+            "x": 375.0,
+            "y": 330.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/K",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "L",
+            "x": 465.0,
+            "y": 435.0,
+            "width": 90.0,
+            "height": 105.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/L",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "L1",
+            "x": 630.0,
+            "y": 405.0,
+            "width": 90.0,
+            "height": 90.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/L1",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "L2",
+            "x": 630.0,
+            "y": 315.0,
+            "width": 90.0,
+            "height": 90.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/L2",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "L3",
+            "x": 630.0,
+            "y": 225.0,
+            "width": 90.0,
+            "height": 90.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/L3",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "L4",
+            "x": 630.0,
+            "y": 135.0,
+            "width": 90.0,
+            "height": 90.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/L4",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "Knock Off Algae",
+            "x": 735.0,
+            "y": 240.0,
+            "width": 135.0,
+            "height": 135.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/Knock Off Algae",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "Right Station Alignement",
+            "x": 1065.0,
+            "y": 15.0,
+            "width": 255.0,
+            "height": 135.0,
+            "type": "Toggle Switch",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/Left/Right Station Alignement",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "Climb",
+            "x": 45.0,
+            "y": 15.0,
+            "width": 255.0,
+            "height": 135.0,
+            "type": "Toggle Button",
+            "properties": {
+              "topic": "/Dashboard ButtonBox/Climb",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
+          },
+          {
+            "title": "Is Near Reef",
+            "x": 1065.0,
+            "y": 150.0,
+            "width": 255.0,
+            "height": 135.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Robot/Drivetrain/Is Near Reef",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

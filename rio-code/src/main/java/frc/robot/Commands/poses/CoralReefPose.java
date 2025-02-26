@@ -48,8 +48,8 @@ public class CoralReefPose extends SequentialCommandGroup{
     public class L4 extends ParallelCommandGroup{
         public L4() {
             addCommands(
-                new SetArmAngle(-0.45),
-                new SetElevatorPosition(1.06)
+                new SetArmAngle(-0.43),
+                new SetElevatorPosition(1.1)
             );
         }
     }

@@ -21,8 +21,8 @@ public class AlignWithCoralStation extends Command{
 
     private final Drivetrain drivetrain = Robot.drivetrain;
 
-    private final PIDController xController = new PIDController(Constants.Drive.translationAlignementPIDkP, Constants.Drive.translationAlignementPIDkI, Constants.Drive.translationAlignementPIDkD);
-    private final PIDController yController = new PIDController(Constants.Drive.translationAlignementPIDkP, Constants.Drive.translationAlignementPIDkI, Constants.Drive.translationAlignementPIDkD);
+    private final PIDController xController = new PIDController(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
+    private final PIDController yController = new PIDController(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
     private final PIDController headingController = new PIDController(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
     private double xVelocity;
@@ -76,11 +76,11 @@ public class AlignWithCoralStation extends Command{
 
         xController.reset();
         xController.setSetpoint(targetPose.getTranslation().getX());
-        xController.setTolerance(Constants.Drive.alignmentTolerance);
+        xController.setTolerance(Constants.Drive.headingAlignmentTolerance);
 
         yController.reset();
         yController.setSetpoint(targetPose.getTranslation().getY());
-        yController.setTolerance(Constants.Drive.alignmentTolerance);
+        yController.setTolerance(Constants.Drive.headingAlignmentTolerance);
 
         Robot.robotMode.setDriveMode(DriveMode.RobotCentric);
         Robot.robotMode.setSwerveControl(() -> xVelocity, () -> yVelocity, () -> rotationVelocity);

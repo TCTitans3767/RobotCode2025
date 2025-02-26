@@ -18,6 +18,7 @@ import frc.robot.Constants.ReefTagIDs;
 import frc.robot.ButtonBox;
 import frc.robot.Robot;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.RobotMode;
 import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.utils.Logger;
 import frc.robot.subsystems.Drivetrain;
@@ -31,8 +32,8 @@ public class AlignWithRightReef extends Command{
     private final FieldCentric driveWithOdometry = new FieldCentric();
     private final Pigeon2 rotation = drivetrain.getPigeon2();
 
-    private final PIDController xController = new PIDController(Constants.Drive.translationAlignementPIDkP, Constants.Drive.translationAlignementPIDkI, Constants.Drive.translationAlignementPIDkD);
-    private final PIDController yController = new PIDController(Constants.Drive.translationAlignementPIDkP, Constants.Drive.translationAlignementPIDkI, Constants.Drive.translationAlignementPIDkD);
+    private final PIDController xController = new PIDController(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
+    private final PIDController yController = new PIDController(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
     private final PIDController headingController = new PIDController(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
     private double xVelocity;
@@ -40,8 +41,9 @@ public class AlignWithRightReef extends Command{
     private double rotationVelocity;
 
     private int targetReefTag;
+    private Rotation2d targetReefRotation;
     private Pose2d targetReefPose = new Pose2d();
-    private Pose2d OdometryTargetPose = new Pose2d();
+    private Pose2d targetPose = new Pose2d();
     private final Field2d field = drivetrain.getField();
     
     public AlignWithRightReef() {
@@ -55,52 +57,60 @@ public class AlignWithRightReef extends Command{
         switch (DashboardButtonBox.getSelectedReefBranch()) {
             case B:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
+                targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(0)) : new Rotation2d();
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefAB : ReefTagIDs.redReefAB;
                 break;
         
             case D:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefCD) : Limelight.getTagPose(ReefTagIDs.redReefCD);
+                targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(60)) : new Rotation2d();
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefCD : ReefTagIDs.redReefCD;
                 break;
 
             case F:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefEF) : Limelight.getTagPose(ReefTagIDs.redReefEF);
+                targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(120)) : new Rotation2d();
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefEF : ReefTagIDs.redReefEF;
                 break;
 
             case H:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefGH) : Limelight.getTagPose(ReefTagIDs.redReefGH);
+                targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(180)) : new Rotation2d();
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefGH : ReefTagIDs.redReefGH;
                 break;
 
             case J:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefIJ) : Limelight.getTagPose(ReefTagIDs.redReefIJ);
+                targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(-120)) : new Rotation2d();
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefIJ : ReefTagIDs.redReefIJ;
                 break;
 
             case L:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefKL) : Limelight.getTagPose(ReefTagIDs.redReefKL);
+                targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(-60)) : new Rotation2d();
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefKL : ReefTagIDs.redReefKL;
                 break;
-                
+
             default:
-                Logger.logSystemError("AlignWithRightReef: Invalid branch: " + DashboardButtonBox.getSelectedReefBranch());
+                Logger.logSystemError("AlignWithLeftReef: Invalid branch: " + DashboardButtonBox.getSelectedReefBranch());
                 this.cancel();
                 break;
         }
 
-        OdometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(9), new Rotation2d(0)));
+        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(9.86), new Rotation2d())).getTranslation(), targetReefRotation);
 
-        headingController.setTolerance(0.2);
-        headingController.setSetpoint(targetReefPose.getRotation().plus(Rotation2d.k180deg).getDegrees());
+        Logger.log("Target Pose", targetPose.toString());
+
+        headingController.setTolerance(Constants.Drive.headingAlignmentTolerance);
+        headingController.setSetpoint(targetPose.getRotation().getDegrees());
         headingController.reset();
 
-        xController.setTolerance(Constants.Drive.alignmentTolerance);
-        yController.setTolerance(Constants.Drive.alignmentTolerance); 
+        xController.setTolerance(Constants.Drive.XAlignmentTolerance);
+        yController.setTolerance(Constants.Drive.YAlignmentTolerance);
 
         camera.setTagFilter(new int[]{targetReefTag});
 
-        Robot.robotMode.setDriveMode(DriveMode.RobotCentric);
+        Robot.robotMode.setDriveMode(DriveMode.FieldCentric);
         Robot.robotMode.setSwerveControl(() -> xVelocity, () -> yVelocity, () -> rotationVelocity);
 
     }
@@ -108,26 +118,12 @@ public class AlignWithRightReef extends Command{
     @Override
     public void execute() {
 
-        if (camera.tagIsVisible()) {
-            // drivetrain.setControl(driveWithTag.withRotationalRate(headingController.calculate(rotation.getYaw().getValueAsDouble()))
-            //                         .withVelocityX(-xController.calculate(camera.getZFromTag(), (Constants.Robot.chassisDepthMeters/2)))
-            //                         .withVelocityY(yController.calculate(camera.getXFromTag(), Units.inchesToMeters(-9)))
-            //                     );
-            xVelocity = -xController.calculate(camera.getZFromTag(), (Constants.Robot.chassisDepthMeters/2));
-            yVelocity = yController.calculate(camera.getXFromTag(), Units.inchesToMeters(-9));
-            rotationVelocity = headingController.calculate(rotation.getYaw().getValueAsDouble());
-        } else {
-            // drivetrain.setControl(driveWithOdometry.withRotationalRate(headingController.calculate(rotation.getYaw().getValueAsDouble()))
-            //                         .withVelocityX(xController.calculate(drivetrain.getPose().getX(), OdometryTargetPose.getX()))
-            //                         .withVelocityY(yController.calculate(drivetrain.getPose().getY(), OdometryTargetPose.getY()))                    
-            // );
-            xVelocity = xController.calculate(drivetrain.getPose().getX(), OdometryTargetPose.getX());
-            yVelocity = yController.calculate(drivetrain.getPose().getY(), OdometryTargetPose.getY());
-            rotationVelocity = headingController.calculate(rotation.getYaw().getValueAsDouble());
-        }
+        xVelocity = xController.calculate(drivetrain.getPose().getX(), targetPose.getX()) + (xController.getError() < 0 ? Constants.Drive.XFeedForward : -Constants.Drive.XFeedForward);
+        yVelocity = yController.calculate(drivetrain.getPose().getY(), targetPose.getY()) + (yController.getError() < 0 ? Constants.Drive.YFeedForward : -Constants.Drive.YFeedForward);
+        rotationVelocity = headingController.calculate(drivetrain.getPose().getRotation().getDegrees()) + (headingController.getError() < 0 ? Constants.Drive.rotationalFeedForward : -Constants.Drive.rotationalFeedForward);
 
-        field.getObject("targetObject").setPose(OdometryTargetPose);
-        
+        Logger.log("Alignment/Is Aligned", isAligned());
+
     }
 
     @Override
@@ -135,13 +131,17 @@ public class AlignWithRightReef extends Command{
         return isAligned();
     }
 
+
     @Override
     public void end(boolean interrupted) {
+        Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
         camera.resetTagFilter();
     }
 
     public boolean isAligned() {
-        return xController.atSetpoint() && yController.atSetpoint() && headingController.atSetpoint();
+        Logger.log("Alignment/Distance X", xController.getError());
+        Logger.log("Alignment/Distance Y", yController.getError());
+        return xController.atSetpoint() && yController.atSetpoint();
     }
 
 }

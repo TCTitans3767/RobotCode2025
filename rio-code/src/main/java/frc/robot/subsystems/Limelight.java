@@ -17,6 +17,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -44,79 +45,59 @@ public class Limelight extends SubsystemBase{
     private static AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
 
     private int startupEstimations = 0;
+
+    PoseEstimate estimatedPose;
+    double runningTimerStart = 0;
     
     public Limelight(String limelightName, Pose3d robotToLimelight) {
+        System.out.println("started limelight initialization");
+
         this.limelightName = limelightName;
         this.robotToLimelight = robotToLimelight;
 
-        try {
-            LimelightHelpers.setCameraPose_RobotSpace(
-                limelightName, 
-                robotToLimelight.getX(),
-                robotToLimelight.getY(), 
-                robotToLimelight.getZ(), 
-                robotToLimelight.getRotation().getX(), 
-                robotToLimelight.getRotation().getY(), 
-                robotToLimelight.getRotation().getZ()
-            );
-            robotToLimelightSet = true;
-        } catch (Exception e) {
-            System.out.println("failed to set camera pose");
-            Logger.logFault(limelightName + " failed to set camera pose");
-            robotToLimelightSet = false;
-        }
+        LimelightHelpers.setCameraPose_RobotSpace(
+            limelightName, 
+            robotToLimelight.getX(),
+            robotToLimelight.getY(), 
+            robotToLimelight.getZ(), 
+            Units.radiansToDegrees(robotToLimelight.getRotation().getX()), 
+            Units.radiansToDegrees(robotToLimelight.getRotation().getY()), 
+            Units.radiansToDegrees(robotToLimelight.getRotation().getZ())
+        );
+        robotToLimelightSet = true;
 
         drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 999999));
+
+        System.out.println("finished limelight initialization");
+
+        runningTimerStart = Timer.getFPGATimestamp();
 
     }
 
     @Override
     public void periodic() {
 
-        if (robotToLimelightSet == false) {
-            try {
-                LimelightHelpers.setCameraPose_RobotSpace(
-                    limelightName, 
-                    robotToLimelight.getX(),
-                    robotToLimelight.getY(), 
-                    robotToLimelight.getZ(), 
-                    robotToLimelight.getRotation().getX(), 
-                    robotToLimelight.getRotation().getY(), 
-                    robotToLimelight.getRotation().getZ()
-                );
-                Logger.clearFault(limelightName + " failed to set camera pose");
-                robotToLimelightSet = true;
-                initialPoseEstimates();
-            } catch (Exception e) {
-                System.out.println("failed to set camera pose");
-                Logger.logFault(limelightName + " failed to set camera pose");
-                robotToLimelightSet = false;
-                doEstimation = false;
-            }
-        }
-
         goodEstimationFrame = true;
 
-        if (LimelightHelpers.getIMUData(limelightName).Yaw != drivetrain.getPigeon2().getYaw().getValueAsDouble()) {
-            currentIMUMode = 1;
-            LimelightHelpers.SetIMUMode(limelightName, 1);
-            LimelightHelpers.SetRobotOrientation(limelightName, 
-            drivetrain.getPigeon2().getYaw().getValueAsDouble(),
-                0, 
-                0, 
-                0, 
-                0,
-                0
-            );
+        LimelightHelpers.SetIMUMode(limelightName, 1);
+        LimelightHelpers.SetRobotOrientation(limelightName, 
+            drivetrain.getPose().getRotation().getDegrees(),
+            0, 
+            0, 
+            0, 
+            0,
+            0
+        );
+
+        if (Timer.getFPGATimestamp() - runningTimerStart >= 10) {
+            estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
         } else {
-            if (currentIMUMode != 2) {
-                currentIMUMode = 2;
-                LimelightHelpers.SetIMUMode(limelightName, 2);
-            }
+            estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
         }
 
-
-        PoseEstimate estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
+        if (estimatedPose == null) {
+            return;
+        }
         if (Math.abs(drivetrain.getPigeon2().getAngularVelocityZDevice().getValueAsDouble()) > 720) {
             goodEstimationFrame = false;
         }
@@ -185,8 +166,11 @@ public class Limelight extends SubsystemBase{
             int numTries = 0;
             while (startupEstimations < 10 && numTries < 40) {
                 PoseEstimate result = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+                if (result == null) {
+                    continue;
+                }
                 if (result.tagCount == 1) {
-                    if (result.rawFiducials[0].ambiguity > 0.3) {
+                    if (result.rawFiducials[0].ambiguity > 0.4) {
                         numTries++;
                         continue;
                     }
@@ -206,7 +190,7 @@ public class Limelight extends SubsystemBase{
                 startupEstimations++;
             }
     
-            resetIMU(drivetrain.getRotation3d());
+            // resetIMU(drivetrain.getRotation3d());
             drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 99999));
             turnOnAprilTags();
         }

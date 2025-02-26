@@ -138,6 +138,7 @@ public class RobotMode extends SubsystemBase {
 
         Logger.log("current mode", currentMode.getName());
         Logger.log("Drivetrain/Is Near Reef", Robot.drivetrain.isNearToReef());
+        Logger.log("Drivetrain/Current Yaw", Robot.drivetrain.getPose().getRotation().getDegrees());
 
         if (driveMode != null) {
             switch (driveMode) {
