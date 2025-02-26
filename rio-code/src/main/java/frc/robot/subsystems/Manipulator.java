@@ -69,6 +69,7 @@ public class Manipulator extends SubsystemBase{
         // This method will be called once per scheduler run
         Logger.log("Manipulator/Has Game Piece", hasGamePiece());
         Logger.log("Manipulator/Sensor Measured Distance", manipulatorSensor.getDistance().getValueAsDouble());
+        Logger.log("Manipulator/Wheel Speed", getTorque());
     }
 
     public double torqueCurrent() {
@@ -78,6 +79,10 @@ public class Manipulator extends SubsystemBase{
     public void setSpeed(double speed) {
         // Move the manipulator at the given speed
         motor.set(speed);
+    }
+
+    public double getTorque() {
+        return motor.getTorqueCurrent().getValueAsDouble();
     }
 
     public boolean hasGamePiece() {

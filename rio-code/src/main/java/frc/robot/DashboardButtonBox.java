@@ -169,7 +169,7 @@ public class DashboardButtonBox {
     public void buttonBoxPeriodic() {
         hasLevelChanged = false;
 
-        if (AValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.A)) {
+        if (AValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.A) : false) {
             selectedReef = ReefPosition.A;
             A.set(true);
             B.set(false);
@@ -183,7 +183,7 @@ public class DashboardButtonBox {
             J.set(false);
             K.set(false);
             L.set(false);
-        } else if (BValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.B)) {
+        } else if (BValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.B) : false) {
             selectedReef = ReefPosition.B;
             A.set(false);
             B.set(true);
@@ -197,7 +197,7 @@ public class DashboardButtonBox {
             J.set(false);
             K.set(false);
             L.set(false);
-        } else if (CValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.C)) {
+        } else if (CValue.getAndSet(false) != false ||  Robot.buttonBoxController.isConnected() ?  Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.C) : false) {
             selectedReef = ReefPosition.C;
             A.set(false);
             B.set(false);
@@ -211,7 +211,7 @@ public class DashboardButtonBox {
             J.set(false);
             K.set(false);
             L.set(false);
-        } else if (DValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.D)) {
+        } else if (DValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.D) : false) {
             selectedReef = ReefPosition.D;
             A.set(false);
             B.set(false);
@@ -225,7 +225,7 @@ public class DashboardButtonBox {
             J.set(false);
             K.set(false);
             L.set(false);
-        } else if (EValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.E)) {
+        } else if (EValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.E) : false) {
             selectedReef = ReefPosition.E;
             A.set(false);
             B.set(false);
@@ -239,7 +239,7 @@ public class DashboardButtonBox {
             J.set(false);
             K.set(false);
             L.set(false);
-        } else if (FValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.F)) {
+        } else if (FValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.F) : false) {
             selectedReef = ReefPosition.F;
             A.set(false);
             B.set(false);
@@ -253,7 +253,7 @@ public class DashboardButtonBox {
             J.set(false);
             K.set(false);
             L.set(false);
-        } else if (GValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.G)) {
+        } else if (GValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.G) : false) {
             selectedReef = ReefPosition.G;
             A.set(false);
             B.set(false);
@@ -267,7 +267,7 @@ public class DashboardButtonBox {
             J.set(false);
             K.set(false);
             L.set(false);
-        } else if (HValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.H)) {
+        } else if (HValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.H) : false) {
             selectedReef = ReefPosition.H;
             A.set(false);
             B.set(false);
@@ -281,7 +281,7 @@ public class DashboardButtonBox {
             J.set(false);
             K.set(false);
             L.set(false);
-        } else if (IValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.I)) {
+        } else if (IValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.I) : false) {
             selectedReef = ReefPosition.I;
             A.set(false);
             B.set(false);
@@ -295,7 +295,7 @@ public class DashboardButtonBox {
             J.set(false);
             K.set(false);
             L.set(false);
-        } else if (JValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.J)) {
+        } else if (JValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.J) : false) {
             selectedReef = ReefPosition.J;
             A.set(false);
             B.set(false);
@@ -309,7 +309,7 @@ public class DashboardButtonBox {
             J.set(true);
             K.set(false);
             L.set(false);
-        } else if (KValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.K)) {
+        } else if (KValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.K) : false) {
             selectedReef = ReefPosition.K;
             A.set(false);
             B.set(false);
@@ -323,7 +323,7 @@ public class DashboardButtonBox {
             J.set(false);
             K.set(true);
             L.set(false);
-        } else if (LValue.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L)) {
+        } else if (LValue.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L) : false) {
             selectedReef = ReefPosition.L;
             A.set(false);
             B.set(false);
@@ -339,28 +339,28 @@ public class DashboardButtonBox {
             L.set(true);
         }
 
-        if (L1Value.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L1)) {
+        if (L1Value.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L1): false) {
             selectedLevel = 1;
             L1.set(true);
             L2.set(false);
             L3.set(false);
             L4.set(false);
             hasLevelChanged = true;
-        } else if (L2Value.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L2)) {
+        } else if (L2Value.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L2) : false) {
             selectedLevel = 2;
             L1.set(false);
             L2.set(true);
             L3.set(false);
             L4.set(false);
             hasLevelChanged = true;
-        } else if (L3Value.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L3)) {
+        } else if (L3Value.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L3) : false) {
             selectedLevel = 3;
             L1.set(false);
             L2.set(false);
             L3.set(true);
             L4.set(false);
             hasLevelChanged = true;
-        } else if (L4Value.getAndSet(false) != false || Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L4)) {
+        } else if (L4Value.getAndSet(false) != false || Robot.buttonBoxController.isConnected() ? Robot.buttonBoxController.getRawButton(Constants.ButtonBoxBindings.L4) : false) {
             selectedLevel = 4;
             L1.set(false);
             L2.set(false);
