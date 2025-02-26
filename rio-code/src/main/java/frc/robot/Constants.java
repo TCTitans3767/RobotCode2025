@@ -237,6 +237,7 @@ public class Constants {
         public final static double reefDistanceThreshold = 3;
         public final static double coralStationDistanceThreshold = 1.5;
 
+
         public final static double YAlignmentTolerance = 0.02;
         public final static double YAlignementPIDkP = 1.07;
         public final static double YAlignementPIDkI = 0;
