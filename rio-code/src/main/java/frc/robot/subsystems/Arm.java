@@ -95,6 +95,10 @@ public class Arm extends SubsystemBase {
       return MathUtil.isNear(targetRotations, armMotor.getPosition().getValueAsDouble(), Constants.Arm.errorTolerance);
     }
 
+    public double getMotionMagicError() {
+      return armMotor.getClosedLoopError().getValueAsDouble();
+    }
+
     public double getAngleDegrees() {
       return Units.rotationsToDegrees(armEncoder.getPosition().getValueAsDouble());
     }

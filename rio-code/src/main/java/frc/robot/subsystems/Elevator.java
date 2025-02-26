@@ -116,6 +116,10 @@ public class Elevator extends SubsystemBase{
         return MathUtil.isNear(targetRotations, leftMotor.getPosition().getValueAsDouble(), Constants.Elevator.errorTolerance);
     }
 
+    public boolean isAtPosition(double meters) {
+        return MathUtil.isNear(meters * Constants.Elevator.RotationsPerMeter, leftMotor.getPosition().getValueAsDouble(), Constants.Elevator.errorTolerance);
+    }
+
     public double getHeightMeters() {
         return leftMotor.getPosition().getValueAsDouble() / Constants.Elevator.RotationsPerMeter;
     }
@@ -155,5 +159,9 @@ public class Elevator extends SubsystemBase{
 
     public double getSpeed() {
         return leftMotor.get();
+    }
+
+    public double getPosition() {
+        return leftMotor.getPosition().getValueAsDouble() / Constants.Elevator.RotationsPerMeter;
     }
 }

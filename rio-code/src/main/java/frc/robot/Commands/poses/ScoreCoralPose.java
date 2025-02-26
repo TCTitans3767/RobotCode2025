@@ -35,7 +35,7 @@ public class ScoreCoralPose extends SequentialCommandGroup{
             new WaitCommand(0.5),
             new InstantCommand(() -> {
                 Robot.manipulator.setSpeed(0);
-                Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+                Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
             }
         ));
 
