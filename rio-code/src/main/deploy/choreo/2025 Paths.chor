@@ -4,7 +4,22 @@
  "type":"Swerve",
  "variables":{
   "expressions":{},
-  "poses":{}
+  "poses":{
+   "coralStationLeft":{
+    "x":{
+     "exp":"1.31 m",
+     "val":1.31
+    },
+    "y":{
+     "exp":"0.68 m",
+     "val":0.68
+    },
+    "heading":{
+     "exp":"0.942 rad",
+     "val":0.942
+    }
+   }
+  }
  },
  "config":{
   "frontLeft":{
@@ -28,16 +43,16 @@
    }
   },
   "mass":{
-   "exp":"60 lbs",
-   "val":27.2155422
+   "exp":"115 lbs",
+   "val":52.16312255
   },
   "inertia":{
    "exp":"6 kg m ^ 2",
    "val":6.0
   },
   "gearing":{
-   "exp":"5.36",
-   "val":5.36
+   "exp":"5.9",
+   "val":5.9
   },
   "radius":{
    "exp":"2 in",
