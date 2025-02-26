@@ -25,13 +25,17 @@ public class Transit extends Command{
         }
         
         if (Robot.joystick.a().getAsBoolean()) {
-            Robot.climber.setSpeed(0.3);
+            Robot.climber.setSpeed(0.6);
         } else if (Robot.joystick.y().getAsBoolean()) {
-            Robot.climber.setSpeed(-0.3);
+            Robot.climber.setSpeed(-0.6);
         } else {
             Robot.climber.setSpeed(0);
         }
 
+        if (Robot.joystick.b().getAsBoolean()) {
+            Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
+        }
+        
         // if (TriggerBoard.isNearCoralStation() && !TriggerBoard.isCoralInManipulator()) {
         //     Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);
         //     return;
@@ -66,26 +70,34 @@ public class Transit extends Command{
         //     Robot.intake.setPivotPosition(0.45);
         // }
 
-        if (Robot.joystick.rightBumper().getAsBoolean()) {
-            Robot.intake.setWheelSpeed(0.75);
-        } else {
-            Robot.intake.setWheelSpeed(0);
-        }
+        // if (Robot.joystick.rightBumper().getAsBoolean()) {
+        //     Robot.intake.setWheelSpeed(0.75);
+        // } else {
+        //     Robot.intake.setWheelSpeed(0);
+        // }
 
-        if (Robot.joystick.povDown().getAsBoolean()) {
-            Robot.robotMode.setDriveMode(DriveMode.Brake);
-            Robot.intake.setPivotSpeed(Robot.joystick.getRightY() * 0.3);
-        } else {
-            Robot.intake.setPivotSpeed(0);
-            Robot.robotMode.setDriveMode(DriveMode.TeleopDrive);
-        }
+        // if (Robot.joystick.povDown().getAsBoolean()) {
+        //     Robot.robotMode.setDriveMode(DriveMode.Brake);
+        //     Robot.intake.setPivotSpeed(Robot.joystick.getRightY() * 0.3);
+        // } else {
+        //     Robot.intake.setPivotSpeed(0);
+        //     Robot.robotMode.setDriveMode(DriveMode.TeleopDrive);
+        // }
 
-        if (Robot.joystick.b().getAsBoolean()) {
-            Robot.intake.setWheelSpeed(0.8);
-        } else {
-            Robot.intake.setWheelSpeed(0);
-        }
+        // if (Robot.joystick.b().getAsBoolean()) {
+        //     Robot.intake.setWheelSpeed(0.8);
+        // } else {
+        //     Robot.intake.setWheelSpeed(0);
+        // }
 
+        // if (Robot.joystick.povUp().getAsBoolean()) {
+        //     Robot.robotMode.setDriveMode(DriveMode.Brake);
+        //     Robot.elevator.setSpeed(Robot.joystick.getRightY() * 0.2);
+        // } else {
+        //     Robot.elevator.setSpeed(0);
+        //     Robot.robotMode.setDriveMode(DriveMode.TeleopDrive);
+        // }
+  
         // if (Robot.joystick.povUp().getAsBoolean()) {
         //     Robot.robotMode.setDriveMode(DriveMode.Brake);
         //     Robot.elevator.setSpeed(Robot.joystick.getRightY() * 0.2);

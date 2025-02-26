@@ -185,8 +185,8 @@ public class Constants {
         public final static double kS = 0.9;
       
         // Motion Magic Constants
-        public final static double maxVelocity = 4;
-        public final static double maxAcceleration = 3.5;
+        public final static double maxVelocity = 6;
+        public final static double maxAcceleration = 4.5;
         public final static double rotationsMax = 0.6;
         public final static double rotationsMin = -0.6;
       
@@ -237,13 +237,14 @@ public class Constants {
         public final static double reefDistanceThreshold = 3;
         public final static double coralStationDistanceThreshold = 1.5;
 
-        public final static double YAlignmentTolerance = 0.021;
+
+        public final static double YAlignmentTolerance = 0.02;
         public final static double YAlignementPIDkP = 1.07;
         public final static double YAlignementPIDkI = 0;
         public final static double YAlignementPIDkD = 0;
         public final static double YFeedForward = 0;
 
-        public final static double XAlignmentTolerance = 0.021;
+        public final static double XAlignmentTolerance = 0.02;
         public final static double XAlignementPIDkP = 0.67;
         public final static double XAlignementPIDkI = 0;
         public final static double XAlignementPIDkD = 0;
