@@ -18,6 +18,7 @@ import frc.robot.utils.Utils.ReefPosition;
 public class DashboardButtonBox {
 
     private static ReefPosition selectedReef = ReefPosition.A;
+    private static int previousSelectedLevel = 0;
     private static int selectedLevel = 0;
     private static boolean hasLevelChanged = false;
 
@@ -367,6 +368,12 @@ public class DashboardButtonBox {
             L3.set(false);
             L4.set(true);
             hasLevelChanged = true;
+        }
+
+        if (Robot.buttonBoxController.isConnected() && Robot.buttonBoxController.getRawButton(Constants.ButtonBoxButtons.algaeEject)) {
+            knockOffAlgae.set(true);
+        } else if (Robot.buttonBoxController.isConnected() && !Robot.buttonBoxController.getRawButton(Constants.ButtonBoxButtons.algaeEject)) {
+            knockOffAlgae.set(false);
         }
 
     }
