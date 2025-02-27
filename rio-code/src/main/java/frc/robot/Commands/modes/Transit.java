@@ -63,13 +63,10 @@ public class Transit extends Command{
             Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
         }
 
-        // if (Robot.joystick.povRight().getAsBoolean()) {
-        //     Robot.intake.setPivotPosition(0);
-        // }
+        if (TriggerBoard.isClimbControllerButtonPressed() && TriggerBoard.isClimbButtonBoxButtonPressed() && TriggerBoard.isEndGame()) {
+            Robot.robotMode.setCurrentMode(RobotMode.climbPose);
+        }
 
-        // if (Robot.joystick.povLeft().getAsBoolean()) {
-        //     Robot.intake.setPivotPosition(0.2);
-        // }
         
         // if (TriggerBoard.isNearCoralStation() && !TriggerBoard.isCoralInManipulator()) {
         //     Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);

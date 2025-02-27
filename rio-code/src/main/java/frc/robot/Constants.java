@@ -278,6 +278,7 @@ public class Constants {
         public final static int L2 = 14;
         public final static int L3 = 15;
         public final static int L4 = 16;
+        public static final int climb = 0;
     }
 
 }

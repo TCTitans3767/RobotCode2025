@@ -24,18 +24,22 @@ import frc.robot.Commands.drive.AlignWithRightReef;
 import frc.robot.Commands.drive.ControllerDrive;
 import frc.robot.Commands.elevator.ZeroElevator;
 import frc.robot.Commands.modes.AlgaePickup;
+import frc.robot.Commands.modes.Climb;
 import frc.robot.Commands.modes.CoralFloor;
 import frc.robot.Commands.modes.CoralReef;
 import frc.robot.Commands.modes.CoralReefAligned;
 import frc.robot.Commands.modes.CoralStation;
+import frc.robot.Commands.modes.FinalClimb;
 import frc.robot.Commands.modes.Transit;
 import frc.robot.Commands.poses.AlgaePickupPose;
+import frc.robot.Commands.poses.ClimbPose;
 import frc.robot.Commands.poses.CoralFloorPose;
 import frc.robot.Commands.poses.CoralRecievedPose;
 import frc.robot.Commands.poses.CoralReefAlignPose;
 import frc.robot.Commands.poses.CoralReefPose;
 import frc.robot.Commands.poses.CoralStationAlignPose;
 import frc.robot.Commands.poses.CoralStationPose;
+import frc.robot.Commands.poses.DeployClimberPose;
 import frc.robot.Commands.poses.EjectAlgaePose;
 import frc.robot.Commands.poses.ScoreCoralPose;
 import frc.robot.Commands.poses.InitialTransitPose;
@@ -102,6 +106,10 @@ public class RobotMode extends SubsystemBase {
     public static InitialTransitPose initialTransitPose;
     public static CoralRecievedPose coralRecievedPose;
     public static AlignWithAlgae alignWithAlgae;
+    public static Climb climb;
+    public static FinalClimb finalClimb;
+    public static DeployClimberPose deployClimberPose;
+    public static ClimbPose climbPose;
     public static EjectAlgaePose ejectAlgaePose;
 
     public static SetDriveModeCommand setDriveModeCommand;
@@ -137,6 +145,10 @@ public class RobotMode extends SubsystemBase {
         coralRecievedPose = new CoralRecievedPose();
         alignWithAlgae = new AlignWithAlgae();
         knockOffAlgaePose = new KnockOffAlgaePose();
+        climb = new Climb();
+        finalClimb = new FinalClimb();
+        deployClimberPose = new DeployClimberPose();
+        climbPose = new ClimbPose();
         ejectAlgaePose = new EjectAlgaePose();
     }
 
