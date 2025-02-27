@@ -54,7 +54,8 @@ public class Robot extends TimedRobot {
   public final static Limelight limelight = new Limelight("", new Pose3d(Units.inchesToMeters(-0.548596), Units.inchesToMeters(9.720909), Units.inchesToMeters(28.228805), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-10), Units.degreesToRadians(23))));
   // public final static Limelight limelight = null;
   
-  public final static CommandXboxController joystick = new CommandXboxController(0);
+  public final static CommandXboxController driverController = new CommandXboxController(0);
+  public final static CommandXboxController panicController = new CommandXboxController(0);
   public final static GenericHID buttonBoxController = new GenericHID(1);
   public final static ButtonBox buttonBox = new ButtonBox(buttonBoxController);
 

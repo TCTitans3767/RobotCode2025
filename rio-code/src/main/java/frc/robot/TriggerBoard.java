@@ -1,17 +1,13 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.subsystems.RobotMode;
 
 public class TriggerBoard {
     
-    public static boolean isCoralButtonPressed() {return Robot.joystick.rightTrigger().getAsBoolean();}
-
-    public static boolean isAlgaeButtonPressed() {return Robot.joystick.rightBumper().getAsBoolean();}
-
+    public static boolean isCoralButtonPressed() {return Robot.driverController.rightTrigger().getAsBoolean();}
+    public static boolean isAlgaeButtonPressed() {return Robot.driverController.rightBumper().getAsBoolean();}
     public static boolean isClimbButtonPressed() {return false;}
-
-    public static boolean isResetButtonPressed() {return Robot.joystick.x().getAsBoolean();}
+    public static boolean isResetButtonPressed() {return Robot.driverController.x().getAsBoolean();}
 
     public static boolean isCoralInManipulator() {
         return Robot.manipulator.hasGamePiece();
@@ -42,4 +38,12 @@ public class TriggerBoard {
     public static boolean isL4Selected() { return ButtonBox.getSelectedLevel() == ReefLevel.L4; }
 
     public static boolean isReefAligned() {return RobotMode.alignWithLeftReef.isAligned() || RobotMode.alignWithRightReef.isAligned();}
+
+    public static boolean isPanicElevatorActive() { return Robot.panicController.povUp().getAsBoolean(); }
+    public static boolean isPanicArmActive() { return Robot.panicController.povRight().getAsBoolean(); }
+    public static boolean isPanicClimbActive() { return Robot.panicController.povLeft().getAsBoolean(); }
+    public static boolean isPanicIntakeActive() { return Robot.panicController.povDown().getAsBoolean(); }
+
+    public static boolean isPanicButtonLowPressed() { return Robot.panicController.povDown().getAsBoolean(); }
+    public static boolean isPanicButtonHighPressed() { return Robot.panicController.povDown().getAsBoolean(); }
 }

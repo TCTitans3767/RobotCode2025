@@ -16,7 +16,7 @@ public class CoralReef extends Command{
     @Override
     public void execute() {
 
-        if (Robot.joystick.leftTrigger().getAsBoolean()) {
+        if (Robot.driverController.leftTrigger().getAsBoolean()) {
             Robot.robotMode.setCurrentMode(RobotMode.ejectCoralPose);
         }
 

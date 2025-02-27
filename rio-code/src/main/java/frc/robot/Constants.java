@@ -247,4 +247,12 @@ public class Constants {
         public final static double rotationAlignementPIDkD = 0;
     }
 
+    public static final class Panic {
+        public static final double armStickMaxSpeed = 0.1;
+        public static final double elevatorStickMaxSpeed = 0.1;
+        public static final double intakeStickMaxSpeed = 0.1;
+        public static final double climbStickMaxSpeed = 0.1;
+        public static final double manipulatorSpeed = 0.1;
+        public static final double intakeSpeed = 0.1;
+    }
 }

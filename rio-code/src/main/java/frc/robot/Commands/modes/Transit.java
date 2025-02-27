@@ -1,10 +1,6 @@
 package frc.robot.Commands.modes;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
 import frc.robot.subsystems.RobotMode;
@@ -58,15 +54,15 @@ public class Transit extends Command{
         //     Robot.intake.setPivotPosition(0.45);
         // }
 
-        if (Robot.joystick.rightBumper().getAsBoolean()) {
+        if (Robot.driverController.rightBumper().getAsBoolean()) {
             Robot.intake.setWheelSpeed(0.75);
         } else {
             Robot.intake.setWheelSpeed(0);
         }
 
-        if (Robot.joystick.povDown().getAsBoolean()) {
+        if (Robot.driverController.povDown().getAsBoolean()) {
             Robot.robotMode.setDriveMode(DriveMode.Brake);
-            Robot.intake.setPivotSpeed(Robot.joystick.getRightY() * 0.3);
+            Robot.intake.setPivotSpeed(Robot.driverController.getRightY() * 0.3);
         } else {
             Robot.intake.setPivotSpeed(0);
             Robot.robotMode.setDriveMode(DriveMode.TeleopDrive);
