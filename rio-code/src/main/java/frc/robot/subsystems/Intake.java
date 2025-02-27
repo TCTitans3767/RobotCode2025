@@ -40,11 +40,15 @@ public class Intake extends SubsystemBase{
         // Motor basic setup
         leftWheelMotor = new TalonFX(Constants.Intake.leftWheelMotorID);
         leftWheelConfig = new TalonFXConfiguration();
+        leftWheelConfig.CurrentLimits.StatorCurrentLimit = Constants.Intake.wheelCurrentLimit;
+        leftWheelConfig.CurrentLimits.StatorCurrentLimitEnable = true;
         leftWheelConfig.Feedback.SensorToMechanismRatio = Constants.Intake.wheelConversionFactor;
         leftWheelConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
         rightWheelMotor = new TalonFX(Constants.Intake.rightWheelMotorID);
         rightWheelConfig = new TalonFXConfiguration();
+        rightWheelConfig.CurrentLimits.StatorCurrentLimit = Constants.Intake.wheelCurrentLimit;
+        rightWheelConfig.CurrentLimits.StatorCurrentLimitEnable = true;
         rightWheelConfig.Feedback.SensorToMechanismRatio = Constants.Intake.wheelConversionFactor;
         rightWheelConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
@@ -55,7 +59,7 @@ public class Intake extends SubsystemBase{
         pivotConfig.Feedback.FeedbackRemoteSensorID = Constants.Intake.pivotEncoderID;
         pivotConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
         pivotConfig.Feedback.RotorToSensorRatio = Constants.Intake.pivotConversionFactor;
-        pivotConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        pivotConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         
          
         // Slot 0 PID setup 
@@ -87,9 +91,9 @@ public class Intake extends SubsystemBase{
         intakeSensorConfig.ProximityParams.ProximityHysteresis = Constants.Intake.sensorDebounce;
         intakeSensorConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRange100Hz;
         intakeSensor.getConfigurator().apply(intakeSensorConfig);
-        
+
+        pivotMotor.getConfigurator().apply(pivotConfig);        
         pivotMotor.getConfigurator().apply(slot0Config);
-        pivotMotor.getConfigurator().apply(pivotConfig);
         pivotMotor.getConfigurator().apply(motionMagicConfig);
         pivotMotor.setNeutralMode(NeutralModeValue.Brake);
     }
@@ -99,7 +103,8 @@ public class Intake extends SubsystemBase{
         Logger.log("Intake/Pivot Position", pivotMotor.getPosition().getValueAsDouble());
         Logger.log("Intake/Pivot Absolute Position", pivotEncoder.getPosition().getValueAsDouble());
         Logger.log("Intake/Is Pivot At Position", isPivotAtPosition());
-        Logger.log("Intake/Has Game Piece", hasGamePiece());
+        Logger.log("Intake/Stator Current", leftWheelMotor.getStatorCurrent().getValueAsDouble());
+        Logger.log("Intake/Has Game Piece", hasAlgae());
     }
     
     public void setPivotSpeed(double speed) {
@@ -120,7 +125,11 @@ public class Intake extends SubsystemBase{
         return MathUtil.isNear(targetRotations, pivotMotor.getPosition().getValueAsDouble(), Constants.Intake.pivotErrorTolerance);
     }
 
-    public boolean hasGamePiece() {
-        return intakeSensor.getIsDetected().getValue();
+    public boolean hasAlgae() {
+        return leftWheelMotor.getStatorCurrent().getValueAsDouble() >= 30;
+    }
+
+    public boolean isWheelMotorTooHot() {
+        return leftWheelMotor.getDeviceTemp().getValueAsDouble() >= 70;
     }
 }

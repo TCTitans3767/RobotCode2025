@@ -20,14 +20,35 @@ public class Transit extends Command{
     @Override
     public void execute() {
 
+        if (Robot.intake.isWheelMotorTooHot()) {
+            Robot.intake.setWheelSpeed(0);
+        }
+
+        if (!TriggerBoard.isAlgaeInIntake()) {
+            Robot.intake.setWheelSpeed(0);
+        }
+
         if (TriggerBoard.isCoralButtonPressed() && !TriggerBoard.isCoralInManipulator()) {
-            if (TriggerBoard.isNearCoralStation()) {
+            // if (TriggerBoard.isNearCoralStation()) {
                 Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);
-            } else {
-                Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
-            }
+            // } else {
+            //     Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
+            // }
+            return;
         } else if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator()) {
             Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+            return;
+        }
+
+        if (TriggerBoard.isAlgaeButtonPressed() && !TriggerBoard.isAlgaeInIntake()) {
+            Robot.robotMode.setCurrentMode(RobotMode.algaePickupPose);
+            return;
+        } else if (TriggerBoard.isAlgaeButtonPressed() && TriggerBoard.isAlgaeInIntake()) {
+            Robot.robotMode.setCurrentMode(RobotMode.ejectAlgaePose);
+        }
+
+        if (TriggerBoard.isCoralOverrideButtonPressed()) {
+            Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
         }
         
         if (Robot.joystick.a().getAsBoolean()) {
@@ -42,13 +63,13 @@ public class Transit extends Command{
             Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
         }
 
-        if (TriggerBoard.isAlgaeButtonPressed()) {
-            Robot.intake.setPivotPosition(0);
-        }
+        // if (Robot.joystick.povRight().getAsBoolean()) {
+        //     Robot.intake.setPivotPosition(0);
+        // }
 
-        if (Robot.joystick.x().getAsBoolean()) {
-            Robot.intake.setPivotPosition(0.2);
-        }
+        // if (Robot.joystick.povLeft().getAsBoolean()) {
+        //     Robot.intake.setPivotPosition(0.2);
+        // }
         
         // if (TriggerBoard.isNearCoralStation() && !TriggerBoard.isCoralInManipulator()) {
         //     Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);

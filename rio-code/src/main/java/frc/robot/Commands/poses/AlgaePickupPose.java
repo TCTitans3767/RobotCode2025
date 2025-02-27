@@ -12,8 +12,12 @@ public class AlgaePickupPose extends Command{
 
     @Override
     public void initialize() {
-        Robot.intake.setWheelSpeed(0.5);
-        Robot.intake.setPivotPosition(0);
+        if (Robot.intake.isWheelMotorTooHot()) {
+            this.cancel();
+        } else {
+            Robot.intake.setWheelSpeed(0.5);
+            Robot.intake.setPivotPosition(0);
+        }
     }
 
     @Override

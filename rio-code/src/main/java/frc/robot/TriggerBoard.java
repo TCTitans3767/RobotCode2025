@@ -24,8 +24,7 @@ public class TriggerBoard {
     }
 
     public static boolean isAlgaeInIntake() {
-        // return Robot.intake.hasGamePiece();
-        return true;
+        return Robot.intake.hasAlgae();
     }
 
     public static boolean isCollapsedTransitButtonPressed() {
@@ -61,6 +60,6 @@ public class TriggerBoard {
     }
 
     public static boolean isCoralInIntake() {
-        return Robot.intake.hasGamePiece();
+        return Robot.intake.hasAlgae();
     }
 }

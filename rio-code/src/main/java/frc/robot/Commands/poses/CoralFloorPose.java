@@ -16,10 +16,10 @@ public class CoralFloorPose extends SequentialCommandGroup{
     public CoralFloorPose() {
 
         addCommands(
+            new SetIntakePosition(-0.095),
             new SetArmAngle(0),
             new SetElevatorPosition(0.021),
-            new SetIntakePosition(0),
-            new SetManipulatorWheelSpeed(0.5),
+            new SetManipulatorWheelSpeed(-0.3),
             new SetIntakeWheelSpeed(0.5),
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralFloor))
         );
