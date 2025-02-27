@@ -73,8 +73,8 @@ public class RobotContainer {
         configureBindings();
         configureChoreo();
 
-        Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
-        Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+        // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
+        // Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
 
         limelight.initialPoseEstimates();
 
@@ -142,7 +142,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return Autos.test(autoFactory).cmd();
+        return Autos.ScoreL1(autoFactory).cmd();
     }
 
 }

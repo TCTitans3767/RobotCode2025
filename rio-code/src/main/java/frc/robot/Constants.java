@@ -205,9 +205,9 @@ public class Constants {
         public final static double kP = 0;
         public final static double kI = 0;
         public final static double kD = 0;
-        public final static double kG = 0;
+        public final static double kG = 0.4;
         public final static double kV = 0;
-        public final static double kS = 0;
+        public final static double kS = 0.8;
 
 
         // Motion Magic Constants

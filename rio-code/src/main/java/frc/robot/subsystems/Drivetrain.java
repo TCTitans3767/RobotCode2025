@@ -65,9 +65,9 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
     private boolean m_hasAppliedOperatorPerspective = false;
 
     private final SwerveRequest.FieldCentric swerveRequest = new SwerveRequest.FieldCentric();
-    private final PIDController choreoXController = new PIDController(12, 0, 0);
-    private final PIDController choreoYController = new PIDController(12, 0, 0);
-    private final PIDController choreoOmegaController = new PIDController(10, 0, 0);
+    private final PIDController choreoXController = new PIDController(2.8, 0, 0);
+    private final PIDController choreoYController = new PIDController(2.8, 0, 0);
+    private final PIDController choreoOmegaController = new PIDController(4.3, 0, 0);
 
     private Field2d field = new Field2d();
 
@@ -310,12 +310,12 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
 
     public void followTrajectory(SwerveSample sample) {
         Pose2d currentPose = getState().Pose;
-        this.setControl(swerveRequest.withVelocityX(sample.vx + choreoXController.calculate(currentPose.getX(), sample.x))
-                                    .withVelocityY(sample.vy + choreoYController.calculate(currentPose.getY(), sample.y))
-                                    .withRotationalRate(sample.omega + choreoOmegaController.calculate(currentPose.getRotation().getRadians(), sample.heading))
+        this.setControl(swerveRequest.withVelocityX(sample.vx + (sample.vx != 0 ? choreoXController.calculate(currentPose.getX(), sample.x) : 0))
+                                    .withVelocityY(sample.vy + (sample.vy != 0 ? choreoYController.calculate(currentPose.getY(), sample.y) : 0))
+                                    .withRotationalRate(sample.omega + (sample.omega != 0 ? choreoOmegaController.calculate(currentPose.getRotation().getRadians(), sample.heading) : 0))
         );
-        SmartDashboard.putNumber("Drivetrain/haeding error degrees", sample.getPose().getRotation().getDegrees() - getPose().getRotation().getDegrees());
-        SmartDashboard.putNumber("Drivetrain/pose error meters", getPose().getTranslation().getDistance(new Translation2d(sample.x, sample.y)));
+        Logger.log("Drivetrain/haeding error degrees", sample.getPose().getRotation().getDegrees() - getPose().getRotation().getDegrees());
+        Logger.log("Drivetrain/pose error meters", getPose().getTranslation().getDistance(new Translation2d(sample.x, sample.y)));
         field.getObject("goalObject").setPose(sample.getPose());
     }
 
