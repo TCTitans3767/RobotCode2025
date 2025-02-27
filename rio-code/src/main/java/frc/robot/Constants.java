@@ -91,17 +91,17 @@ public class Constants {
 
     public static final class Field {
         public final static Translation2d blueReefCenter = new Translation2d(4.5, 4.03);
-        public final static Translation2d redReefCenter = new Translation2d(0, 0);
+        public final static Translation2d redReefCenter = new Translation2d(13.08, 4.03);
         public final static Translation2d blueRightCoralStation = new Translation2d(0.9, 0.6);
         public final static Pose2d blueRightCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 0.6), new Rotation2d(Units.degreesToRadians(126.5)));
         public final static Pose2d blueRightCoralStationLeftAlignment = new Pose2d(new Translation2d(0.9, 0.6), new Rotation2d(Units.degreesToRadians(126.5)));
-        public final static Translation2d redRightCoralStation = new Translation2d(0, 0);
+        public final static Translation2d redRightCoralStation = new Translation2d(16.68, 7.4);
         public final static Pose2d redRightCoralStationRightAlignment = new Pose2d(new Translation2d(0, 0), new Rotation2d());
         public final static Pose2d redRightCoralStationLeftAlignment  = new Pose2d(new Translation2d(0, 0), new Rotation2d());
         public final static Translation2d blueLeftCoralStation = new Translation2d(0.9, 7.41);
         public final static Pose2d blueLeftCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 7.41), new Rotation2d(Units.degreesToRadians(233.5)));
         public final static Pose2d blueLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(0.9, 7.41), new Rotation2d(Units.degreesToRadians(233.5)));
-        public final static Translation2d redLeftCoralStation = new Translation2d(0, 0);
+        public final static Translation2d redLeftCoralStation = new Translation2d(16.68, 0.58);
         public final static Pose2d redLeftCoralStationRightAlignment = new Pose2d(new Translation2d(0, 0), new Rotation2d());
         public final static Pose2d redLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(0, 0), new Rotation2d());
     }

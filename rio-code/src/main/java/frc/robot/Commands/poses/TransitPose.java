@@ -25,28 +25,6 @@ public class TransitPose extends SequentialCommandGroup{
         noGamePiece
     }
 
-    // if (TriggerBoard.isCoralInManipulator() && !TriggerBoard.isAlgaeInIntake()) {
-    //     Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-    //     Robot.manipulator.setSpeed(0);
-    //     Robot.arm.setPosition(-0.128);
-    //     Robot.elevator.setPosition(0.5);
-    // } else if (TriggerBoard.isCoralInManipulator() && TriggerBoard.isAlgaeInIntake()) {
-    //     Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-    //     Robot.manipulator.setSpeed(0);
-    //     Robot.arm.setPosition(-0.128);
-    //     Robot.elevator.setPosition(0.5);
-    // } else if (TriggerBoard.isAlgaeInIntake() && !TriggerBoard.isCoralInManipulator()) {
-    //     Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-    //     Robot.manipulator.setSpeed(0);
-    //     Robot.arm.setPosition(-0.128);
-    //     Robot.elevator.setPosition(0.5);
-    // } else {
-    //     System.out.println("Transit Pose Intialize: controllerDrive\n arm @ 0\n elevator @ 0.5m");
-    //     Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-    //     Robot.arm.setPosition(0.128);
-    //     Robot.elevator.setPosition(0.5);
-    // }
-
     private class AlgaeInIntakeTransit extends ParallelCommandGroup {
         public AlgaeInIntakeTransit() {
             addCommands(
@@ -67,11 +45,11 @@ public class TransitPose extends SequentialCommandGroup{
         }
     }
 
-    private class CoralInManipulatorTransit extends ParallelCommandGroup {
+    private class CoralInManipulatorTransit extends SequentialCommandGroup {
         public CoralInManipulatorTransit() {
             addCommands(
-                new SetElevatorPosition(0.5),
                 new SetArmAngle(-0.128),
+                new SetElevatorPosition(0.5),
                 new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
             );
         }

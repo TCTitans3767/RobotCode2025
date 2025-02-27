@@ -82,14 +82,13 @@ public class Intake extends SubsystemBase{
         pivotMotor.getConfigurator().apply(slot0Config);
         pivotMotor.getConfigurator().apply(motionMagicConfig);
         pivotMotor.setNeutralMode(NeutralModeValue.Brake);
-        pivotMotor.setPosition(0);
-        
     }
 
     @Override
     public void periodic() {
         Logger.log("Intake/Pivot Position", pivotMotor.getPosition().getValueAsDouble());
-        // This method will be called once per scheduler run
+        Logger.log("Intake/Is Pivot At Position", isPivotAtPosition());
+        Logger.log("Intake/Has Game Piece", hasGamePiece());
     }
     
     public void setPivotSpeed(double speed) {
