@@ -67,7 +67,7 @@ public class Manipulator extends SubsystemBase{
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        Logger.log("Manipulator/Has Game Piece", hasGamePiece());
+        Logger.log("Manipulator/Has Game Piece", manipulatorSensor.getIsDetected().getValue());
         Logger.log("Manipulator/Sensor Measured Distance", manipulatorSensor.getDistance().getValueAsDouble());
         Logger.log("Manipulator/Wheel Speed", getTorque());
     }
@@ -86,6 +86,6 @@ public class Manipulator extends SubsystemBase{
     }
 
     public boolean hasGamePiece() {
-        return manipulatorSensor.getIsDetected().getValue() && manipulatorSensor.getDistance().getValueAsDouble() > 0;
+        return manipulatorSensor.getIsDetected().getValue();
     }
 }

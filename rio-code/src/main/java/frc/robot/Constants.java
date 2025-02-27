@@ -167,7 +167,7 @@ public class Constants {
 
         public static final double detectionRange = 0.066;
         public static final double sensorDebounce = 0.004;
-        public static final int sensorID = 18;
+        public static final int sensorID = 24;
     }
 
 
