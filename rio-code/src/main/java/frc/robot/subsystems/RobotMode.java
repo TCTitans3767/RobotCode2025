@@ -37,11 +37,10 @@ import frc.robot.Commands.poses.CoralFloorPose;
 import frc.robot.Commands.poses.CoralRecievedPose;
 import frc.robot.Commands.poses.CoralReefAlignPose;
 import frc.robot.Commands.poses.CoralReefPose;
-import frc.robot.Commands.poses.CoralScorePose;
 import frc.robot.Commands.poses.CoralStationAlignPose;
 import frc.robot.Commands.poses.CoralStationPose;
 import frc.robot.Commands.poses.DeployClimberPose;
-import frc.robot.Commands.poses.EjectCoralPose;
+import frc.robot.Commands.poses.ScoreCoralPose;
 import frc.robot.Commands.poses.InitialTransitPose;
 import frc.robot.Commands.poses.KnockOffAlgaePose;
 import frc.robot.Commands.poses.TransitPose;
@@ -100,8 +99,7 @@ public class RobotMode extends SubsystemBase {
     public static CoralReef coralReef;
     public static CoralReefAlignPose coralReefAlignPose;
     public static CoralReefAligned coralReefAligned;
-    public static CoralScorePose coralScorePose;
-    public static EjectCoralPose ejectCoralPose;
+    public static ScoreCoralPose scoreCoralPose;
     public static AlgaePickupPose algaePickupPose;
     public static AlgaePickup algaePickup;
     public static InitialTransitPose initialTransitPose;
@@ -138,8 +136,7 @@ public class RobotMode extends SubsystemBase {
         coralReef = new CoralReef();
         coralReefAlignPose = new CoralReefAlignPose();
         coralReefAligned = new CoralReefAligned();
-        coralScorePose = new CoralScorePose();
-        ejectCoralPose = new EjectCoralPose();
+        scoreCoralPose = new ScoreCoralPose();
         algaePickupPose = new AlgaePickupPose();
         algaePickup = new AlgaePickup();
         initialTransitPose = new InitialTransitPose();
@@ -155,7 +152,7 @@ public class RobotMode extends SubsystemBase {
     @Override
     public void periodic() {
 
-        Logger.log("current mode", currentMode.getName());
+        Logger.log("current mode", currentMode != null ? currentMode.getName() : "null");
         Logger.log("Drivetrain/Is Near Reef", Robot.drivetrain.isNearToReef());
         Logger.log("Drivetrain/Current Yaw", Robot.drivetrain.getPose().getRotation().getDegrees());
 

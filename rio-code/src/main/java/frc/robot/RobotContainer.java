@@ -73,8 +73,8 @@ public class RobotContainer {
         configureBindings();
         configureChoreo();
 
-        Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
-        Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+        // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
+        // Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
 
         limelight.initialPoseEstimates();
 
@@ -136,13 +136,13 @@ public class RobotContainer {
 
         // joystick.x().whileTrue(RobotMode.alignWithLeftReef);
 
-        joystick.start().onTrue(Robot.robotMode.runOnce(() -> Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose)));
+        joystick.start().onTrue(new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose)));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
     public Command getAutonomousCommand() {
-        return Autos.test(autoFactory).cmd();
+        return Autos.ScoreL1(autoFactory).cmd();
     }
 
 }
