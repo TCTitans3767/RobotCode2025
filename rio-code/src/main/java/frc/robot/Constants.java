@@ -256,6 +256,18 @@ public class Constants {
         public static final double rotationalFeedForward = 0.0015;
         public final static double headingAlignmentTolerance = 0.01;
 
+        public static final double L4XAlignementPIDkP = 0.67;
+        public static final double L4XAlignementPIDkI = 0;
+        public static final double L4XAlignementPIDkD = 0;
+
+        public static final double L4YAlignementPIDkP = 1.07;
+        public static final double L4YAlignementPIDkI = 0;
+        public static final double L4YAlignementPIDkD = 0;
+
+        public static final double L4RotationalAlignementPIDkP = 0.014;
+        public static final double L4RotationalAlignementPIDkI = 0;
+        public static final double L4RotationalAlignementPIDkD = 0.0015;
+
     }
 
     public final static class ButtonBoxBindings {

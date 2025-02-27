@@ -18,6 +18,7 @@ import frc.robot.ButtonBox;
 import frc.robot.Constants;
 import frc.robot.DashboardButtonBox;
 import frc.robot.Robot;
+import frc.robot.TriggerBoard;
 import frc.robot.Constants.ReefTagIDs;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.RobotMode;
@@ -103,9 +104,17 @@ public class AlignWithLeftReef extends Command{
                 break;
         }
 
-        // odometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(-6), new Rotation2d(0)));
+        if (TriggerBoard.isL4Selected()) {
+            xController.setPID(Constants.Drive.L4XAlignementPIDkD, Constants.Drive.L4XAlignementPIDkI, Constants.Drive.L4XAlignementPIDkD);
+            yController.setPID(Constants.Drive.L4YAlignementPIDkD, Constants.Drive.L4YAlignementPIDkI, Constants.Drive.L4YAlignementPIDkD);
+            headingController.setPID(Constants.Drive.L4RotationalAlignementPIDkD, Constants.Drive.L4RotationalAlignementPIDkI, Constants.Drive.L4RotationalAlignementPIDkD);
+        } else {
+            xController.setPID(Constants.Drive.XAlignementPIDkP, Constants.Drive.XAlignementPIDkI, Constants.Drive.XAlignementPIDkD);
+            yController.setPID(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
+            headingController.setPID(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
+        }
+
         targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2 + 0.03), -0.21, new Rotation2d())).getTranslation(), targetReefRotation);
-        // targetPose = new Pose2d(targetReefPose.getX(), targetReefPose.getY() + Units.inchesToMeters(7.5), targetReefPose.getRotation());
 
         Logger.log("Target Pose", targetPose.toString());
 

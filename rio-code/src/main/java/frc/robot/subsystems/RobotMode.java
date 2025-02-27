@@ -39,6 +39,7 @@ import frc.robot.Commands.poses.CoralStationPose;
 import frc.robot.Commands.poses.ScoreCoralPose;
 import frc.robot.Commands.poses.InitialTransitPose;
 import frc.robot.Commands.poses.KnockOffAlgaePose;
+import frc.robot.Commands.poses.ResetPose;
 import frc.robot.Commands.poses.TransitPose;
 import frc.robot.generated.TunerConstants;
 import frc.robot.utils.Logger;
@@ -101,6 +102,7 @@ public class RobotMode extends SubsystemBase {
     public static InitialTransitPose initialTransitPose;
     public static CoralRecievedPose coralRecievedPose;
     public static AlignWithAlgae alignWithAlgae;
+    public static ResetPose resetPose;
 
     public static SetDriveModeCommand setDriveModeCommand;
     public static SetModeCommand setModeCommand;
@@ -135,6 +137,7 @@ public class RobotMode extends SubsystemBase {
         coralRecievedPose = new CoralRecievedPose();
         alignWithAlgae = new AlignWithAlgae();
         knockOffAlgaePose = new KnockOffAlgaePose();
+        resetPose = new ResetPose();
     }
 
     @Override
