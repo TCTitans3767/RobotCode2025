@@ -42,11 +42,24 @@ public class Transit extends Command{
             Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
         }
 
-        if (Robot.joystick.x().getAsBoolean()) {
-            Robot.intake.setWheelSpeed(-0.5);
-        } else {
-            Robot.intake.setWheelSpeed(0);
+        if (TriggerBoard.isAlgaeButtonPressed()) {
+            Robot.intake.setPivotPosition(0);
         }
+
+        if (Robot.joystick.x().getAsBoolean()) {
+            Robot.intake.setPivotPosition(0.2);
+        }
+        
+        // if (TriggerBoard.isNearCoralStation() && !TriggerBoard.isCoralInManipulator()) {
+        //     Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);
+        //     return;
+        // }
+
+        // if (Robot.joystick.x().getAsBoolean()) {
+        //     Robot.intake.setWheelSpeed(-0.5);
+        // } else {
+        //     Robot.intake.setWheelSpeed(0);
+        // }
 
     }
 
