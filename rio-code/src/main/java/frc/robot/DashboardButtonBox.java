@@ -13,6 +13,7 @@ import edu.wpi.first.networktables.PubSubOptions;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.utils.Logger;
 import frc.robot.utils.Utils.ReefPosition;
 
 public class DashboardButtonBox {
@@ -375,6 +376,11 @@ public class DashboardButtonBox {
         } else if (Robot.buttonBoxController.isConnected() && !Robot.buttonBoxController.getRawButton(Constants.ButtonBoxButtons.algaeEject)) {
             knockOffAlgae.set(false);
         }
+
+        Logger.log("ButtonBox/Selected Reef", selectedReef);
+        Logger.log("ButtonBox/Selected Reef Level", selectedLevel);
+        Logger.log("ButtonBox/Algae Knockoff", knockOffAlgae.get());
+        Logger.log("ButtonBox/Has Level Changed", hasLevelChanged);
 
     }
 
