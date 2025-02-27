@@ -143,7 +143,7 @@ public class RobotMode extends SubsystemBase {
     @Override
     public void periodic() {
 
-        Logger.log("current mode", currentMode.getName());
+        Logger.log("current mode", currentMode != null ? currentMode.getName() : "null");
         Logger.log("Drivetrain/Is Near Reef", Robot.drivetrain.isNearToReef());
         Logger.log("Drivetrain/Current Yaw", Robot.drivetrain.getPose().getRotation().getDegrees());
 

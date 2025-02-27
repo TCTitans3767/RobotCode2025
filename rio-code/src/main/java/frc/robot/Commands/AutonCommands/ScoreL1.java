@@ -1,27 +1,28 @@
 package frc.robot.Commands.AutonCommands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import frc.robot.Robot;
-import frc.robot.TriggerBoard;
 import frc.robot.utils.CommandTrigger;
 
-public class CoralStationAuton extends CommandTrigger{
+public class ScoreL1 extends CommandTrigger{
+
+    double timer = 0;
     
-    public CoralStationAuton(EventLoop loop) {
+    public ScoreL1(EventLoop loop) {
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
         addLoop(loop);
     }
 
     @Override
     public void initialize() {
-        Robot.arm.setPosition(0.128);
-        Robot.elevator.setPosition(0.5);
-        Robot.manipulator.setSpeed(0.2);
+        timer = Timer.getFPGATimestamp();
+        Robot.intake.setWheelSpeed(-0.2);
     }
 
     @Override
     public boolean isFinished() {
-        return TriggerBoard.isCoralInManipulator();
+        return Timer.getFPGATimestamp() - timer >= 1;
     }
 
 }

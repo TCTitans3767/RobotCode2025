@@ -122,6 +122,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    robotMode.setCurrentMode(RobotMode.initialTransitPose);
+    robotMode.setDriveModeCommand(RobotMode.controllerDrive);
   }
 
   @Override
