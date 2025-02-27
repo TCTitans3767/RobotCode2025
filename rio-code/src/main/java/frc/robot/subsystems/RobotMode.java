@@ -40,6 +40,7 @@ import frc.robot.Commands.poses.CoralReefPose;
 import frc.robot.Commands.poses.CoralStationAlignPose;
 import frc.robot.Commands.poses.CoralStationPose;
 import frc.robot.Commands.poses.DeployClimberPose;
+import frc.robot.Commands.poses.EjectAlgaePose;
 import frc.robot.Commands.poses.ScoreCoralPose;
 import frc.robot.Commands.poses.InitialTransitPose;
 import frc.robot.Commands.poses.KnockOffAlgaePose;
@@ -109,6 +110,7 @@ public class RobotMode extends SubsystemBase {
     public static FinalClimb finalClimb;
     public static DeployClimberPose deployClimberPose;
     public static ClimbPose climbPose;
+    public static EjectAlgaePose ejectAlgaePose;
 
     public static SetDriveModeCommand setDriveModeCommand;
     public static SetModeCommand setModeCommand;
@@ -147,6 +149,7 @@ public class RobotMode extends SubsystemBase {
         finalClimb = new FinalClimb();
         deployClimberPose = new DeployClimberPose();
         climbPose = new ClimbPose();
+        ejectAlgaePose = new EjectAlgaePose();
     }
 
     @Override

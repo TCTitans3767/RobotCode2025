@@ -3,6 +3,7 @@ package frc.robot.Commands.modes;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.DashboardButtonBox;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
 import frc.robot.subsystems.RobotMode;
@@ -16,8 +17,8 @@ public class CoralReef extends Command{
     @Override
     public void execute() {
 
-        // if (TriggerBoard.isCoralButtonPressed()) {
-        //     Robot.robotMode.setCurrentMode(RobotMode.ejectCoralPose);
+        // if (DashboardButtonBox.hasSelectedLevelChanged()) {
+        //     Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
         // }
 
         if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isNearReef()) {
@@ -25,8 +26,9 @@ public class CoralReef extends Command{
             return;
         }
 
-        if (Robot.joystick.leftTrigger().getAsBoolean()) {
+        if (TriggerBoard.isCoralOverrideButtonPressed()) {
             Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);
+            return;
         }
 
         // if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isNearReef()) {

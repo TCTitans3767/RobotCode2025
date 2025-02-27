@@ -91,17 +91,17 @@ public class Constants {
 
     public static final class Field {
         public final static Translation2d blueReefCenter = new Translation2d(4.5, 4.03);
-        public final static Translation2d redReefCenter = new Translation2d(0, 0);
+        public final static Translation2d redReefCenter = new Translation2d(13.08, 4.03);
         public final static Translation2d blueRightCoralStation = new Translation2d(0.9, 0.6);
         public final static Pose2d blueRightCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 0.6), new Rotation2d(Units.degreesToRadians(126.5)));
         public final static Pose2d blueRightCoralStationLeftAlignment = new Pose2d(new Translation2d(0.9, 0.6), new Rotation2d(Units.degreesToRadians(126.5)));
-        public final static Translation2d redRightCoralStation = new Translation2d(0, 0);
+        public final static Translation2d redRightCoralStation = new Translation2d(16.68, 7.4);
         public final static Pose2d redRightCoralStationRightAlignment = new Pose2d(new Translation2d(0, 0), new Rotation2d());
         public final static Pose2d redRightCoralStationLeftAlignment  = new Pose2d(new Translation2d(0, 0), new Rotation2d());
         public final static Translation2d blueLeftCoralStation = new Translation2d(0.9, 7.41);
         public final static Pose2d blueLeftCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 7.41), new Rotation2d(Units.degreesToRadians(233.5)));
         public final static Pose2d blueLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(0.9, 7.41), new Rotation2d(Units.degreesToRadians(233.5)));
-        public final static Translation2d redLeftCoralStation = new Translation2d(0, 0);
+        public final static Translation2d redLeftCoralStation = new Translation2d(16.68, 0.58);
         public final static Pose2d redLeftCoralStationRightAlignment = new Pose2d(new Translation2d(0, 0), new Rotation2d());
         public final static Pose2d redLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(0, 0), new Rotation2d());
     }
@@ -167,7 +167,7 @@ public class Constants {
 
         public static final double detectionRange = 0.066;
         public static final double sensorDebounce = 0.004;
-        public static final int sensorID = 18;
+        public static final int sensorID = 24;
     }
 
 
@@ -200,14 +200,15 @@ public class Constants {
         public final static int leftWheelMotorID = 21;
         public static final int rightWheelMotorID = 22;
         public final static int pivotMotorID = 20;
+        public final static int pivotEncoderID = 23;
 
         // PID Constants
-        public final static double kP = 0;
+        public final static double kP = 70;
         public final static double kI = 0;
-        public final static double kD = 0;
-        public final static double kG = 0.4;
+        public final static double kD = 0.1;
+        public final static double kG = 0.15;
         public final static double kV = 0;
-        public final static double kS = 0.8;
+        public final static double kS = 0.32;
 
 
         // Motion Magic Constants
@@ -217,13 +218,14 @@ public class Constants {
         public final static double angleMin = 0.1;
       
         // Conversion Factor
-        public final static double pivotConversionFactor = 85.5;
+        public final static double pivotConversionFactor = 1;
         public final static double wheelConversionFactor = 1;
-        public static final double pivotErrorTolerance = 0.1;
+        public static final double pivotErrorTolerance = 0.01;
 
         public static final double detectionRange = 0.1;
         public static final double sensorDebounce = 0.01;
-        public static final int sensorID = 19;
+        public static final int sensorID = 25;
+        public static final double wheelCurrentLimit = 60;
 
     }
   

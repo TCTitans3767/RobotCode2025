@@ -121,7 +121,7 @@ public class RobotContainer {
         // joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // reset the field-centric heading on left bumper press
-        joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        joystick.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
         // joystick.rightBumper().onTrue(limelight.runOnce(() -> limelight.resetIMU(new Rotation3d())));
         // joystick.povUp().onTrue(limelight.runOnce(() -> limelight.initialPoseEstimates()));
         // joystick.povLeft().whileTrue(new RunCommand(() -> {manipulator.setSpeed(0.1);}, manipulator));

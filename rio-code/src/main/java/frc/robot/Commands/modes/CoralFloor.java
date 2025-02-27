@@ -13,11 +13,22 @@ public class CoralFloor extends Command{
 
     @Override
     public void execute() {
-        if (TriggerBoard.isCoralInManipulator()) {
 
-        } else if (TriggerBoard.isCoralButtonPressed()) {
+        // if (TriggerBoard.isL1Selected() && TriggerBoard.isCoralInIntake()) {
+        //     Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+        // }
+
+        if (TriggerBoard.isCoralInManipulator()) {
+            Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+        } else if (TriggerBoard.isCoralOverrideButtonPressed()) {
             Robot.robotMode.setCurrentMode(RobotMode.transitPose);
         }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        Robot.manipulator.setSpeed(0);
+        Robot.intake.setWheelSpeed(0);
     }
 
 }
