@@ -11,9 +11,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
+import frc.robot.Commands.Intake.SetIntakePosition;
+import frc.robot.Commands.Intake.SetIntakeWheelSpeed;
 import frc.robot.Commands.arm.SetArmAngle;
 import frc.robot.Commands.drive.ControllerDrive;
 import frc.robot.Commands.elevator.SetElevatorPosition;
+import frc.robot.Commands.manipulator.SetManipulatorWheelSpeed;
 import frc.robot.subsystems.RobotMode;
 
 public class TransitPose extends SequentialCommandGroup{
@@ -25,31 +28,14 @@ public class TransitPose extends SequentialCommandGroup{
         noGamePiece
     }
 
-    // if (TriggerBoard.isCoralInManipulator() && !TriggerBoard.isAlgaeInIntake()) {
-    //     Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-    //     Robot.manipulator.setSpeed(0);
-    //     Robot.arm.setPosition(-0.128);
-    //     Robot.elevator.setPosition(0.5);
-    // } else if (TriggerBoard.isCoralInManipulator() && TriggerBoard.isAlgaeInIntake()) {
-    //     Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-    //     Robot.manipulator.setSpeed(0);
-    //     Robot.arm.setPosition(-0.128);
-    //     Robot.elevator.setPosition(0.5);
-    // } else if (TriggerBoard.isAlgaeInIntake() && !TriggerBoard.isCoralInManipulator()) {
-    //     Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-    //     Robot.manipulator.setSpeed(0);
-    //     Robot.arm.setPosition(-0.128);
-    //     Robot.elevator.setPosition(0.5);
-    // } else {
-    //     System.out.println("Transit Pose Intialize: controllerDrive\n arm @ 0\n elevator @ 0.5m");
-    //     Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-    //     Robot.arm.setPosition(0.128);
-    //     Robot.elevator.setPosition(0.5);
-    // }
-
-    private class AlgaeInIntakeTransit extends ParallelCommandGroup {
+    private class AlgaeInIntakeTransit extends SequentialCommandGroup {
         public AlgaeInIntakeTransit() {
             addCommands(
+                new ParallelCommandGroup(
+                    new SetIntakeWheelSpeed(0.5),
+                    new SetManipulatorWheelSpeed(0)
+                ),
+                new SetIntakePosition(0.25),
                 new SetElevatorPosition(0.5),
                 new SetArmAngle(-0.128),
                 new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
@@ -57,9 +43,14 @@ public class TransitPose extends SequentialCommandGroup{
         }
     }
 
-    private class CoralInManipulatorAndAlgaeInIntakeTransit extends ParallelCommandGroup {
+    private class CoralInManipulatorAndAlgaeInIntakeTransit extends SequentialCommandGroup {
         public CoralInManipulatorAndAlgaeInIntakeTransit() {
             addCommands(
+                new ParallelCommandGroup(
+                    new SetIntakeWheelSpeed(0.5),
+                    new SetManipulatorWheelSpeed(0)
+                ),
+                new SetIntakePosition(0.32),
                 new SetElevatorPosition(0.5),
                 new SetArmAngle(-0.128),
                 new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
@@ -67,19 +58,31 @@ public class TransitPose extends SequentialCommandGroup{
         }
     }
 
-    private class CoralInManipulatorTransit extends ParallelCommandGroup {
+    private class CoralInManipulatorTransit extends SequentialCommandGroup {
         public CoralInManipulatorTransit() {
             addCommands(
+                new ParallelCommandGroup(
+                    new SetIntakeWheelSpeed(0),
+                    new SetManipulatorWheelSpeed(0)
+                ),
+                new ParallelCommandGroup(
+                    new SetIntakePosition(0.32),
+                    new SetArmAngle(-0.128)
+                ),
                 new SetElevatorPosition(0.5),
-                new SetArmAngle(-0.128),
                 new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
             );
         }
     }
 
-    private class NoGamePieceTransit extends ParallelCommandGroup {
+    private class NoGamePieceTransit extends SequentialCommandGroup {
         public NoGamePieceTransit() {
             addCommands(
+                new ParallelCommandGroup(
+                    new SetIntakeWheelSpeed(0),
+                    new SetManipulatorWheelSpeed(0)
+                ),
+                new SetIntakePosition(0.32),
                 new SetElevatorPosition(0.5),
                 new SetArmAngle(0.128),
                 new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})

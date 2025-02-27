@@ -7,7 +7,11 @@ public class TriggerBoard {
     
     public static boolean isCoralButtonPressed() {return Robot.joystick.rightTrigger().getAsBoolean();}
 
-    public static boolean isAlgaeButtonPressed() {return Robot.joystick.rightBumper().getAsBoolean();}
+    public static boolean isCoralOverrideButtonPressed() {return Robot.joystick.rightBumper().getAsBoolean();}
+
+    public static boolean isAlgaeButtonPressed() {return Robot.joystick.leftTrigger().getAsBoolean();}
+
+    public static boolean isAlgaeOverrideButtonPressed() {return Robot.joystick.leftBumper().getAsBoolean();}
 
     public static boolean isClimbButtonPressed() {return Robot.joystick.leftTrigger().getAsBoolean();}
 
@@ -20,8 +24,7 @@ public class TriggerBoard {
     }
 
     public static boolean isAlgaeInIntake() {
-        // return Robot.intake.hasGamePiece();
-        return false;
+        return Robot.intake.hasAlgae();
     }
 
     public static boolean isCollapsedTransitButtonPressed() {
@@ -54,5 +57,9 @@ public class TriggerBoard {
 
     public static boolean hasSelectedLevelChanged() {
         return DashboardButtonBox.hasSelectedLevelChanged();
+    }
+
+    public static boolean isCoralInIntake() {
+        return Robot.intake.hasAlgae();
     }
 }
