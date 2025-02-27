@@ -11,13 +11,15 @@ public class RobotLights extends SubsystemBase {
 
     AddressableLED backLED;
     AddressableLEDBuffer backBuffer;
+    LEDPattern greenPattern = LEDPattern.solid(Color.kGreen);
 
     public RobotLights() {
         backLED = new AddressableLED(0);
         backBuffer = new AddressableLEDBuffer(60);
         backLED.setLength(60);
+        greenPattern.applyTo(backBuffer);
+        backLED.setData(backBuffer);
         backLED.start();
-        setBackLEDColor(Color.kGreen);
     }
 
     @Override
