@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.subsystems.RobotMode;
 
@@ -9,7 +10,11 @@ public class TriggerBoard {
 
     public static boolean isAlgaeButtonPressed() {return Robot.joystick.rightBumper().getAsBoolean();}
 
-    public static boolean isClimbButtonPressed() {return Robot.joystick.leftTrigger().getAsBoolean();}
+    public static boolean isClimbControllerButtonPressed() {return Robot.joystick.leftTrigger().getAsBoolean();}
+
+    public static boolean isClimbButtonBoxButtonPressed() {
+        return DashboardButtonBox.isClimbPressed();
+    }
 
     public static boolean isResetButtonPressed() {return Robot.joystick.x().getAsBoolean();}
 
@@ -54,5 +59,9 @@ public class TriggerBoard {
 
     public static boolean hasSelectedLevelChanged() {
         return DashboardButtonBox.hasSelectedLevelChanged();
+    }
+
+    public static boolean isEndGame() {
+        return true;
     }
 }

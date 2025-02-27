@@ -43,6 +43,10 @@ public class Transit extends Command{
         } else {
             Robot.intake.setWheelSpeed(0);
         }
+
+        if (TriggerBoard.isClimbControllerButtonPressed() && TriggerBoard.isClimbButtonBoxButtonPressed() && TriggerBoard.isEndGame()) {
+            Robot.robotMode.setCurrentMode(RobotMode.climbPose);
+        }
         
         // if (TriggerBoard.isNearCoralStation() && !TriggerBoard.isCoralInManipulator()) {
         //     Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);

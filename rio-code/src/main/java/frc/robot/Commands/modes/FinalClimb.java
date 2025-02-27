@@ -12,7 +12,7 @@ public class FinalClimb extends Command{
 
     @Override
     public void execute() {
-        if (TriggerBoard.isClimbButtonPressed()) {
+        if (TriggerBoard.isClimbControllerButtonPressed()) {
             Robot.climber.setSpeed(0.8);
         } else {
             Robot.climber.setSpeed(0);

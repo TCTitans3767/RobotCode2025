@@ -42,6 +42,8 @@ public class DashboardButtonBox {
 
     private static BooleanEntry knockOffAlgae;
 
+    private static BooleanEntry climb;
+
     private static AtomicBoolean AValue = new AtomicBoolean();
     private static AtomicBoolean BValue = new AtomicBoolean();
     private static AtomicBoolean CValue = new AtomicBoolean();
@@ -61,6 +63,8 @@ public class DashboardButtonBox {
     private static AtomicBoolean L4Value = new AtomicBoolean();
 
     private static AtomicBoolean knockOffAlgaeValue = new AtomicBoolean();
+
+    private static AtomicBoolean climbValue = new AtomicBoolean();
 
     private static NetworkTableInstance instance;
     private static NetworkTable table;
@@ -87,6 +91,8 @@ public class DashboardButtonBox {
         L4 = table.getBooleanTopic("L4").getEntry(false);
 
         knockOffAlgae = table.getBooleanTopic("Knock Off Algae").getEntry(false);
+
+        climb = table.getBooleanTopic("climb").getEntry(false);
 
         instance.addListener(A, EnumSet.of(NetworkTableEvent.Kind.kValueRemote), event -> {
             AValue.set(event.valueData.value.getBoolean());
@@ -142,6 +148,10 @@ public class DashboardButtonBox {
             knockOffAlgaeValue.set(event.valueData.value.getBoolean());
         });
 
+        instance.addListener(climb, EnumSet.of(NetworkTableEvent.Kind.kValueRemote), event -> {
+            climbValue.set(event.valueData.value.getBoolean());
+        });
+
         table.getBooleanTopic("A").publish();
         table.getBooleanTopic("B").publish();
         table.getBooleanTopic("C").publish();
@@ -161,6 +171,8 @@ public class DashboardButtonBox {
         table.getBooleanTopic("L4").publish();
 
         table.getBooleanTopic("Knock Off Algae").publish();
+
+        table.getBooleanTopic("climb").publish();
 
         A.set(true);
         L4.set(true);
@@ -376,6 +388,12 @@ public class DashboardButtonBox {
             knockOffAlgae.set(false);
         }
 
+        if (Robot.buttonBoxController.isConnected() && Robot.buttonBoxController.getRawButton(Constants.ButtonBoxButtons.climb)) {
+            climb.set(true);
+        } else if (Robot.buttonBoxController.isConnected() && !Robot.buttonBoxController.getRawButton(Constants.ButtonBoxButtons.climb)) {
+            climb.set(false);
+        }
+
     }
 
     public static ReefPosition getSelectedReefBranch() {
@@ -396,6 +414,10 @@ public class DashboardButtonBox {
 
     public static boolean hasSelectedLevelChanged() {
         return hasLevelChanged;
+    }
+
+    public static boolean isClimbPressed() {
+        return climb.get();
     }
 
 }
