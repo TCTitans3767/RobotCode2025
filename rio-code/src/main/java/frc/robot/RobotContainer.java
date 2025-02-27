@@ -136,7 +136,7 @@ public class RobotContainer {
 
         // joystick.x().whileTrue(RobotMode.alignWithLeftReef);
 
-        joystick.start().onTrue(Robot.robotMode.runOnce(() -> Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose)));
+        joystick.start().onTrue(new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose)));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }

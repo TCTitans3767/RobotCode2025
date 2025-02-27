@@ -26,7 +26,7 @@ public class CoralReef extends Command{
         }
 
         if (Robot.joystick.leftTrigger().getAsBoolean()) {
-            Robot.robotMode.setCurrentMode(RobotMode.ejectCoralPose);
+            Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);
         }
 
         // if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isNearReef()) {
