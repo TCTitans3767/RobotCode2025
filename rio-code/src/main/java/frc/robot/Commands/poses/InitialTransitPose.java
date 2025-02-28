@@ -19,7 +19,7 @@ public class InitialTransitPose extends SequentialCommandGroup{
             new SetIntakeWheelSpeed(0),
             new SetIntakePosition(0.32),
             new SetElevatorPosition(0.5),
-            new SetArmAngle(-0.128),
+            new SetArmAngle(0.128),
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive); Robot.manipulator.setSpeed(0); Robot.limelight.turnOnAprilTags();}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.transit);}).ignoringDisable(true)
         );
