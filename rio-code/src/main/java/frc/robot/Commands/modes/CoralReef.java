@@ -21,10 +21,15 @@ public class CoralReef extends Command{
         //     Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
         // }
 
+        if (TriggerBoard.isL1Selected() && TriggerBoard.isCoralButtonPressed()) {
+            Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);
+            return;
+        }
+
         if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isNearReef()) {
             Robot.robotMode.setCurrentMode(RobotMode.coralReefAlignPose);
             return;
-        }
+        } 
 
         if (TriggerBoard.isCoralOverrideButtonPressed()) {
             Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);

@@ -19,12 +19,14 @@ import frc.robot.subsystems.RobotMode;
 
 public class CoralReefPose extends SequentialCommandGroup{
 
-    public class L1 extends ParallelCommandGroup{
+    public class L1 extends SequentialCommandGroup{
         public L1() {
             addCommands(
-                new SetArmAngle(0.02),
-                new SetElevatorPosition(0.34),
-                new SetIntakePosition(0.32)
+                new ParallelCommandGroup(
+                    new SetArmAngle(0.02),
+                    new SetElevatorPosition(0.34)
+                ),
+                new SetIntakePosition(0.26)
             );
         }
     }

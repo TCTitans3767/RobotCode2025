@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     DogLog.setOptions(new DogLogOptions(
-        Robot::isFMSAttached, 
+        Robot::doNetworksTablePublishing,
         false, 
         false, 
         true, 
@@ -78,7 +78,6 @@ public class Robot extends TimedRobot {
         1000
       )
     );
-    DogLog.setPdh(pdh);
     m_robotContainer = new RobotContainer();
     addPeriodic(buttonBox::buttonBoxPeriodic, 0.1);
     SmartDashboard.putData(drivetrain.getField());
@@ -191,7 +190,7 @@ public class Robot extends TimedRobot {
       Robot.testMode = false;
   }
 
-  public static boolean isFMSAttached() {
-    return DriverStation.isDSAttached() ? DriverStation.isFMSAttached() : false;
+  public static boolean doNetworksTablePublishing() {
+    return DriverStation.isDSAttached() ? !DriverStation.isFMSAttached() : false;
   }
 }

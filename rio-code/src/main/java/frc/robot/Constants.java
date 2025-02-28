@@ -241,13 +241,13 @@ public class Constants {
 
 
         public final static double YAlignmentTolerance = 0.02;
-        public final static double YAlignementPIDkP = 1.07;
+        public final static double YAlignementPIDkP = 0.96;
         public final static double YAlignementPIDkI = 0;
         public final static double YAlignementPIDkD = 0;
         public final static double YFeedForward = 0;
 
         public final static double XAlignmentTolerance = 0.02;
-        public final static double XAlignementPIDkP = 0.67;
+        public final static double XAlignementPIDkP = 0.58;
         public final static double XAlignementPIDkI = 0;
         public final static double XAlignementPIDkD = 0;
         public final static double XFeedForward = 0;
