@@ -50,7 +50,6 @@ public class Transit extends Command{
         if (TriggerBoard.isCoralOverrideButtonPressed()) {
             Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
         }
-        
 
         if (Robot.joystick.b().getAsBoolean()) {
             Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);

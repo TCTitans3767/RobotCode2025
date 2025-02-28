@@ -65,7 +65,11 @@ public class TriggerBoard {
     }
 
     public static boolean isEndGame() {
-        return true;
+        if (DriverStation.isDSAttached() ? DriverStation.isFMSAttached() : false) {
+            return DriverStation.getMatchTime() < 20;
+        } else {
+            return true;
+        }
     }
   
     public static boolean isCoralInIntake() {

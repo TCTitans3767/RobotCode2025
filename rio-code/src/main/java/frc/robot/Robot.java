@@ -70,14 +70,15 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     DogLog.setOptions(new DogLogOptions(
-        () -> testMode, 
+        Robot::isFMSAttached, 
         false, 
         false, 
-        false, 
+        true, 
         true, 
         1000
       )
     );
+    DogLog.setPdh(pdh);
     m_robotContainer = new RobotContainer();
     addPeriodic(buttonBox::buttonBoxPeriodic, 0.1);
     SmartDashboard.putData(drivetrain.getField());
@@ -188,5 +189,9 @@ public class Robot extends TimedRobot {
 
   public static void disableTestMode() {
       Robot.testMode = false;
+  }
+
+  public static boolean isFMSAttached() {
+    return DriverStation.isDSAttached() ? DriverStation.isFMSAttached() : false;
   }
 }
