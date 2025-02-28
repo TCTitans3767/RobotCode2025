@@ -53,6 +53,6 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
     }
 
     public static boolean isAlignCommandFinsihed() {
-        return RobotMode.alignWithLeftReef.isFinished() || RobotMode.alignWithRightReef.isFinished();
+        return CoralReefAlignPose.isLeftBranchSelected() ? RobotMode.alignWithLeftReef.isFinished() : RobotMode.alignWithRightReef.isFinished();
     }
 }

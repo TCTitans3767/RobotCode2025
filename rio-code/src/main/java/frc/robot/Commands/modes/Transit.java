@@ -51,13 +51,6 @@ public class Transit extends Command{
             Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
         }
         
-        if (Robot.joystick.a().getAsBoolean()) {
-            Robot.climber.setSpeed(0.6);
-        } else if (Robot.joystick.y().getAsBoolean()) {
-            Robot.climber.setSpeed(-0.6);
-        } else {
-            Robot.climber.setSpeed(0);
-        }
 
         if (Robot.joystick.b().getAsBoolean()) {
             Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);

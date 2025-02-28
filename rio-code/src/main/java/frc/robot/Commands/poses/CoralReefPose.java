@@ -12,6 +12,7 @@ import frc.robot.ButtonBox;
 import frc.robot.DashboardButtonBox;
 import frc.robot.ReefLevel;
 import frc.robot.Robot;
+import frc.robot.Commands.Intake.SetIntakePosition;
 import frc.robot.Commands.arm.SetArmAngle;
 import frc.robot.Commands.elevator.SetElevatorPosition;
 import frc.robot.subsystems.RobotMode;
@@ -22,7 +23,8 @@ public class CoralReefPose extends SequentialCommandGroup{
         public L1() {
             addCommands(
                 new SetArmAngle(0.02),
-                new SetElevatorPosition(0.34)
+                new SetElevatorPosition(0.34),
+                new SetIntakePosition(0.32)
             );
         }
     }
@@ -31,7 +33,8 @@ public class CoralReefPose extends SequentialCommandGroup{
         public L2() {
             addCommands(
                 new SetArmAngle(-0.44),
-                new SetElevatorPosition(0.02)
+                new SetElevatorPosition(0.02),
+                new SetIntakePosition(0.32)
             );
         }
     }
@@ -40,7 +43,8 @@ public class CoralReefPose extends SequentialCommandGroup{
         public L3() {
             addCommands(
                 new SetArmAngle(-0.43),
-                new SetElevatorPosition(0.44)
+                new SetElevatorPosition(0.44),
+                new SetIntakePosition(0.32)
             );
         }
     }
@@ -49,7 +53,8 @@ public class CoralReefPose extends SequentialCommandGroup{
         public L4() {
             addCommands(
                 new SetArmAngle(-0.43),
-                new SetElevatorPosition(1.1)
+                new SetElevatorPosition(1.1),
+                new SetIntakePosition(0.32)
             );
         }
     }

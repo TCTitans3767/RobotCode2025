@@ -16,13 +16,20 @@ public class ScoreL1 extends CommandTrigger{
 
     @Override
     public void initialize() {
+        active(true);
         timer = Timer.getFPGATimestamp();
-        Robot.intake.setWheelSpeed(-0.2);
+        Robot.intake.setWheelSpeed(-0.3);
     }
 
     @Override
     public boolean isFinished() {
         return Timer.getFPGATimestamp() - timer >= 1;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        active(false);
+        Robot.intake.setWheelSpeed(0);
     }
 
 }
