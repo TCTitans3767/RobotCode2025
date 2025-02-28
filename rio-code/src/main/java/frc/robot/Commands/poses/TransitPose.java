@@ -50,7 +50,7 @@ public class TransitPose extends SequentialCommandGroup{
                     new SetIntakeWheelSpeed(0.5),
                     new SetManipulatorWheelSpeed(0)
                 ),
-                new SetIntakePosition(0.32),
+                new SetIntakePosition(0.25),
                 new SetElevatorPosition(0.5),
                 new SetArmAngle(-0.128),
                 new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})

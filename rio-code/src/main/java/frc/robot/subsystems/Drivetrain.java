@@ -65,8 +65,8 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
     private boolean m_hasAppliedOperatorPerspective = false;
 
     private final SwerveRequest.FieldCentric swerveRequest = new SwerveRequest.FieldCentric();
-    private final PIDController choreoXController = new PIDController(2.8, 0, 0);
-    private final PIDController choreoYController = new PIDController(2.8, 0, 0);
+    private final PIDController choreoXController = new PIDController(4, 0, 0);
+    private final PIDController choreoYController = new PIDController(4, 0, 0);
     private final PIDController choreoOmegaController = new PIDController(4.3, 0, 0);
 
     private Field2d field = new Field2d();
@@ -340,5 +340,13 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
             updateSimState(deltaTime, RobotController.getBatteryVoltage());
         });
         m_simNotifier.startPeriodic(kSimLoopPeriod);
+    }
+
+    public double getYaw() {
+        return getPigeon2().getYaw().getValueAsDouble();
+    }
+
+    public void driveRobotRelative(double xVelocity, double yVelocity, double rotationVelocity) {
+        setControl(new SwerveRequest.RobotCentric().withVelocityX(xVelocity).withVelocityY(yVelocity).withRotationalRate(rotationVelocity));
     }
 }

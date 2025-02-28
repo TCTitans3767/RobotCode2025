@@ -47,11 +47,11 @@ public class ScoreCoralPose extends SequentialCommandGroup{
             }),
             new WaitCommand(0.4),
             new ConditionalCommand(
-                new scoreAndTransit(),
                 new InstantCommand(() -> {
                     Robot.manipulator.setSpeed(0);
                     Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
                 }),
+                new scoreAndTransit(),
                 DashboardButtonBox::isAlgaeKnockoffOn
             )
         );

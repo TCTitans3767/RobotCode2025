@@ -18,13 +18,18 @@ public class Autos {
         final frc.robot.Commands.AutonCommands.ScoreL1 scoreL1 = new frc.robot.Commands.AutonCommands.ScoreL1(routine.loop());
 
         final AutoTrajectory scoreL1Path = routine.trajectory("ScoreL1");
+        final AutoTrajectory scoreL1NextPath = routine.trajectory("ScoreL1Next");
 
         routine.active().onTrue(new InstantCommand(
-                () -> Robot.getDrivetrain().resetPose(scoreL1Path.getInitialPose().get())
+                () -> {
+                    Robot.limelight.turnOffAprilTags();
+                    Robot.getDrivetrain().resetPose(scoreL1Path.getInitialPose().get());
+                    Robot.intake.setPivotPosition(0.18);
+                }
             )
         ).onTrue(scoreL1Path.cmd());
 
-        scoreL1Path.done().onTrue(scoreL1.cmd());
+        scoreL1Path.atTime("ScoreL1").onTrue(scoreL1.cmd());
 
         return routine;
 
