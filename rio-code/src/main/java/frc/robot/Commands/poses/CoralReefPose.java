@@ -15,6 +15,7 @@ import frc.robot.Robot;
 import frc.robot.Commands.Intake.SetIntakePosition;
 import frc.robot.Commands.arm.SetArmAngle;
 import frc.robot.Commands.elevator.SetElevatorPosition;
+import frc.robot.Commands.manipulator.SetManipulatorWheelSpeed;
 import frc.robot.subsystems.RobotMode;
 
 public class CoralReefPose extends SequentialCommandGroup{
@@ -23,6 +24,7 @@ public class CoralReefPose extends SequentialCommandGroup{
         public L1() {
             addCommands(
                 new ParallelCommandGroup(
+                    new SetManipulatorWheelSpeed(-0.05),
                     new SetArmAngle(0.02),
                     new SetElevatorPosition(0.34)
                 ),
@@ -34,6 +36,7 @@ public class CoralReefPose extends SequentialCommandGroup{
     public class L2 extends SequentialCommandGroup{
         public L2() {
             addCommands(
+                new SetManipulatorWheelSpeed(-0.05),
                 new SetArmAngle(-0.44),
                 new SetElevatorPosition(0.02),
                 new SetIntakePosition(0.32)
@@ -44,6 +47,7 @@ public class CoralReefPose extends SequentialCommandGroup{
     public class L3 extends ParallelCommandGroup{
         public L3() {
             addCommands(
+                new SetManipulatorWheelSpeed(-0.05),
                 new SetArmAngle(-0.43),
                 new SetElevatorPosition(0.44),
                 new SetIntakePosition(0.32)
@@ -54,6 +58,7 @@ public class CoralReefPose extends SequentialCommandGroup{
     public class L4 extends ParallelCommandGroup{
         public L4() {
             addCommands(
+                new SetManipulatorWheelSpeed(-0.05),
                 new SetArmAngle(-0.43),
                 new SetElevatorPosition(1.1),
                 new SetIntakePosition(0.32)

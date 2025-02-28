@@ -18,6 +18,7 @@ import frc.robot.ButtonBox;
 import frc.robot.Constants;
 import frc.robot.DashboardButtonBox;
 import frc.robot.Robot;
+import frc.robot.TriggerBoard;
 import frc.robot.Constants.ReefTagIDs;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.RobotMode;
@@ -103,8 +104,12 @@ public class AlignWithLeftReef extends Command{
                 break;
         }
 
+        xController.setPID(Constants.Drive.XAlignementPIDkP, Constants.Drive.XAlignementPIDkI, Constants.Drive.XAlignementPIDkD);
+        yController.setPID(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
+        headingController.setPID(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
+
         // odometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(-6), new Rotation2d(0)));
-        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2 + 0.1), -0.21, new Rotation2d())).getTranslation(), targetReefRotation);
+        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2 + 0.2), -0.21, new Rotation2d())).getTranslation(), targetReefRotation);
         // targetPose = new Pose2d(targetReefPose.getX(), targetReefPose.getY() + Units.inchesToMeters(7.5), targetReefPose.getRotation());
 
         Logger.log("Target Pose", targetPose.toString());

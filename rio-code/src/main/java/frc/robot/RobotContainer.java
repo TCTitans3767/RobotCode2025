@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -67,11 +68,18 @@ public class RobotContainer {
     // private final Joystick joystick = new Joystick(0);
 
     private AutoFactory autoFactory;
+    
+    private final SendableChooser<Command> autonSelector;
 
     public RobotContainer() {
 
         configureBindings();
         configureChoreo();
+        
+        autonSelector = new SendableChooser<Command>();
+        autonSelector.setDefaultOption("L1 Right", Autos.L1Right(autoFactory).cmd());
+        autonSelector.addOption("L1 Left", Autos.L1Left(autoFactory).cmd());
+        SmartDashboard.putData("Auton Selection", autonSelector);
 
         // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
         // Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
@@ -142,7 +150,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return Autos.ScoreL1(autoFactory).cmd();
+        return autonSelector.getSelected();
     }
 
 }

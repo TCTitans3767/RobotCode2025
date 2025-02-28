@@ -37,9 +37,9 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
             ),
             new ParallelRaceGroup(
                 new RunCommand(() -> {
-                    Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.5));
+                    Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.25));
                 }),
-                new WaitCommand(0.15)
+                new WaitCommand(0.2)
             ),
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReefAligned);})

@@ -14,7 +14,7 @@ public class EjectAlgaePose extends SequentialCommandGroup{
     public EjectAlgaePose() {
 
         addCommands(
-            new SetIntakePosition(0),
+            new SetIntakePosition(0.08),
             new WaitUntilCommand(TriggerBoard::isAlgaeButtonPressed),
             new SetIntakeWheelSpeed(-0.5),
             new InstantCommand(() -> {

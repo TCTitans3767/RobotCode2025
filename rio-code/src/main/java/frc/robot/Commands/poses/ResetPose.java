@@ -16,7 +16,7 @@ public class ResetPose extends SequentialCommandGroup{
         addCommands(
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}).ignoringDisable(true),
             new SetIntakePosition(0),
-            new SetIntakeWheelSpeed(0),
+            new SetIntakeWheelSpeed(-0.5),
             new SetArmAngle(-0.3),
             new SetElevatorPosition(0.5),
             new SetArmAngle(-0.128),

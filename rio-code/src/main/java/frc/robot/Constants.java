@@ -212,8 +212,8 @@ public class Constants {
 
 
         // Motion Magic Constants
-        public final static double maxVelocity = 4;
-        public final static double maxAcceleration = 3.5;
+        public final static double maxVelocity = 5;
+        public final static double maxAcceleration = 4;
         public final static double angleMax = 0.1;
         public final static double angleMin = 0.1;
       
@@ -241,22 +241,34 @@ public class Constants {
 
 
         public final static double YAlignmentTolerance = 0.02;
-        public final static double YAlignementPIDkP = 0.96;
+        public final static double YAlignementPIDkP = 0.9;
         public final static double YAlignementPIDkI = 0;
         public final static double YAlignementPIDkD = 0;
         public final static double YFeedForward = 0;
 
         public final static double XAlignmentTolerance = 0.02;
-        public final static double XAlignementPIDkP = 0.58;
+        public final static double XAlignementPIDkP = 0.5;
         public final static double XAlignementPIDkI = 0;
         public final static double XAlignementPIDkD = 0;
         public final static double XFeedForward = 0;
 
-        public final static double rotationAlignementPIDkP = 0.014;
+        public final static double rotationAlignementPIDkP = 0.0135;
         public final static double rotationAlignementPIDkI = 0;
         public final static double rotationAlignementPIDkD = 0;
         public static final double rotationalFeedForward = 0.0015;
         public final static double headingAlignmentTolerance = 0.01;
+
+        public static final double L4XAlignementPIDkP = 0.5;
+        public static final double L4XAlignementPIDkI = 0;
+        public static final double L4XAlignementPIDkD = 0;
+
+        public static final double L4YAlignementPIDkP = 0.85;
+        public static final double L4YAlignementPIDkI = 0;
+        public static final double L4YAlignementPIDkD = 0;
+
+        public static final double L4RotationalAlignementPIDkP = 0.0135;
+        public static final double L4RotationalAlignementPIDkI = 0;
+        public static final double L4RotationalAlignementPIDkD = 0.0015;
 
     }
 

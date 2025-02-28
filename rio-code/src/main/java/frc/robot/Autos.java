@@ -12,12 +12,34 @@ import frc.robot.Commands.AutonCommands.CoralStationAuton;
 
 public class Autos {
 
-    public static AutoRoutine ScoreL1(AutoFactory factory) {
-        final AutoRoutine routine = factory.newRoutine("ScoreL1");
+    public static AutoRoutine L1Left(AutoFactory factory) {
+        final AutoRoutine routine = factory.newRoutine("ScoreL1 Left");
 
         final frc.robot.Commands.AutonCommands.ScoreL1 scoreL1 = new frc.robot.Commands.AutonCommands.ScoreL1(routine.loop());
 
-        final AutoTrajectory scoreL1Path = routine.trajectory("ScoreL1");
+        final AutoTrajectory scoreL1Path = routine.trajectory("ScoreL1 Left");
+
+        routine.active().onTrue(new InstantCommand(
+                () -> {
+                    Robot.limelight.turnOffAprilTags();
+                    Robot.getDrivetrain().resetPose(scoreL1Path.getInitialPose().get());
+                    Robot.intake.setPivotPosition(0.18);
+                }
+            )
+        ).onTrue(scoreL1Path.cmd());
+
+        scoreL1Path.atTime("ScoreL1").onTrue(scoreL1.cmd());
+
+        return routine;
+
+    }
+
+    public static AutoRoutine L1Right(AutoFactory factory) {
+        final AutoRoutine routine = factory.newRoutine("ScoreL1 Right");
+
+        final frc.robot.Commands.AutonCommands.ScoreL1 scoreL1 = new frc.robot.Commands.AutonCommands.ScoreL1(routine.loop());
+
+        final AutoTrajectory scoreL1Path = routine.trajectory("ScoreL1 Right");
         final AutoTrajectory scoreL1NextPath = routine.trajectory("ScoreL1Next");
 
         routine.active().onTrue(new InstantCommand(

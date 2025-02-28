@@ -24,7 +24,7 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                     Robot.robotMode.setDriveMode(DriveMode.Brake);
                     Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.15));
                 }),
-                new WaitCommand(0.10),
+                new WaitCommand(0.05),
                 new InstantCommand(() -> {
                     Robot.manipulator.setSpeed(0);
                     Robot.robotMode.setCurrentMode(RobotMode.transitPose);
@@ -45,7 +45,7 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                     Robot.manipulator.setSpeed(0.25);
                 }
             }),
-            new WaitCommand(0.2),
+            new WaitCommand(0.1),
             new ConditionalCommand(
                 new InstantCommand(() -> {
                     Robot.manipulator.setSpeed(0);
