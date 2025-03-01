@@ -17,15 +17,13 @@ import frc.robot.Constants.Elevator;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.subsystems.RobotMode.DriveMode;
 
-public class KnockOffAlgaePose extends SequentialCommandGroup{
+public class KnockOffAlgaePoseManual extends SequentialCommandGroup{
 
     Command algaeAlign = new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.alignWithAlgae);});
     
-    public KnockOffAlgaePose() {
+    public KnockOffAlgaePoseManual() {
 
         addCommands(
-            algaeAlign,
-            new WaitUntilCommand(KnockOffAlgaePose::isAlignCommandFinsihed),
             new ParallelCommandGroup(
                 new SetArmAngle(-0.32),
                 new SetElevatorPosition(1.1)

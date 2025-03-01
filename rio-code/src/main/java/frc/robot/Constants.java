@@ -229,7 +229,9 @@ public class Constants {
         public static final double sensorDebounce = 0.01;
         public static final int sensorID = 25;
         public static final double wheelCurrentLimit = 60;
-        public static final double pivotCurrentLimit = 80;
+        public static final double pivotCurrentLimit = 60;
+
+        public static final double pivotStowPosition = 0.32;
 
     }
   

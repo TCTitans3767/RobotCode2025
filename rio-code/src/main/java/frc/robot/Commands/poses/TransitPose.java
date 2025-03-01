@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
 import frc.robot.Commands.Intake.SetIntakePosition;
@@ -50,7 +51,7 @@ public class TransitPose extends SequentialCommandGroup{
                     new SetIntakeWheelSpeed(0.5),
                     new SetManipulatorWheelSpeed(-0.05)
                 ),
-                new SetIntakePosition(0.3),
+                new SetIntakePosition(0.25),
                 new SetElevatorPosition(0.5),
                 new SetArmAngle(-0.128),
                 new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
@@ -66,7 +67,7 @@ public class TransitPose extends SequentialCommandGroup{
                     new SetManipulatorWheelSpeed(-0.05)
                 ),
                 new ParallelCommandGroup(
-                    new SetIntakePosition(0.3),
+                    new SetIntakePosition(Constants.Intake.pivotStowPosition),
                     new SetArmAngle(-0.128)
                 ),
                 new SetElevatorPosition(0.5),
@@ -82,7 +83,7 @@ public class TransitPose extends SequentialCommandGroup{
                     new SetIntakeWheelSpeed(0),
                     new SetManipulatorWheelSpeed(0)
                 ),
-                new SetIntakePosition(0.29),
+                new SetIntakePosition(Constants.Intake.pivotStowPosition),
                 new SetElevatorPosition(0.5),
                 new SetArmAngle(0.128),
                 new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})

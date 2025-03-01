@@ -20,8 +20,10 @@ public class Transit extends Command{
     @Override
     public void execute() {
 
-        if (TriggerBoard.isClimbControllerButtonPressed() && TriggerBoard.isClimbButtonBoxButtonPressed()) {
-            Robot.robotMode.setCurrentMode(RobotMode.climbPose);
+        if (TriggerBoard.isClimbButtonBoxButtonPressed()) {
+            if (TriggerBoard.isClimbControllerButtonPressed()) {
+                Robot.robotMode.setCurrentMode(RobotMode.climbPose);
+            }
             return;
         }
 
@@ -57,7 +59,7 @@ public class Transit extends Command{
         }
 
         if (Robot.joystick.b().getAsBoolean()) {
-            Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
+            Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePoseManual);
         }
 
         

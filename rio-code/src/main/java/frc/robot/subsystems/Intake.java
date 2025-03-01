@@ -36,8 +36,6 @@ public class Intake extends SubsystemBase{
 
     private double targetRotations = 0;
 
-    private boolean isDisabled = false;
-
     public Intake() {
         // Motor basic setup
         leftWheelMotor = new TalonFX(Constants.Intake.leftWheelMotorID);
@@ -104,17 +102,15 @@ public class Intake extends SubsystemBase{
 
     @Override
     public void periodic() {
-
-        if (pivotMotor.getStatorCurrent().getValueAsDouble() > Constants.Intake.pivotCurrentLimit || isDisabled) {
-            pivotMotor.set(0);
-            isDisabled = true;
-        }
-
         Logger.log("Intake/Pivot Position", pivotMotor.getPosition().getValueAsDouble());
         Logger.log("Intake/Pivot Absolute Position", pivotEncoder.getPosition().getValueAsDouble());
         Logger.log("Intake/Is Pivot At Position", isPivotAtPosition());
         Logger.log("Intake/Stator Current", leftWheelMotor.getStatorCurrent().getValueAsDouble());
         Logger.log("Intake/Has Game Piece", hasAlgae());
+    }
+
+    public double getPivotPosition() {
+        return pivotMotor.getPosition().getValueAsDouble();
     }
     
     public void setPivotSpeed(double speed) {
@@ -132,7 +128,7 @@ public class Intake extends SubsystemBase{
     }
 
     public boolean isPivotAtPosition() {
-        return MathUtil.isNear(targetRotations, pivotMotor.getPosition().getValueAsDouble(), Constants.Intake.pivotErrorTolerance) || isDisabled;
+        return MathUtil.isNear(targetRotations, pivotMotor.getPosition().getValueAsDouble(), Constants.Intake.pivotErrorTolerance);
     }
 
     public boolean hasAlgae() {

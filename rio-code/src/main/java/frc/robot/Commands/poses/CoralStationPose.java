@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
+import frc.robot.TriggerBoard;
 import frc.robot.subsystems.RobotMode;
 
 public class CoralStationPose extends Command{
@@ -14,7 +15,9 @@ public class CoralStationPose extends Command{
 
     @Override
     public void initialize() {
-        Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+        if (!TriggerBoard.isAutonActive()) {
+            Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+        }
         Robot.arm.setPosition(0.128);
         Robot.manipulator.setSpeed(-0.2);
         Robot.elevator.setPosition(0.5);

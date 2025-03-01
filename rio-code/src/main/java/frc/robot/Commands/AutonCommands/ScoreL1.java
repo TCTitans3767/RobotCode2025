@@ -18,7 +18,7 @@ public class ScoreL1 extends CommandTrigger{
     public void initialize() {
         active(true);
         timer = Timer.getFPGATimestamp();
-        Robot.intake.setWheelSpeed(-0.3);
+        Robot.intake.setWheelSpeed(-0.2);
     }
 
     @Override

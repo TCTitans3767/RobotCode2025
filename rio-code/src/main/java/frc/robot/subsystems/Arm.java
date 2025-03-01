@@ -99,8 +99,8 @@ public class Arm extends SubsystemBase {
       return armMotor.getClosedLoopError().getValueAsDouble();
     }
 
-    public double getAngleDegrees() {
-      return Units.rotationsToDegrees(armEncoder.getPosition().getValueAsDouble());
+    public double getPosition() {
+      return armMotor.getPosition().getValueAsDouble();
     }
 
     private void logArmPosition() {

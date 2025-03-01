@@ -16,7 +16,7 @@ public class CoralStationAuton extends CommandTrigger{
     public void initialize() {
         Robot.arm.setPosition(0.128);
         Robot.elevator.setPosition(0.5);
-        Robot.manipulator.setSpeed(0.2);
+        Robot.manipulator.setSpeed(-0.2);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class ScoreCoralPose extends SequentialCommandGroup{
         addCommands(
             new InstantCommand(() -> {
                 if (DashboardButtonBox.getSelectedLevelString() == "1") {
-                    Robot.manipulator.setSpeed(0.05);
+                    Robot.manipulator.setSpeed(0.03);
                 } else {
                     Robot.manipulator.setSpeed(0.25);
                 }
