@@ -24,4 +24,10 @@ public class CoralStationAuton extends CommandTrigger{
         return TriggerBoard.isCoralInManipulator();
     }
 
+    @Override
+    public void end(boolean interrupted) {
+        Robot.manipulator.setSpeed(0);
+        super.end(interrupted);
+    }
+
 }

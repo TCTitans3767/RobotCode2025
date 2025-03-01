@@ -16,6 +16,7 @@ public class Autos {
         final AutoRoutine routine = factory.newRoutine("ScoreL1 Left");
 
         final frc.robot.Commands.AutonCommands.ScoreL1 scoreL1 = new frc.robot.Commands.AutonCommands.ScoreL1(routine.loop());
+        final CoralStationAuton coralStationAuton = new CoralStationAuton(routine.loop());
 
         final AutoTrajectory scoreL1Path = routine.trajectory("ScoreL1 Left");
 
@@ -28,6 +29,8 @@ public class Autos {
         ).onTrue(scoreL1Path.cmd());
 
         scoreL1Path.atTime("ScoreL1").onTrue(scoreL1.cmd());
+        
+        scoreL1Path.atTime("Coral Station").onTrue(coralStationAuton.cmd());
 
         return routine;
 
@@ -37,9 +40,9 @@ public class Autos {
         final AutoRoutine routine = factory.newRoutine("ScoreL1 Right");
 
         final frc.robot.Commands.AutonCommands.ScoreL1 scoreL1 = new frc.robot.Commands.AutonCommands.ScoreL1(routine.loop());
+        final CoralStationAuton coralStationAuton = new CoralStationAuton(routine.loop());
 
         final AutoTrajectory scoreL1Path = routine.trajectory("ScoreL1 Right");
-        final AutoTrajectory scoreL1NextPath = routine.trajectory("ScoreL1Next");
 
         routine.active().onTrue(new InstantCommand(
                 () -> {
@@ -51,6 +54,8 @@ public class Autos {
         ).onTrue(scoreL1Path.cmd());
 
         scoreL1Path.atTime("ScoreL1").onTrue(scoreL1.cmd());
+
+        scoreL1Path.atTime("Coral Station").onTrue(coralStationAuton.cmd());
 
         return routine;
 

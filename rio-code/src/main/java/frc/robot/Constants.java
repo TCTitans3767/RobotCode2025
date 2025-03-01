@@ -3,10 +3,13 @@ package frc.robot;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ctre.phoenix6.StatusSignal;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Current;
 
 public class Constants {
     public static final class NetworkTables {
@@ -226,6 +229,7 @@ public class Constants {
         public static final double sensorDebounce = 0.01;
         public static final int sensorID = 25;
         public static final double wheelCurrentLimit = 60;
+        public static final double pivotCurrentLimit = 80;
 
     }
   
