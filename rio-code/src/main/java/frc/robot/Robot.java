@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.event.EventLoop;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -70,10 +71,10 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     DogLog.setOptions(new DogLogOptions(
-        () -> testMode, 
+        Robot::doNetworksTablePublishing,
         false, 
         false, 
-        false, 
+        true, 
         true, 
         1000
       )
@@ -188,5 +189,9 @@ public class Robot extends TimedRobot {
 
   public static void disableTestMode() {
       Robot.testMode = false;
+  }
+
+  public static boolean doNetworksTablePublishing() {
+    return DriverStation.isDSAttached() ? !DriverStation.isFMSAttached() : false;
   }
 }

@@ -42,7 +42,7 @@ public class Limelight extends SubsystemBase{
     private static boolean doEstimationAll = true;
     private boolean goodEstimationFrame = true;
     private boolean robotToLimelightSet = true;
-    private static AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
+    private static AprilTagFieldLayout fieldLayout;
 
     private int startupEstimations = 0;
 
@@ -51,6 +51,13 @@ public class Limelight extends SubsystemBase{
     
     public Limelight(String limelightName, Pose3d robotToLimelight) {
         System.out.println("started limelight initialization");
+
+        try {
+            fieldLayout = new AprilTagFieldLayout("src\\main\\deploy\\AprilTagCalibrations\\field_calibration.json");
+        } catch (Exception e) {
+            System.err.println("failed to read calibrated field layout! \n Falling back to 2025 Reefscape Welded!");
+            fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
+        }
 
         this.limelightName = limelightName;
         this.robotToLimelight = robotToLimelight;

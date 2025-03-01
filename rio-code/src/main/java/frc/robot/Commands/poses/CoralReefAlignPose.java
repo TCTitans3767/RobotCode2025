@@ -33,13 +33,13 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
             new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
             new ParallelRaceGroup(
                 new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed),
-                new WaitCommand(2)
+                new WaitCommand(0.1)
             ),
             new ParallelRaceGroup(
                 new RunCommand(() -> {
-                    Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.5));
+                    Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.25));
                 }),
-                new WaitCommand(0.15)
+                new WaitCommand(0.2)
             ),
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReefAligned);})
@@ -53,6 +53,6 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
     }
 
     public static boolean isAlignCommandFinsihed() {
-        return RobotMode.alignWithLeftReef.isFinished() || RobotMode.alignWithRightReef.isFinished();
+        return CoralReefAlignPose.isLeftBranchSelected() ? RobotMode.alignWithLeftReef.isFinished() : RobotMode.alignWithRightReef.isFinished();
     }
 }

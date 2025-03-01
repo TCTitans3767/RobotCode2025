@@ -41,7 +41,7 @@ public class AlignWithAlgae extends Command{
     @Override
     public void initialize() {
         initialPosition = Robot.drivetrain.getPose();
-        targetPose = initialPosition.transformBy(CoralReefAlignPose.isLeftBranchSelected() ? new Transform2d(-0.05, -0.17, new Rotation2d()) : new Transform2d(0, 0.17, new Rotation2d()));
+        targetPose = initialPosition.transformBy(CoralReefAlignPose.isLeftBranchSelected() ? new Transform2d(0, -0.17, new Rotation2d()) : new Transform2d(0, 0.17, new Rotation2d()));
         Logger.log("Alignment/Target Pose", targetPose.toString());
         xController.setSetpoint(targetPose.getX());
         yController.setSetpoint(targetPose.getY());

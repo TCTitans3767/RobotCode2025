@@ -22,9 +22,9 @@ public class ScoreCoralPose extends SequentialCommandGroup{
             addCommands(
                 new InstantCommand(() -> {
                     Robot.robotMode.setDriveMode(DriveMode.Brake);
-                    Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.25));
+                    Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.15));
                 }),
-                new WaitCommand(0.5),
+                new WaitCommand(0.05),
                 new InstantCommand(() -> {
                     Robot.manipulator.setSpeed(0);
                     Robot.robotMode.setCurrentMode(RobotMode.transitPose);
@@ -45,13 +45,13 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                     Robot.manipulator.setSpeed(0.25);
                 }
             }),
-            new WaitCommand(0.4),
+            new WaitCommand(0.1),
             new ConditionalCommand(
-                new scoreAndTransit(),
                 new InstantCommand(() -> {
                     Robot.manipulator.setSpeed(0);
                     Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
                 }),
+                new scoreAndTransit(),
                 DashboardButtonBox::isAlgaeKnockoffOn
             )
         );

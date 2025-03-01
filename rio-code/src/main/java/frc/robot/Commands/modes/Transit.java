@@ -20,6 +20,11 @@ public class Transit extends Command{
     @Override
     public void execute() {
 
+        if (TriggerBoard.isClimbControllerButtonPressed() && TriggerBoard.isClimbButtonBoxButtonPressed()) {
+            Robot.robotMode.setCurrentMode(RobotMode.climbPose);
+            return;
+        }
+
         if (Robot.intake.isWheelMotorTooHot()) {
             Robot.intake.setWheelSpeed(0);
         }
@@ -50,21 +55,9 @@ public class Transit extends Command{
         if (TriggerBoard.isCoralOverrideButtonPressed()) {
             Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
         }
-        
-        if (Robot.joystick.a().getAsBoolean()) {
-            Robot.climber.setSpeed(0.6);
-        } else if (Robot.joystick.y().getAsBoolean()) {
-            Robot.climber.setSpeed(-0.6);
-        } else {
-            Robot.climber.setSpeed(0);
-        }
 
         if (Robot.joystick.b().getAsBoolean()) {
             Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
-        }
-
-        if (TriggerBoard.isClimbControllerButtonPressed() && TriggerBoard.isClimbButtonBoxButtonPressed() && TriggerBoard.isEndGame()) {
-            Robot.robotMode.setCurrentMode(RobotMode.climbPose);
         }
 
         

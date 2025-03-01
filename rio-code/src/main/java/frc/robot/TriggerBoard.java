@@ -14,7 +14,7 @@ public class TriggerBoard {
 
     public static boolean isAlgaeOverrideButtonPressed() {return Robot.joystick.leftBumper().getAsBoolean();}
 
-    public static boolean isClimbControllerButtonPressed() {return Robot.joystick.leftTrigger().getAsBoolean();}
+    public static boolean isClimbControllerButtonPressed() {return Robot.joystick.leftBumper().getAsBoolean();}
 
     public static boolean isClimbButtonBoxButtonPressed() {
         return DashboardButtonBox.isClimbPressed();
@@ -65,7 +65,11 @@ public class TriggerBoard {
     }
 
     public static boolean isEndGame() {
-        return true;
+        if (DriverStation.isDSAttached() ? DriverStation.isFMSAttached() : false) {
+            return DriverStation.getMatchTime() < 20;
+        } else {
+            return true;
+        }
     }
   
     public static boolean isCoralInIntake() {
