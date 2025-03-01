@@ -33,7 +33,7 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
             new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
             new ParallelRaceGroup(
                 new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed),
-                new WaitCommand(2)
+                new WaitCommand(0.1)
             ),
             new ParallelRaceGroup(
                 new RunCommand(() -> {

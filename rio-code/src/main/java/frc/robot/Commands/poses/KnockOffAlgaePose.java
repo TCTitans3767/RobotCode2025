@@ -53,7 +53,7 @@ public class KnockOffAlgaePose extends SequentialCommandGroup{
     }
 
     public static boolean isElevatorAtPosition() {
-        return Robot.elevator.getPosition() <= 0.1;
+        return Robot.elevator.getPosition() <= 0.05;
     }
 
     public static boolean isManipulatorTouchingAlgae() {

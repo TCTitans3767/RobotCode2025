@@ -21,7 +21,6 @@ public class Autos {
 
         routine.active().onTrue(new InstantCommand(
                 () -> {
-                    Robot.limelight.turnOffAprilTags();
                     Robot.getDrivetrain().resetPose(scoreL1Path.getInitialPose().get());
                     Robot.intake.setPivotPosition(0.18);
                 }
