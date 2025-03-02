@@ -6,11 +6,19 @@ import choreo.Choreo;
 import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Commands.AutonCommands.CoralStationAuton;
 
 public class Autos {
+
+    public static Command L1LeftCommandGroup() {
+        return new SequentialCommandGroup(
+            
+        );
+    }
 
     public static AutoRoutine L1Left(AutoFactory factory) {
         final AutoRoutine routine = factory.newRoutine("ScoreL1 Left");
@@ -18,7 +26,7 @@ public class Autos {
         final frc.robot.Commands.AutonCommands.ScoreL1 scoreL1 = new frc.robot.Commands.AutonCommands.ScoreL1(routine.loop());
         final CoralStationAuton coralStationAuton = new CoralStationAuton(routine.loop());
 
-        final AutoTrajectory scoreL1Path = routine.trajectory("ScoreL1 Left");
+        final AutoTrajectory scoreL1Path = routine.trajectory("Score L1 Left");
 
         routine.active().onTrue(new InstantCommand(
                 () -> {
@@ -36,6 +44,28 @@ public class Autos {
 
     }
 
+    public static AutoRoutine L1RightNoExtra(AutoFactory factory) {
+        final AutoRoutine routine = factory.newRoutine("ScoreL1 Right No Extra");
+
+        final frc.robot.Commands.AutonCommands.ScoreL1 scoreL1 = new frc.robot.Commands.AutonCommands.ScoreL1(routine.loop());
+        final CoralStationAuton coralStationAuton = new CoralStationAuton(routine.loop());
+
+        final AutoTrajectory scoreL1Path = routine.trajectory("ScoreL1 Right No Extra");
+
+        routine.active().onTrue(new InstantCommand(
+                () -> {
+                    Robot.getDrivetrain().resetPose(scoreL1Path.getInitialPose().get());
+                    Robot.intake.setPivotPosition(0.18);
+                }
+            )
+        ).onTrue(scoreL1Path.cmd());
+
+        scoreL1Path.atTime("ScoreL1").onTrue(scoreL1.cmd());
+
+        return routine;
+
+    }
+
     public static AutoRoutine L1Right(AutoFactory factory) {
         final AutoRoutine routine = factory.newRoutine("ScoreL1 Right");
 
@@ -46,7 +76,6 @@ public class Autos {
 
         routine.active().onTrue(new InstantCommand(
                 () -> {
-                    Robot.limelight.turnOffAprilTags();
                     Robot.getDrivetrain().resetPose(scoreL1Path.getInitialPose().get());
                     Robot.intake.setPivotPosition(0.18);
                 }

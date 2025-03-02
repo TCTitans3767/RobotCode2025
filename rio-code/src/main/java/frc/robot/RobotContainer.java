@@ -14,6 +14,7 @@ import choreo.auto.AutoFactory;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.estimator.SteadyStateKalmanFilter;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -28,9 +29,13 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Commands.Intake.SetIntakePivotSpeed;
+import frc.robot.Commands.arm.SetArmSpeed;
+import frc.robot.Commands.climb.SetClimberSpeed;
 import frc.robot.Commands.drive.AlignWithLeftReef;
 import frc.robot.Commands.drive.AlignWithRightReef;
 import frc.robot.Commands.drive.TeleopDrive;
+import frc.robot.Commands.elevator.SetElevatorSpeed;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
@@ -67,18 +72,30 @@ public class RobotContainer {
 
     // private final Joystick joystick = new Joystick(0);
 
-    private AutoFactory autoFactory;
+    public AutoFactory autoFactory;
+
+    private Command rightL1;
+    private Command leftL1;
+    private Command rightL1NoExtras;
+
+    public final static String rightL1Name = "Right L1";
+    public final static String leftL1Name = "Left L1";
+    public final static String rightL1NoExtrasName = "Right L1 No Extras"; 
     
-    private final SendableChooser<Command> autonSelector;
+    private final SendableChooser<Command> autonSelector = new SendableChooser<Command>();
 
     public RobotContainer() {
 
         configureBindings();
         configureChoreo();
-        
-        autonSelector = new SendableChooser<Command>();
-        autonSelector.setDefaultOption("L1 Right", Autos.L1Right(autoFactory).cmd());
-        autonSelector.addOption("L1 Left", Autos.L1Left(autoFactory).cmd());
+
+        leftL1 = Autos.L1Left(autoFactory).cmd();
+        rightL1 = Autos.L1Right(autoFactory).cmd();
+        rightL1NoExtras = Autos.L1RightNoExtra(autoFactory).cmd();
+    
+        autonSelector.setDefaultOption(rightL1Name, rightL1);
+        autonSelector.addOption(leftL1Name, leftL1);
+        autonSelector.addOption(rightL1NoExtrasName, rightL1NoExtras);
         SmartDashboard.putData("Auton Selection", autonSelector);
 
         // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
@@ -146,10 +163,22 @@ public class RobotContainer {
 
         joystick.start().onTrue(new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.resetPose)));
 
+        joystick.povUp().whileTrue(new SetElevatorSpeed(0.3));
+        joystick.povDown().whileTrue(new SetElevatorSpeed(-0.3));
+
+        joystick.povRight().whileTrue(new SetIntakePivotSpeed(0.3));
+        joystick.povLeft().whileTrue(new SetIntakePivotSpeed(-0.3));
+
+        joystick.a().whileTrue(new SetArmSpeed(0.3));
+        joystick.y().whileTrue(new SetArmSpeed(-0.3));
+
+        joystick.x().whileTrue(new SetClimberSpeed(0.3));
+
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
     public Command getAutonomousCommand() {
+        System.out.println(autonSelector.getSelected().getName());
         return autonSelector.getSelected();
     }
 

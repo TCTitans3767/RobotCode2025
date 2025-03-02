@@ -33,7 +33,7 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
             new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
             new ParallelRaceGroup(
                 new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed),
-                new WaitCommand(0.1)
+                new WaitCommand(1.5)
             ),
             new ParallelRaceGroup(
                 new RunCommand(() -> {
@@ -41,6 +41,7 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
                 }),
                 new WaitCommand(0.2)
             ),
+            new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0).withVelocityY(0).withRotationalRate(0));}),
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReefAligned);})
         );

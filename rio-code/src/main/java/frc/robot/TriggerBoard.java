@@ -6,6 +6,8 @@ import frc.robot.subsystems.RobotMode;
 
 public class TriggerBoard {
     
+    public static boolean isAutonActive() {return DriverStation.isDSAttached() ? DriverStation.isAutonomousEnabled() : false;}
+
     public static boolean isCoralButtonPressed() {return Robot.joystick.rightTrigger().getAsBoolean();}
 
     public static boolean isCoralOverrideButtonPressed() {return Robot.joystick.rightBumper().getAsBoolean();}

@@ -17,7 +17,7 @@ public class CoralFloorPose extends SequentialCommandGroup{
     public CoralFloorPose() {
 
         addCommands(
-            new SetIntakePosition(-0.1),
+            new SetIntakePosition(-0.11),
             new ParallelCommandGroup(
                 new SetArmAngle(-0.03),
                 new SetElevatorPosition(0.021),
