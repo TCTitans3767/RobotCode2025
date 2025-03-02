@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.ButtonBox;
 import frc.robot.DashboardButtonBox;
 import frc.robot.Robot;
@@ -21,8 +22,14 @@ public class ScoreCoralPose extends SequentialCommandGroup{
         public scoreAndTransit() {
             addCommands(
                 new InstantCommand(() -> {
-                    Robot.robotMode.setDriveMode(DriveMode.Brake);
-                    Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.15));
+                    if (DashboardButtonBox.getSelectedLevelString() == "1") {
+                        Robot.robotMode.setDriveMode(DriveMode.Brake);
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.15));
+                    } else {
+                        Robot.robotMode.setDriveMode(DriveMode.Brake);
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.15));
+                    }
+
                 }),
                 new WaitCommand(0.05),
                 new InstantCommand(() -> {
