@@ -8,15 +8,38 @@ import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Commands.AutonCommands.CoralStationAuton;
+import frc.robot.Commands.AutonCommands.CoralStationAutonCommand;
+import frc.robot.Commands.AutonCommands.PrepL4Auton;
+import frc.robot.Commands.AutonCommands.ScoreL1;
+import frc.robot.Commands.AutonCommands.ScoreL1AutonCommand;
+import frc.robot.Commands.Intake.SetIntakePosition;
+import frc.robot.subsystems.RobotMode;
 
 public class Autos {
 
-    public static Command L1LeftCommandGroup() {
+    public static Command L1LeftCommandGroup(AutoFactory factory) {
         return new SequentialCommandGroup(
-            
+            new ParallelCommandGroup(
+                factory.trajectoryCmd("Score L1 Left"),
+                new SetIntakePosition(0.18)
+            ),
+            new ScoreL1AutonCommand(),
+            new WaitCommand(2),
+            new ParallelCommandGroup(
+                factory.trajectoryCmd("L1 Left To Coral Station"),
+                new CoralStationAutonCommand()
+            ),
+            factory.trajectoryCmd("Left Coral Station To I4"),
+            new PrepL4Auton(),
+            factory.trajectoryCmd("L4 Lineup"),
+            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);})
         );
     }
 
@@ -36,9 +59,9 @@ public class Autos {
             )
         ).onTrue(scoreL1Path.cmd());
 
-        scoreL1Path.atTime("ScoreL1").onTrue(scoreL1.cmd());
-        
-        scoreL1Path.atTime("Coral Station").onTrue(coralStationAuton.cmd());
+        scoreL1Path.atTime("Score L1").onTrue(scoreL1.cmd());
+
+        scoreL1Path.atTime("Prep Coral Station").onTrue(coralStationAuton.cmd());
 
         return routine;
 
@@ -73,6 +96,7 @@ public class Autos {
         final CoralStationAuton coralStationAuton = new CoralStationAuton(routine.loop());
 
         final AutoTrajectory scoreL1Path = routine.trajectory("ScoreL1 Right");
+        final AutoTrajectory scoreL4Path = routine.trajectory("Right Coral Station To B4");
 
         routine.active().onTrue(new InstantCommand(
                 () -> {
@@ -85,6 +109,8 @@ public class Autos {
         scoreL1Path.atTime("ScoreL1").onTrue(scoreL1.cmd());
 
         scoreL1Path.atTime("Coral Station").onTrue(coralStationAuton.cmd());
+
+        coralStationAuton.done().onTrue(scoreL4Path.cmd());
 
         return routine;
 

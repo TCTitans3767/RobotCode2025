@@ -18,12 +18,12 @@ public class ResetPose extends SequentialCommandGroup{
         addCommands(
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}).ignoringDisable(true),
             new SetManipulatorWheelSpeed(0),
-            new SetIntakePosition(0),
+            new SetIntakePosition(0).withTimeout(3),
             new SetIntakeWheelSpeed(-0.5),
             new SetArmAngle(-0.3),
             new SetElevatorPosition(0.5),
             new SetArmAngle(-0.128),
-            new SetIntakePosition(Constants.Intake.pivotStowPosition),
+            new SetIntakePosition(Constants.Intake.pivotStowPosition).withTimeout(3),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.transit);}).ignoringDisable(true)
         );
 
