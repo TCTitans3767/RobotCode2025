@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Commands.AutonCommands.PrepL4Auton;
 import frc.robot.Commands.Intake.SetIntakePivotSpeed;
 import frc.robot.Commands.arm.SetArmSpeed;
 import frc.robot.Commands.climb.SetClimberSpeed;
@@ -36,6 +37,7 @@ import frc.robot.Commands.drive.AlignWithLeftReef;
 import frc.robot.Commands.drive.AlignWithRightReef;
 import frc.robot.Commands.drive.TeleopDrive;
 import frc.robot.Commands.elevator.SetElevatorSpeed;
+import frc.robot.Commands.poses.ScoreCoralPose;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Climber;
@@ -96,6 +98,7 @@ public class RobotContainer {
         autonSelector.setDefaultOption(rightL1Name, rightL1);
         autonSelector.addOption(leftL1Name, leftL1);
         autonSelector.addOption(rightL1NoExtrasName, rightL1NoExtras);
+        autonSelector.addOption(leftL1Name + " + L4", Autos.L1LeftCommandGroup(autoFactory));
         SmartDashboard.putData("Auton Selection", autonSelector);
 
         // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
@@ -113,6 +116,9 @@ public class RobotContainer {
             true,
             drivetrain
         );
+
+        autoFactory.bind("PrepL4", new PrepL4Auton());
+        autoFactory.bind("ScoreCoral", new ScoreCoralPose());
     }
 
     private void configureBindings() {
