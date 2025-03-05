@@ -21,7 +21,7 @@ import frc.robot.Commands.drive.AlignWithAlgae;
 import frc.robot.Commands.drive.AlignWithCoralStation;
 import frc.robot.Commands.drive.AlignWithLeftReef;
 import frc.robot.Commands.drive.AlignWithRightReef;
-import frc.robot.Commands.drive.ClimbControllerDrive;
+import frc.robot.Commands.drive.SlowControllerDrive;
 import frc.robot.Commands.drive.ControllerDrive;
 import frc.robot.Commands.elevator.ZeroElevator;
 import frc.robot.Commands.modes.AlgaePickup;
@@ -121,7 +121,7 @@ public class RobotMode extends SubsystemBase {
     public static KnockOffAlgaePose knockOffAlgaePose;
     public static KnockOffAlgaePoseManual knockOffAlgaePoseManual;
 
-    public static ClimbControllerDrive climbControllerDrive;
+    public static SlowControllerDrive slowControllerDrive;
 
     public static ResetPose resetPose;
 
@@ -161,7 +161,7 @@ public class RobotMode extends SubsystemBase {
         
         knockOffAlgaePoseManual = new KnockOffAlgaePoseManual();
 
-        climbControllerDrive = new ClimbControllerDrive();
+        slowControllerDrive = new SlowControllerDrive();
 
         resetPose = new ResetPose();
     }
