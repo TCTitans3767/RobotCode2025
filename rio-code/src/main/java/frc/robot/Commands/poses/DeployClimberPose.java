@@ -13,6 +13,7 @@ public class DeployClimberPose extends SequentialCommandGroup{
         addCommands(
             new InstantCommand(() -> Robot.climber.setSpeed(0.6)),
             new WaitCommand(0.5),
+            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(RobotMode.climbControllerDrive)),
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.finalClimb))
         );
 
