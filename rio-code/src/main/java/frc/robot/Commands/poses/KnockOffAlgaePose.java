@@ -49,6 +49,7 @@ public class KnockOffAlgaePose extends SequentialCommandGroup{
     }
 
     public static boolean isAlignCommandFinsihed() {
+        System.out.println("align finished: " + RobotMode.alignWithAlgae.isFinished());
         return RobotMode.alignWithAlgae.isFinished();
     }
 
