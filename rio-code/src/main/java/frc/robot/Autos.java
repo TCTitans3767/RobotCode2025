@@ -6,36 +6,75 @@ import choreo.Choreo;
 import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Commands.AutonCommands.CoralStationAuton;
 import frc.robot.Commands.AutonCommands.CoralStationAutonCommand;
+import frc.robot.Commands.AutonCommands.GroundIntakeAuton;
+import frc.robot.Commands.AutonCommands.PrepL2Auton;
 import frc.robot.Commands.AutonCommands.PrepL4Auton;
+import frc.robot.Commands.AutonCommands.ScoreAuto;
 import frc.robot.Commands.AutonCommands.ScoreL1;
 import frc.robot.Commands.AutonCommands.ScoreL1AutonCommand;
 import frc.robot.Commands.Intake.SetIntakePosition;
+import frc.robot.Commands.Intake.SetIntakeWheelSpeed;
+import frc.robot.Commands.arm.SetArmAngle;
+import frc.robot.Commands.elevator.SetElevatorPosition;
 import frc.robot.subsystems.RobotMode;
 
 public class Autos {
 
+    public static Command lolipopAuto(AutoFactory factory) {
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> Robot.drivetrain.resetPose(Choreo.loadTrajectory("Wall Start To A4").get().getInitialPose(Robot.getAlliance() == Alliance.Red).get())),
+            new InstantCommand(() -> Robot.limelight.turnOnAprilTags()),
+            new ParallelCommandGroup(
+                factory.trajectoryCmd("Wall Start To A4"),
+                new SetIntakePosition(0.32),
+                new SequentialCommandGroup(
+                    new SetArmAngle(-0.128),
+                    new SetElevatorPosition(0.5)
+                )
+            ),
+            new PrepL4Auton(),
+            new WaitCommand(0.1),
+            // new InstantCommand(() -> Robot.limelight.turnOffAprilTags()),
+            factory.trajectoryCmd("A4 Lineup"),
+            new ScoreAuto(),
+            new WaitCommand(0.1),
+            new SetIntakeWheelSpeed(0.5),
+            new GroundIntakeAuton(),
+            factory.trajectoryCmd("A4 To Lolipop 2"),
+            new WaitUntilCommand(TriggerBoard::isCoralInManipulator),
+            factory.trajectoryCmd("Lolipop 2 To A2"),
+            new PrepL2Auton(),
+            factory.trajectoryCmd("A Lineup"),
+            new ScoreAuto()
+        );
+    }
+
     public static Command L1LeftCommandGroup(AutoFactory factory) {
         return new SequentialCommandGroup(
+            new InstantCommand(() -> Robot.drivetrain.resetPose(Choreo.loadTrajectory("Score L1 Left").get().getInitialPose(Robot.getAlliance() == Alliance.Red).get())),
             new ParallelCommandGroup(
                 factory.trajectoryCmd("Score L1 Left"),
-                new SetIntakePosition(0.18)
+                new SetIntakePosition(0.20)
             ),
             new ScoreL1AutonCommand(),
-            new WaitCommand(2),
+            new WaitCommand(0.5),
             new ParallelCommandGroup(
                 factory.trajectoryCmd("L1 Left To Coral Station"),
                 new CoralStationAutonCommand()
             ),
+            new WaitCommand(0.3),
             factory.trajectoryCmd("Left Coral Station To I4"),
             new PrepL4Auton(),
             factory.trajectoryCmd("L4 Lineup"),

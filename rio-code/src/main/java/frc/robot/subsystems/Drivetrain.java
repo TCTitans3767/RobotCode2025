@@ -65,9 +65,9 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
     private boolean m_hasAppliedOperatorPerspective = false;
 
     private final SwerveRequest.FieldCentric swerveRequest = new SwerveRequest.FieldCentric();
-    private final PIDController choreoXController = new PIDController(4, 0, 0);
-    private final PIDController choreoYController = new PIDController(4, 0, 0);
-    private final PIDController choreoOmegaController = new PIDController(4.3, 0, 0);
+    private final PIDController choreoXController = new PIDController(3.5, 0, 0);
+    private final PIDController choreoYController = new PIDController(3.5, 0, 0);
+    private final PIDController choreoOmegaController = new PIDController(4, 0, 0);
 
     private Field2d field = new Field2d();
 

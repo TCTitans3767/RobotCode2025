@@ -99,6 +99,7 @@ public class RobotContainer {
         autonSelector.addOption(leftL1Name, leftL1);
         autonSelector.addOption(rightL1NoExtrasName, rightL1NoExtras);
         autonSelector.addOption(leftL1Name + " + L4", Autos.L1LeftCommandGroup(autoFactory));
+        autonSelector.addOption("Left Wall Auton", Autos.lolipopAuto(autoFactory));
         SmartDashboard.putData("Auton Selection", autonSelector);
 
         // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);

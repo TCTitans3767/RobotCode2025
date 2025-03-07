@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.PubSubOption;
 import edu.wpi.first.networktables.PubSubOptions;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -409,7 +410,7 @@ public class DashboardButtonBox {
     }
 
     public static boolean isAlgaeKnockoffOn() {
-        return knockOffAlgae.get();
+        return knockOffAlgae.get() ^ DriverStation.isAutonomousEnabled();
     }
 
     public static boolean hasSelectedLevelChanged() {

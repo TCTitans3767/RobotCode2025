@@ -12,6 +12,8 @@ import edu.wpi.first.epilogue.EpilogueConfiguration;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.epilogue.Logged.Importance;
 import edu.wpi.first.epilogue.logging.EpilogueBackend;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
@@ -111,6 +113,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(1, 1, 99999));
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
@@ -129,6 +132,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 99999));
     robotMode.setCurrentMode(RobotMode.initialTransitPose);
     robotMode.setDriveModeCommand(RobotMode.controllerDrive);
   }
