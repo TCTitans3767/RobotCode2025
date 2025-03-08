@@ -17,12 +17,12 @@ public class CoralRecievedPose extends SequentialCommandGroup{
         addCommands(
             new ParallelRaceGroup(
                 new RunCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.25));}, Robot.drivetrain),
-                new RunCommand(() -> {Robot.manipulator.setSpeed(-0.1);}, Robot.manipulator),
+                new RunCommand(() -> {Robot.manipulator.setSpeed(-0.05);}, Robot.manipulator),
                 new WaitCommand(0.15)
             ),
             new InstantCommand(() -> {
                 Robot.manipulator.setSpeed(0);
-                Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+                Robot.robotMode.setCurrentMode(RobotMode.transitPose);
             })
         );
 

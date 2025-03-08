@@ -35,7 +35,7 @@ public class Autos {
     public static Command lolipopAuto(AutoFactory factory) {
         return new SequentialCommandGroup(
             new InstantCommand(() -> Robot.drivetrain.resetPose(Choreo.loadTrajectory("Wall Start To A4").get().getInitialPose(Robot.getAlliance() == Alliance.Red).get())),
-            new InstantCommand(() -> Robot.limelight.turnOnAprilTags()),
+            // new InstantCommand(() -> Robot.limelight.turnOnAprilTags()),
             new ParallelCommandGroup(
                 factory.trajectoryCmd("Wall Start To A4"),
                 new SetIntakePosition(0.32),

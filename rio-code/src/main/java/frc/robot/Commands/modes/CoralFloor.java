@@ -19,7 +19,8 @@ public class CoralFloor extends Command{
         // }
 
         if (TriggerBoard.isCoralInManipulator()) {
-            Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+            Robot.intake.setWheelSpeed(-0.6);
+            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
         } else if (TriggerBoard.isCoralOverrideButtonPressed()) {
             Robot.robotMode.setCurrentMode(RobotMode.transitPose);
         }

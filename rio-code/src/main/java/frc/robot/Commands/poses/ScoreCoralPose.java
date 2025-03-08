@@ -31,11 +31,11 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                     }
 
                 }),
-                new WaitCommand(0.35),
+                new WaitCommand(0.2),
                 new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive)),
                 new InstantCommand(() -> {
                     Robot.manipulator.setSpeed(0);
-                    Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+                    Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
                 })
             );
         }

@@ -18,7 +18,7 @@ public class GroundIntakeAuton extends ParallelCommandGroup{
         addCommands(
             new SetIntakePosition(-0.11),
             new SetElevatorPosition(0.025),
-            new SetManipulatorWheelSpeed(-0.3),
+            new SetManipulatorWheelSpeed(-0.2),
             new SetArmAngle(-0.03)
         );
 

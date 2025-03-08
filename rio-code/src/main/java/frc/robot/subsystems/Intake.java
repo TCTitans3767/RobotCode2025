@@ -132,7 +132,7 @@ public class Intake extends SubsystemBase{
     }
 
     public boolean hasAlgae() {
-        return leftWheelMotor.getStatorCurrent().getValueAsDouble() >= 30;
+        return leftWheelMotor.getStatorCurrent().getValueAsDouble() >= 50;
     }
 
     public boolean isWheelMotorTooHot() {

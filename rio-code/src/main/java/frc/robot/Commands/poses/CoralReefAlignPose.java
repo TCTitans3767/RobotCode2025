@@ -31,19 +31,10 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
 
         addCommands(
             new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
-            new ParallelRaceGroup(
-                new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed),
-                new WaitCommand(1.5)
-            ),
-            new ParallelRaceGroup(
-                new RunCommand(() -> {
-                    Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.25));
-                }),
-                new WaitCommand(0.2)
-            ),
+            new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed).withTimeout(1.5),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0).withVelocityY(0).withRotationalRate(0));}),
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.slowControllerDrive);}),
-            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReefAligned);})
+            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);})
         );
 
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);

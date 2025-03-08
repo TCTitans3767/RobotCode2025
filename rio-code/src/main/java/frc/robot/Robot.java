@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(1, 1, 99999));
+    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(1.3, 1.3, 99999));
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {

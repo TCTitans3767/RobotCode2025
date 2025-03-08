@@ -109,7 +109,7 @@ public class AlignWithLeftReef extends Command{
         headingController.setPID(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
         // odometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(-6), new Rotation2d(0)));
-        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2 + 0.2), -0.21, new Rotation2d())).getTranslation(), targetReefRotation);
+        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), -0.2, new Rotation2d())).getTranslation(), targetReefRotation);
         // targetPose = new Pose2d(targetReefPose.getX(), targetReefPose.getY() + Units.inchesToMeters(7.5), targetReefPose.getRotation());
 
         Logger.log("Target Pose", targetPose.toString());
@@ -131,8 +131,8 @@ public class AlignWithLeftReef extends Command{
     @Override
     public void execute() {
         
-        xVelocity = xController.calculate(drivetrain.getPose().getX(), targetPose.getX()) + (xController.getError() < 0 ? Constants.Drive.XFeedForward : -Constants.Drive.XFeedForward);
-        yVelocity = yController.calculate(drivetrain.getPose().getY(), targetPose.getY()) + (yController.getError() < 0 ? Constants.Drive.YFeedForward : -Constants.Drive.YFeedForward);
+        xVelocity = xController.calculate(drivetrain.getPose().getX(), targetPose.getX()) + (xController.getError() < 0 ? -Constants.Drive.XFeedForward : Constants.Drive.XFeedForward);
+        yVelocity = yController.calculate(drivetrain.getPose().getY(), targetPose.getY()) + (yController.getError() < 0 ? -Constants.Drive.YFeedForward : Constants.Drive.YFeedForward);
         rotationVelocity = headingController.calculate(drivetrain.getPose().getRotation().getDegrees()) + (headingController.getError() < 0 ? Constants.Drive.rotationalFeedForward : -Constants.Drive.rotationalFeedForward);
 
         Logger.log("Alignment/Is Aligned", isAligned());

@@ -181,6 +181,8 @@ public class RobotContainer {
 
         joystick.x().whileTrue(new SetClimberSpeed(0.3));
 
+        joystick.leftStick().onTrue(new InstantCommand(() -> Robot.elevator.resetEncoder()));
+
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 

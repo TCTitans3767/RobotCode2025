@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.ButtonBox;
 import frc.robot.DashboardButtonBox;
 import frc.robot.ReefLevel;
@@ -27,8 +28,7 @@ public class CoralReefPose extends SequentialCommandGroup{
                     new SetManipulatorWheelSpeed(-0.05),
                     new SetArmAngle(0.02),
                     new SetElevatorPosition(0.34)
-                ),
-                new SetIntakePosition(0.26)
+                )
             );
         }
     }
@@ -37,31 +37,31 @@ public class CoralReefPose extends SequentialCommandGroup{
         public L2() {
             addCommands(
                 new SetManipulatorWheelSpeed(-0.05),
-                new SetArmAngle(-0.44),
                 new SetElevatorPosition(0.02),
-                new SetIntakePosition(0.32)
+                new SetArmAngle(-0.44),
+                new WaitCommand(0.25)
             );
         }
     }
 
-    public class L3 extends ParallelCommandGroup{
+    public class L3 extends SequentialCommandGroup{
         public L3() {
             addCommands(
                 new SetManipulatorWheelSpeed(-0.05),
-                new SetArmAngle(-0.43),
                 new SetElevatorPosition(0.44),
-                new SetIntakePosition(0.32)
+                new SetArmAngle(-0.43),
+                new WaitCommand(0.25)
             );
         }
     }
 
-    public class L4 extends ParallelCommandGroup{
+    public class L4 extends SequentialCommandGroup{
         public L4() {
             addCommands(
                 new SetManipulatorWheelSpeed(-0.05),
-                new SetArmAngle(-0.43),
-                new SetElevatorPosition(1.1),
-                new SetIntakePosition(0.32)
+                new SetElevatorPosition(0.95),
+                new SetArmAngle(-0.5),
+                new WaitCommand(0.25)
             );
         }
     }
@@ -78,7 +78,7 @@ public class CoralReefPose extends SequentialCommandGroup{
         addCommands(
             new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
             new InstantCommand(() -> {Robot.manipulator.setSpeed(0);}),
-            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReef);})
+            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);})
         );
 
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);

@@ -42,9 +42,11 @@ public class Transit extends Command{
             //     Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
             // }
             return;
-        } else if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator()) {
-            Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+        } else if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator() && !Robot.arm.isNear(-0.5)) {
+            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
             return;
+        } else if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator() && Robot.arm.isNear(-0.5)) {
+            Robot.robotMode.setCurrentMode(RobotMode.coralReefAlignPose);
         }
 
         if (TriggerBoard.isAlgaeButtonPressed() && !TriggerBoard.isAlgaeInIntake()) {
@@ -54,8 +56,11 @@ public class Transit extends Command{
             Robot.robotMode.setCurrentMode(RobotMode.ejectAlgaePose);
         }
 
-        if (TriggerBoard.isCoralOverrideButtonPressed()) {
+        if (TriggerBoard.isCoralOverrideButtonPressed() && !TriggerBoard.isCoralInManipulator()) {
             Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
+            return;
+        } else if (TriggerBoard.isCoralOverrideButtonPressed() && TriggerBoard.isCoralInManipulator()) {
+            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
         }
 
         if (Robot.joystick.b().getAsBoolean()) {
