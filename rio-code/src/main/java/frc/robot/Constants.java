@@ -304,4 +304,19 @@ public class Constants {
         public static final int climb = 0;
     }
 
+    public final static class L4Measurements {
+        public final static double armAngle = -0.5;
+        public final static double elevtaorHeight = 0.95;
+    }
+
+    public final static class L3Measurements {
+        public final static double armAngle = -0.43;
+        public final static double elevtaorHeight = 0.44;
+    }
+
+    public final static class L2Measurements {
+        public final static double armAngle = -0.44;
+        public final static double elevtaorHeight = 0.02;
+    }
+
 }
