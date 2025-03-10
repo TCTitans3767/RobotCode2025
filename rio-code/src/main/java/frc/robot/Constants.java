@@ -124,6 +124,8 @@ public class Constants {
         public final static int leftMotorID = 13;
         public final static int rightMotorID = 14;
 
+        public static final double maxCurrent = 100;
+
         // PID Constants
         public final static double kP = 12;
         public final static double kI = 0;
@@ -147,6 +149,7 @@ public class Constants {
         public final static double errorTolerance = 0.01;
         public final static double zeroingSpeed = -0.05;
         public final static double zeroingThreshold = 0.01;
+
     }
 
     public static final class Manipulator {

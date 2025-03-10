@@ -98,9 +98,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run(); 
     // buttonBox.periodic();
     // Logger.log("Selected Level", ButtonBox.getSelectedLevel());
-    Logger.log("Is Auton Command Scheduled", m_autonomousCommand != null ? m_autonomousCommand.isScheduled() : false);
     drivetrain.getField().setRobotPose(drivetrain.getPose());
-
   }
 
   @Override

@@ -86,6 +86,10 @@ public class Elevator extends SubsystemBase{
         //     rightMotor.setControl(new Follower(Constants.Elevator.leftMotorID, true));
         // }
 
+        if (leftMotor.get() < 0 && leftMotor.getStatorCurrent().getValueAsDouble() > Constants.Elevator.maxCurrent) {
+            leftMotor.setPosition(0);
+        }
+
         if (!isAtPosition()) {
             logElevatorPosition();
         }
@@ -132,6 +136,7 @@ public class Elevator extends SubsystemBase{
         Logger.logElevatorHeight(leftMotor.getPosition().getValueAsDouble() / Constants.Elevator.RotationsPerMeter);
         Logger.logElevatorMotorSpeed(leftMotor.get());
         Logger.logElevatorMotorVelocity(leftMotor.getVelocity().getValueAsDouble());
+        Logger.logElevatorMotorCurrent(leftMotor.getStatorCurrent().getValueAsDouble());
         Logger.logElevatorAtPosition(isAtPosition());
     }
 
