@@ -1,21 +1,31 @@
 package frc.robot;
 
+import java.util.logging.Logger;
+
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import choreo.Choreo;
 import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
+import edu.wpi.first.wpilibj.AnalogTriggerOutput.AnalogTriggerOutputException;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.Commands.AutonCommands.AlignWithLeftReefAuton;
+import frc.robot.Commands.AutonCommands.AlignWithRightReefAuton;
+import frc.robot.Commands.AutonCommands.CoralReefAlignPoseAuton;
 import frc.robot.Commands.AutonCommands.CoralStationAuton;
 import frc.robot.Commands.AutonCommands.CoralStationAutonCommand;
 import frc.robot.Commands.AutonCommands.GroundIntakeAuton;
@@ -29,36 +39,34 @@ import frc.robot.Commands.Intake.SetIntakeWheelSpeed;
 import frc.robot.Commands.arm.SetArmAngle;
 import frc.robot.Commands.elevator.SetElevatorPosition;
 import frc.robot.subsystems.RobotMode;
+import frc.robot.utils.Utils.ReefPosition;
 
 public class Autos {
 
     public static Command lolipopAuto(AutoFactory factory) {
+
+        CoralReefAlignPoseAuton alignWithA = new CoralReefAlignPoseAuton(ReefPosition.A, "4", true);
+        CoralReefAlignPoseAuton alignWithB = new CoralReefAlignPoseAuton(ReefPosition.B, "4", false);
+
         return new SequentialCommandGroup(
             new InstantCommand(() -> Robot.drivetrain.resetPose(Choreo.loadTrajectory("Wall Start To A4").get().getInitialPose(Robot.getAlliance() == Alliance.Red).get())),
             // new InstantCommand(() -> Robot.limelight.turnOnAprilTags()),
-            new ParallelCommandGroup(
-                factory.trajectoryCmd("Wall Start To A4"),
-                new SetIntakePosition(0.32),
-                new SequentialCommandGroup(
-                    new SetArmAngle(-0.128),
-                    new SetElevatorPosition(0.5)
-                )
-            ),
-            new PrepL4Auton(),
-            new WaitCommand(0.1),
-            // new InstantCommand(() -> Robot.limelight.turnOffAprilTags()),
-            factory.trajectoryCmd("A4 Lineup"),
-            new ScoreAuto(),
-            new WaitCommand(0.1),
-            new SetIntakeWheelSpeed(0.5),
-            new GroundIntakeAuton(),
-            factory.trajectoryCmd("A4 To Lolipop 2"),
-            new WaitUntilCommand(TriggerBoard::isCoralInManipulator),
-            factory.trajectoryCmd("Lolipop 2 To A2"),
-            new PrepL2Auton(),
-            factory.trajectoryCmd("A Lineup"),
-            new ScoreAuto()
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)),
+            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("Wall Start To A4"))),
+            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithA)),
+            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
+            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("A4 To Lolipop 2"))),
+            new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
+            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("Lolipop 2 To B"))),
+            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithB)),
+            new WaitUntilCommand(() -> RobotMode.scoreCoralPose.isFinished())
         );
+    }
+
+    public static boolean isAlignCommandFinsihed() {
+        return Robot.robotMode.isDriveCommandFinished();
     }
 
     public static Command L1LeftCommandGroup(AutoFactory factory) {

@@ -98,6 +98,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run(); 
     // buttonBox.periodic();
     // Logger.log("Selected Level", ButtonBox.getSelectedLevel());
+    Logger.log("Is Auton Command Scheduled", m_autonomousCommand != null ? m_autonomousCommand.isScheduled() : false);
     drivetrain.getField().setRobotPose(drivetrain.getPose());
 
   }
@@ -113,7 +114,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(1.3, 1.3, 99999));
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
@@ -132,7 +132,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 99999));
     robotMode.setCurrentMode(RobotMode.initialTransitPose);
     robotMode.setDriveModeCommand(RobotMode.controllerDrive);
   }

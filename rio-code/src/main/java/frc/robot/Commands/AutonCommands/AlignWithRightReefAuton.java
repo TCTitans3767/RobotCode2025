@@ -1,4 +1,6 @@
-package frc.robot.Commands.drive;
+package frc.robot.Commands.AutonCommands;
+
+import java.lang.annotation.Target;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric;
@@ -22,9 +24,10 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.utils.Logger;
+import frc.robot.utils.Utils.ReefPosition;
 import frc.robot.subsystems.Drivetrain;
 
-public class AlignWithRightReef extends Command{
+public class AlignWithRightReefAuton extends Command{
     
     private final Limelight camera = Robot.limelight;
     private final Drivetrain drivetrain = Robot.getDrivetrain();
@@ -41,21 +44,25 @@ public class AlignWithRightReef extends Command{
     private double yVelocity;
     private double rotationVelocity;
 
+    private final ReefPosition targetReef;
+
     private int targetReefTag;
     private Rotation2d targetReefRotation;
     private Pose2d targetReefPose = new Pose2d();
     private Pose2d targetPose = new Pose2d();
     private final Field2d field = drivetrain.getField();
     
-    public AlignWithRightReef() {
+    public AlignWithRightReefAuton(ReefPosition targetReef) {
+
+        this.targetReef = targetReef;
+
         headingController.enableContinuousInput(-180, 180);
 
-        addRequirements(Robot.drivetrain);
     }
 
     @Override
     public void initialize() {
-        switch (DashboardButtonBox.getSelectedReefBranch()) {
+        switch (targetReef) {
             case B:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
                 targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(0)) : new Rotation2d(Units.degreesToRadians(180));
@@ -103,7 +110,7 @@ public class AlignWithRightReef extends Command{
         yController.setPID(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
         headingController.setPID(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
-        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), 0.09, new Rotation2d())).getTranslation(), targetReefRotation);
+        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), 0.08, new Rotation2d())).getTranslation(), targetReefRotation);
 
         Logger.log("Target Pose", targetPose.toString());
 

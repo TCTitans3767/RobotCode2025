@@ -3,6 +3,7 @@ package frc.robot.Commands.poses;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -39,7 +40,7 @@ public class TransitPose extends SequentialCommandGroup{
                 new SetIntakePosition(0.25),
                 new SetElevatorPosition(0.5),
                 new SetArmAngle(-0.128),
-                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
+                new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
     }
@@ -54,7 +55,7 @@ public class TransitPose extends SequentialCommandGroup{
                 new SetArmAngle(-0.128),
                 new SetIntakePosition(0.25),
                 new SetElevatorPosition(0.5),
-                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
+                new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
     }
@@ -66,7 +67,7 @@ public class TransitPose extends SequentialCommandGroup{
                 new SetArmAngle(-0.55),
                 new SetIntakeWheelSpeed(0),
                 new SetElevatorPosition(0.03),
-                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
+                new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
     }
@@ -82,7 +83,7 @@ public class TransitPose extends SequentialCommandGroup{
                     new SetElevatorPosition(0.5),
                     new SetArmAngle(0.128)
                 ),
-                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
+                new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
     }

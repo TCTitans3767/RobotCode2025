@@ -410,7 +410,10 @@ public class DashboardButtonBox {
     }
 
     public static boolean isAlgaeKnockoffOn() {
-        return knockOffAlgae.get() ^ DriverStation.isAutonomousEnabled();
+        if (DriverStation.isAutonomousEnabled()) {
+            return false;
+        }
+        return knockOffAlgae.get();
     }
 
     public static boolean hasSelectedLevelChanged() {

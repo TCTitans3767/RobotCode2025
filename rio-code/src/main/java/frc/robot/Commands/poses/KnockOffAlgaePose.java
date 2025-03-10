@@ -26,7 +26,7 @@ public class KnockOffAlgaePose extends SequentialCommandGroup{
 
         addCommands(
             algaeAlign,
-            new WaitUntilCommand((KnockOffAlgaePose::isAlignCommandFinsihed)),
+            new WaitUntilCommand((KnockOffAlgaePose::isAlignCommandFinsihed)).withTimeout(1.5),
             new ParallelCommandGroup(
                 new SetArmAngle(-0.32),
                 new SetElevatorPosition(1.1)

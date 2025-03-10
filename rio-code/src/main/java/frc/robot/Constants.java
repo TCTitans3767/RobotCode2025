@@ -125,7 +125,7 @@ public class Constants {
         public final static int rightMotorID = 14;
 
         // PID Constants
-        public final static double kP = 13;
+        public final static double kP = 12;
         public final static double kI = 0;
         public final static double kD = 0.06;
         public final static double kG = 0.185;
@@ -133,8 +133,8 @@ public class Constants {
         public final static double kS = 0.5;
         
         // Motion Magic Constants
-        public final static double maxVelocity = 200;
-        public final static double maxAcceleration = 200;
+        public final static double maxVelocity = 250;
+        public final static double maxAcceleration = 350;
 
         // Conversion Factor
         public final static double conversionFactor = 1;
@@ -228,7 +228,7 @@ public class Constants {
         public static final double detectionRange = 0.1;
         public static final double sensorDebounce = 0.01;
         public static final int sensorID = 25;
-        public static final double wheelCurrentLimit = 70;
+        public static final double wheelCurrentLimit = 80;
         public static final double pivotCurrentLimit = 60;
 
         public static final double pivotStowPosition = 0.32;
