@@ -104,7 +104,7 @@ public class AlignWithLeftReefAuton extends Command{
                 break;
 
             default:
-                Logger.logSystemError("AlignWithLeftReef: Invalid branch: " + DashboardButtonBox.getSelectedReefBranch());
+                Logger.logSystemError("AlignWithLeftReef: Invalid branch: " + targetReef);
                 this.cancel();
                 break;
         }

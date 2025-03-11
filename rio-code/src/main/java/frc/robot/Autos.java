@@ -47,12 +47,13 @@ public class Autos {
     public static Command J4_K4_L4_CoralStation(AutoFactory factory) {
 
         CoralReefAlignPoseAuton alignWithJ4 = new CoralReefAlignPoseAuton(ReefPosition.J, "4", false);
-        CoralReefAlignPoseAuton alignWithK4 = new CoralReefAlignPoseAuton(ReefPosition.K, "4", false);
+        CoralReefAlignPoseAuton alignWithK4 = new CoralReefAlignPoseAuton(ReefPosition.K, "4", true);
         CoralReefAlignPoseAuton alignWithL4 = new CoralReefAlignPoseAuton(ReefPosition.L, "4", false);
 
         return new SequentialCommandGroup(
             new InstantCommand(() -> Robot.drivetrain.resetPose(Choreo.loadTrajectory("LeftReefStart-IJ").get().getInitialPose(Robot.getAlliance() == Alliance.Red).get())),
-            new InstantCommand(() -> Robot.robotMode.setCurrentMode(factory.trajectoryCmd("LeftReefStart-IJ"))),
+            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("LeftReefStart-IJ"))),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)),
             new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithJ4)),
             new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
@@ -79,13 +80,14 @@ public class Autos {
 
     public static Command E4_C4_D4_CoralStation(AutoFactory factory) {
 
-        CoralReefAlignPoseAuton alignWithE4 = new CoralReefAlignPoseAuton(ReefPosition.E, "4", false);
-        CoralReefAlignPoseAuton alignWithC4 = new CoralReefAlignPoseAuton(ReefPosition.C, "4", false);
+        CoralReefAlignPoseAuton alignWithE4 = new CoralReefAlignPoseAuton(ReefPosition.E, "4", true);
+        CoralReefAlignPoseAuton alignWithC4 = new CoralReefAlignPoseAuton(ReefPosition.C, "4", true);
         CoralReefAlignPoseAuton alignWithD4 = new CoralReefAlignPoseAuton(ReefPosition.D, "4", false);
 
         return new SequentialCommandGroup(
             new InstantCommand(() -> Robot.drivetrain.resetPose(Choreo.loadTrajectory("RightReefStart-EF").get().getInitialPose(Robot.getAlliance() == Alliance.Red).get())),
-            new InstantCommand(() -> Robot.robotMode.setCurrentMode(factory.trajectoryCmd("RightReefStart-EF"))),
+            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("RightReefStart-EF"))),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)),
             new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithE4)),
             new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),

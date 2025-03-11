@@ -32,12 +32,7 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
 
         addCommands(
             new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
-            new InstantCommand(() -> {
-                if (TriggerBoard.isL3Selected() || TriggerBoard.isL4Selected()) {
-                    Robot.elevator.setSpeed(0.15);
-                }
-            }),
-            new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed).withTimeout(1.5),
+            new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed).withTimeout(1.2),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0).withVelocityY(0).withRotationalRate(0));}),
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.slowControllerDrive);}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);})

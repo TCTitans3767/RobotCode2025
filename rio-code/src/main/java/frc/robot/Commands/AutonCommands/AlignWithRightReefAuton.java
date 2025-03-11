@@ -100,7 +100,7 @@ public class AlignWithRightReefAuton extends Command{
                 break;
 
             default:
-                Logger.logSystemError("AlignWithRightReef: Invalid branch: " + DashboardButtonBox.getSelectedReefBranch());
+                Logger.logSystemError("AlignWithRightReef: Invalid branch: " + targetReef);
                 this.cancel();
                 break;
         }

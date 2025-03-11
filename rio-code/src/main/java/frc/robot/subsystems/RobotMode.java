@@ -253,7 +253,11 @@ public class RobotMode extends SubsystemBase {
     }
 
     public boolean isDriveCommandFinished() {
-        return currentDriveMode.isFinished();
+        if (currentDriveMode != null) {
+            return currentDriveMode.isFinished();
+        } else {
+            return false;
+        }
     }
     
 }
