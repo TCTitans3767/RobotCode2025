@@ -38,10 +38,77 @@ import frc.robot.Commands.Intake.SetIntakePosition;
 import frc.robot.Commands.Intake.SetIntakeWheelSpeed;
 import frc.robot.Commands.arm.SetArmAngle;
 import frc.robot.Commands.elevator.SetElevatorPosition;
+import frc.robot.Commands.modes.CoralReef;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.utils.Utils.ReefPosition;
 
 public class Autos {
+
+    public static Command J4_K4_L4_CoralStation(AutoFactory factory) {
+
+        CoralReefAlignPoseAuton alignWithJ4 = new CoralReefAlignPoseAuton(ReefPosition.J, "4", false);
+        CoralReefAlignPoseAuton alignWithK4 = new CoralReefAlignPoseAuton(ReefPosition.K, "4", false);
+        CoralReefAlignPoseAuton alignWithL4 = new CoralReefAlignPoseAuton(ReefPosition.L, "4", false);
+
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> Robot.drivetrain.resetPose(Choreo.loadTrajectory("LeftReefStart-IJ").get().getInitialPose(Robot.getAlliance() == Alliance.Red).get())),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(factory.trajectoryCmd("LeftReefStart-IJ"))),
+            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithJ4)),
+            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
+            new ParallelCommandGroup(
+                new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("IJ-CoralStation"))),
+                new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
+            ),
+            new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
+            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-KL"))),
+            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithL4)),
+            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
+            new ParallelCommandGroup(
+                new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("KL-CoralStation"))),
+                new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
+            ),
+            new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
+            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-KL"))),
+            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithK4)),
+            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled())
+        );
+    }
+
+    public static Command E4_C4_D4_CoralStation(AutoFactory factory) {
+
+        CoralReefAlignPoseAuton alignWithE4 = new CoralReefAlignPoseAuton(ReefPosition.E, "4", false);
+        CoralReefAlignPoseAuton alignWithC4 = new CoralReefAlignPoseAuton(ReefPosition.C, "4", false);
+        CoralReefAlignPoseAuton alignWithD4 = new CoralReefAlignPoseAuton(ReefPosition.D, "4", false);
+
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> Robot.drivetrain.resetPose(Choreo.loadTrajectory("RightReefStart-EF").get().getInitialPose(Robot.getAlliance() == Alliance.Red).get())),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(factory.trajectoryCmd("RightReefStart-EF"))),
+            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithE4)),
+            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
+            new ParallelCommandGroup(
+                new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("EF-CoralStation"))),
+                new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
+            ),
+            new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
+            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-CD"))),
+            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithD4)),
+            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
+            new ParallelCommandGroup(
+                new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CD-CoralStation"))),
+                new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
+            ),
+            new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
+            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-CD"))),
+            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithC4)),
+            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled())
+        );
+    }
 
     public static Command lolipopAuto(AutoFactory factory) {
 

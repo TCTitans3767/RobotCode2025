@@ -23,12 +23,12 @@ public class ScoreCoralPose extends SequentialCommandGroup{
         public scoreAndTransit() {
             addCommands(
                 new InstantCommand(() -> {
-                    if (DashboardButtonBox.getSelectedLevelString() == "1") {
+                    if (TriggerBoard.isL1Selected()) {
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.25));
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.55));
                     } else {
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.25));
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.35));
                     }
 
                 }),
@@ -49,9 +49,9 @@ public class ScoreCoralPose extends SequentialCommandGroup{
         addCommands(
             new InstantCommand(() -> {
                 if (DashboardButtonBox.getSelectedLevelString() == "1") {
-                    Robot.manipulator.setSpeed(0.03);
+                    Robot.manipulator.setSpeed(0.001);
                 } else {
-                    Robot.manipulator.setSpeed(0.25);
+                    Robot.manipulator.setSpeed(0.3);
                 }
             }),
             new WaitCommand(0.1),

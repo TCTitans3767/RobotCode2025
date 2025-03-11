@@ -135,8 +135,8 @@ public class Constants {
         public final static double kS = 0.5;
         
         // Motion Magic Constants
-        public final static double maxVelocity = 250;
-        public final static double maxAcceleration = 350;
+        public final static double maxVelocity = 300;
+        public final static double maxAcceleration = 450;
 
         // Conversion Factor
         public final static double conversionFactor = 1;
@@ -171,7 +171,7 @@ public class Constants {
         // Conversion Factor
         public final static double conversionFactor = 1;
 
-        public static final double detectionRange = 0.066;
+        public static final double detectionRange = 0.07;
         public static final double sensorDebounce = 0.004;
         public static final int sensorID = 24;
     }
@@ -191,8 +191,8 @@ public class Constants {
         public final static double kS = 0.9;
       
         // Motion Magic Constants
-        public final static double maxVelocity = 6;
-        public final static double maxAcceleration = 4.5;
+        public final static double maxVelocity = 7;
+        public final static double maxAcceleration = 10;
         public final static double rotationsMax = 0.6;
         public final static double rotationsMin = -0.6;
       
@@ -218,8 +218,8 @@ public class Constants {
 
 
         // Motion Magic Constants
-        public final static double maxVelocity = 5;
-        public final static double maxAcceleration = 4;
+        public final static double maxVelocity = 10;
+        public final static double maxAcceleration = 17;
         public final static double angleMax = 0.1;
         public final static double angleMin = 0.1;
       

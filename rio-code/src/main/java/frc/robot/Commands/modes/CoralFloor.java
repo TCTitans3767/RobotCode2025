@@ -28,7 +28,7 @@ public class CoralFloor extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        Robot.manipulator.setSpeed(0);
+        Robot.manipulator.setSpeed(-0.05);
         Robot.intake.setWheelSpeed(0);
     }
 

@@ -30,7 +30,9 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.AutonCommands.PrepL4Auton;
+import frc.robot.Commands.Intake.PanicIntakeWheelSpeed;
 import frc.robot.Commands.Intake.SetIntakePivotSpeed;
+import frc.robot.Commands.Intake.SetIntakeWheelSpeed;
 import frc.robot.Commands.arm.SetArmSpeed;
 import frc.robot.Commands.climb.SetClimberSpeed;
 import frc.robot.Commands.drive.AlignWithLeftReef;
@@ -90,15 +92,10 @@ public class RobotContainer {
 
         configureBindings();
         configureChoreo();
-
-        leftL1 = Autos.L1Left(autoFactory).cmd();
-        rightL1 = Autos.L1Right(autoFactory).cmd();
-        rightL1NoExtras = Autos.L1RightNoExtra(autoFactory).cmd();
     
-        autonSelector.setDefaultOption(rightL1Name, rightL1);
-        autonSelector.addOption(leftL1Name, leftL1);
-        autonSelector.addOption(rightL1NoExtrasName, rightL1NoExtras);
         autonSelector.addOption(leftL1Name + " + L4", Autos.L1LeftCommandGroup(autoFactory));
+        autonSelector.addOption("Left Triple L4", Autos.J4_K4_L4_CoralStation(autoFactory));
+        autonSelector.addOption("Right Triple L4", Autos.E4_C4_D4_CoralStation(autoFactory));
         autonSelector.addOption("Left Wall Auton", Autos.lolipopAuto(autoFactory));
         SmartDashboard.putData("Auton Selection", autonSelector);
 
@@ -176,8 +173,10 @@ public class RobotContainer {
         joystick.povRight().whileTrue(new SetIntakePivotSpeed(0.3));
         joystick.povLeft().whileTrue(new SetIntakePivotSpeed(-0.3));
 
-        joystick.a().whileTrue(new SetArmSpeed(0.3));
-        joystick.y().whileTrue(new SetArmSpeed(-0.3));
+        joystick.a().whileTrue(new PanicIntakeWheelSpeed(-0.5));
+
+        // joystick.a().whileTrue(new SetArmSpeed(0.3));
+        // joystick.y().whileTrue(new SetArmSpeed(-0.3));
 
         joystick.x().whileTrue(new SetClimberSpeed(0.3));
 

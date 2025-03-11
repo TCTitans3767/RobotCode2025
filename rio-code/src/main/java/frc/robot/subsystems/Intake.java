@@ -138,4 +138,8 @@ public class Intake extends SubsystemBase{
     public boolean isWheelMotorTooHot() {
         return leftWheelMotor.getDeviceTemp().getValueAsDouble() >= 70;
     }
+
+    public double getWheelSpeed() {
+        return leftWheelMotor.get();
+    }
 }

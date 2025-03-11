@@ -35,6 +35,11 @@ public class Transit extends Command{
             Robot.intake.setWheelSpeed(0);
         }
 
+        if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator() && TriggerBoard.isL1Selected()) {
+            Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+            return;
+        }
+
         if (TriggerBoard.isCoralButtonPressed() && !TriggerBoard.isCoralInManipulator()) {
             // if (TriggerBoard.isNearCoralStation()) {
                 Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);
@@ -47,6 +52,7 @@ public class Transit extends Command{
             return;
         } else if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator() && Robot.arm.isNear(-0.5)) {
             Robot.robotMode.setCurrentMode(RobotMode.coralReefAlignPose);
+            return;
         }
 
         if (TriggerBoard.isAlgaeButtonPressed() && !TriggerBoard.isAlgaeInIntake()) {

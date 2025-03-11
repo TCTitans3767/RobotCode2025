@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.ButtonBox;
 import frc.robot.DashboardButtonBox;
 import frc.robot.Robot;
@@ -31,6 +32,11 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
 
         addCommands(
             new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
+            new InstantCommand(() -> {
+                if (TriggerBoard.isL3Selected() || TriggerBoard.isL4Selected()) {
+                    Robot.elevator.setSpeed(0.15);
+                }
+            }),
             new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed).withTimeout(1.5),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0).withVelocityY(0).withRotationalRate(0));}),
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.slowControllerDrive);}),
