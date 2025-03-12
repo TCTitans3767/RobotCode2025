@@ -37,6 +37,7 @@ import frc.robot.Commands.arm.SetArmSpeed;
 import frc.robot.Commands.climb.SetClimberSpeed;
 import frc.robot.Commands.drive.AlignWithLeftReef;
 import frc.robot.Commands.drive.AlignWithRightReef;
+import frc.robot.Commands.drive.CalculateWheelDiameter;
 import frc.robot.Commands.drive.TeleopDrive;
 import frc.robot.Commands.elevator.SetElevatorSpeed;
 import frc.robot.Commands.poses.ScoreCoralPose;
@@ -181,6 +182,8 @@ public class RobotContainer {
         joystick.x().whileTrue(new SetClimberSpeed(0.3));
 
         joystick.leftStick().onTrue(new InstantCommand(() -> Robot.elevator.resetEncoder()));
+
+        joystick.rightStick().onTrue(new CalculateWheelDiameter());
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }

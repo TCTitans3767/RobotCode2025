@@ -341,4 +341,12 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         });
         m_simNotifier.startPeriodic(kSimLoopPeriod);
     }
+
+    public void driveRobotRelative(int xVelocity, int yVelocity, double rotationSpeedRadiansPerSecond) {
+        this.setControl(new SwerveRequest.RobotCentric().withVelocityX(xVelocity).withVelocityY(yVelocity).withRotationalRate(rotationSpeedRadiansPerSecond));
+    }
+
+    public double getYaw() {
+        return getPigeon2().getYaw().getValue().in(Degree);
+    }
 }
