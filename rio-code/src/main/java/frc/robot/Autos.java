@@ -61,15 +61,15 @@ public class Autos {
                 new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("IJ-CoralStation"))),
                 new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
             ),
-            new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
-            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-KL"))),
-            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
-            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithL4)),
-            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
-            new ParallelCommandGroup(
-                new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("KL-CoralStation"))),
-                new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
-            ),
+            // new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
+            // new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-KL"))),
+            // new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
+            // new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithL4)),
+            // new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
+            // new ParallelCommandGroup(
+            //     new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("KL-CoralStation"))),
+            //     new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
+            // ),
             new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
             new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-KL"))),
             new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
@@ -95,15 +95,15 @@ public class Autos {
                 new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("EF-CoralStation"))),
                 new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
             ),
-            new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
-            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-CD"))),
-            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
-            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithD4)),
-            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
-            new ParallelCommandGroup(
-                new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CD-CoralStation"))),
-                new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
-            ),
+            // new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
+            // new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-CD"))),
+            // new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
+            // new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithD4)),
+            // new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
+            // new ParallelCommandGroup(
+            //     new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CD-CoralStation"))),
+            //     new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
+            // ),
             new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
             new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-CD"))),
             new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
