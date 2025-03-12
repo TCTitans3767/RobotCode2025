@@ -28,7 +28,7 @@ public class CoralReefPose extends SequentialCommandGroup{
                 new ParallelCommandGroup(
                     new SetIntakePosition(0.22),
                     new SetManipulatorWheelSpeed(-0.05),
-                    new SetArmAngle(0.02),
+                    new SetArmAngle(0.08),
                     new SetElevatorPosition(0.34)
                 )
             );

@@ -183,7 +183,7 @@ public class RobotContainer {
 
         joystick.leftStick().onTrue(new InstantCommand(() -> Robot.elevator.resetEncoder()));
 
-        joystick.rightStick().onTrue(new CalculateWheelDiameter());
+        joystick.rightStick().onTrue(new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(new CalculateWheelDiameter())));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }

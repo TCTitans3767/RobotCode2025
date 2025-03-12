@@ -26,7 +26,7 @@ public class ScoreCoralPose extends SequentialCommandGroup{
         public scoreAndTransit() {
             addCommands(
                 new InstantCommand(() -> {
-                    if (TriggerBoard.isL1Selected()) {
+                    if (TriggerBoard.isL1Selected() && !DriverStation.isAutonomousEnabled()) {
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
                         Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.55));
                     } else {
@@ -57,7 +57,7 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                     Robot.manipulator.setSpeed(0.3);
                 }
             }),
-            new WaitCommand(0.1),
+            new WaitCommand(0.15),
             new ConditionalCommand(
                 new ParallelCommandGroup(
                     new SetArmAngle(-0.5),

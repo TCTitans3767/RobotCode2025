@@ -14,6 +14,7 @@ public class AlgaePickupPose extends Command{
     public void initialize() {
         if (Robot.intake.isWheelMotorTooHot()) {
             this.cancel();
+            return;
         } else {
             Robot.arm.setPosition(-0.128);
             Robot.intake.setWheelSpeed(0.5);

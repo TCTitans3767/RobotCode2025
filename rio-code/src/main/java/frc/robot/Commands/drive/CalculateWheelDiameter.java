@@ -6,6 +6,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.RobotMode;
+import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.utils.Logger;
 
 public class CalculateWheelDiameter extends Command {
@@ -44,6 +45,8 @@ public class CalculateWheelDiameter extends Command {
 
   @Override
   public void initialize() {
+    Robot.robotMode.setDriveMode(DriveMode.Brake);
+
     m_robotRotations = 0;
     m_lastGyroDegrees = Robot.drivetrain.getYaw();
 
