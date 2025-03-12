@@ -1,4 +1,4 @@
-package frc.robot.Commands.drive;
+package frc.robot.Commands.AutonCommands;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric;
@@ -28,8 +28,9 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.CommandTrigger;
 import frc.robot.utils.Logger;
 import frc.robot.utils.Utils;
+import frc.robot.utils.Utils.ReefPosition;
 
-public class AlignWithLeftReef extends Command{
+public class AlignWithLeftReefAuton extends Command{
     
     private final Limelight camera = Robot.limelight;
     private final Drivetrain drivetrain = Robot.drivetrain;
@@ -46,22 +47,26 @@ public class AlignWithLeftReef extends Command{
     private double yVelocity;
     private double rotationVelocity;
 
+    private final ReefPosition targetReef;
+
     private int targetReefTag;
     private Pose2d targetReefPose;
     private Rotation2d targetReefRotation;
     private Pose2d targetPose;
     private final Field2d field = drivetrain.getField();
     
-    public AlignWithLeftReef() {
+    public AlignWithLeftReefAuton(ReefPosition targetReef) {
+
+        this.targetReef = targetReef;
+
         headingController.enableContinuousInput(-180, 180);
 
-        addRequirements(Robot.drivetrain);
     }
 
     @Override
     public void initialize() {
         System.out.println("entered left reef align");
-        switch (DashboardButtonBox.getSelectedReefBranch()) {
+        switch (targetReef) {
             case A:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
                 targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(0)) : new Rotation2d(Units.degreesToRadians(180));
@@ -99,7 +104,7 @@ public class AlignWithLeftReef extends Command{
                 break;
 
             default:
-                Logger.logSystemError("AlignWithLeftReef: Invalid branch: " + DashboardButtonBox.getSelectedReefBranch());
+                Logger.logSystemError("AlignWithLeftReef: Invalid branch: " + targetReef);
                 this.cancel();
                 break;
         }

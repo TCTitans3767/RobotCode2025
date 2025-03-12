@@ -12,6 +12,8 @@ import edu.wpi.first.epilogue.EpilogueConfiguration;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.epilogue.Logged.Importance;
 import edu.wpi.first.epilogue.logging.EpilogueBackend;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
@@ -97,7 +99,6 @@ public class Robot extends TimedRobot {
     // buttonBox.periodic();
     // Logger.log("Selected Level", ButtonBox.getSelectedLevel());
     drivetrain.getField().setRobotPose(drivetrain.getPose());
-
   }
 
   @Override
@@ -129,7 +130,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    robotMode.setCurrentMode(RobotMode.initialTransitPose);
+    if (robotMode.currentMode == null) {
+      robotMode.setCurrentMode(RobotMode.initialTransitPose);
+    }
     robotMode.setDriveModeCommand(RobotMode.controllerDrive);
   }
 

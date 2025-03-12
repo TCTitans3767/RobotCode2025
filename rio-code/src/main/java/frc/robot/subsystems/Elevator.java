@@ -132,6 +132,7 @@ public class Elevator extends SubsystemBase{
         Logger.logElevatorHeight(leftMotor.getPosition().getValueAsDouble() / Constants.Elevator.RotationsPerMeter);
         Logger.logElevatorMotorSpeed(leftMotor.get());
         Logger.logElevatorMotorVelocity(leftMotor.getVelocity().getValueAsDouble());
+        Logger.logElevatorMotorCurrent(leftMotor.getStatorCurrent().getValueAsDouble());
         Logger.logElevatorAtPosition(isAtPosition());
     }
 

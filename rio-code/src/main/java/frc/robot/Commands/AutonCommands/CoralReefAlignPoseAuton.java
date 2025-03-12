@@ -1,4 +1,4 @@
-package frc.robot.Commands.poses;
+package frc.robot.Commands.AutonCommands;
 
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 
@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.ButtonBox;
 import frc.robot.DashboardButtonBox;
 import frc.robot.Robot;
@@ -23,19 +22,25 @@ import frc.robot.utils.Utils;
 import frc.robot.utils.Utils.ReefPosition;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class CoralReefAlignPose extends SequentialCommandGroup{
+public class CoralReefAlignPoseAuton extends SequentialCommandGroup{
 
-    Command leftReefAlign = new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.alignWithLeftReef);});
-    Command rightReefAlign = new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.alignWithRightReef);});
+    Command leftReefAlign;
+    Command rightReefAlign;
+
+    private final boolean leftAlign;
     
-    public CoralReefAlignPose() {
+    public CoralReefAlignPoseAuton(ReefPosition targetReef, String reefLevel, boolean leftAlign) {
+
+        this.leftAlign = leftAlign;
+
+        leftReefAlign = new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(new AlignWithLeftReefAuton(targetReef));});
+        rightReefAlign = new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(new AlignWithRightReefAuton(targetReef));});
 
         addCommands(
-            new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
-            new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed).withTimeout(1.2),
+            new ConditionalCommand(leftReefAlign, rightReefAlign, () -> leftAlign),
+            new WaitUntilCommand(() -> isAlignCommandFinsihed()),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0).withVelocityY(0).withRotationalRate(0));}),
-            new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.slowControllerDrive);}),
-            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);})
+            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(new CoralReefPoseAuton(reefLevel));})
         );
 
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
@@ -45,7 +50,7 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
         return (DashboardButtonBox.getSelectedReefBranch() == ReefPosition.A || DashboardButtonBox.getSelectedReefBranch() == ReefPosition.C ||DashboardButtonBox.getSelectedReefBranch() == ReefPosition.E || DashboardButtonBox.getSelectedReefBranch() == ReefPosition.G || DashboardButtonBox.getSelectedReefBranch() == ReefPosition.I || DashboardButtonBox.getSelectedReefBranch() == ReefPosition.K);
     }
 
-    public static boolean isAlignCommandFinsihed() {
-        return CoralReefAlignPose.isLeftBranchSelected() ? RobotMode.alignWithLeftReef.isFinished() : RobotMode.alignWithRightReef.isFinished();
+    public boolean isAlignCommandFinsihed() {
+        return Robot.robotMode.isDriveCommandFinished();
     }
 }

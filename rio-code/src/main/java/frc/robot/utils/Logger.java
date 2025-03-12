@@ -33,6 +33,10 @@ public class Logger extends DogLog{
         DogLog.log("Elevator/Motor Velocity", velocity);
     }
 
+    public static void logElevatorMotorCurrent(double current) {
+        DogLog.log("Elevator/Motor Current", current);
+    }
+
     public static void logElevatorAtPosition(boolean isAtPosition) {
         DogLog.log("Elevator/Is At Position", isAtPosition);
     }

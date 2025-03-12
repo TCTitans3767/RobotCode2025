@@ -28,6 +28,8 @@ public class KnockOffAlgaePoseManual extends SequentialCommandGroup{
                 new SetArmAngle(-0.32),
                 new SetElevatorPosition(1.1)
             ),
+            algaeAlign,
+            new WaitUntilCommand(algaeAlign::isFinished),
             new ParallelRaceGroup(
                 new RunCommand(() -> Robot.manipulator.setSpeed(-0.7)),
                 new RunCommand(() -> Robot.elevator.setSpeed(-0.2)),

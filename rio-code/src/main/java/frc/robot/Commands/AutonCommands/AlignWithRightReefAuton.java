@@ -1,4 +1,6 @@
-package frc.robot.Commands.drive;
+package frc.robot.Commands.AutonCommands;
+
+import java.lang.annotation.Target;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric;
@@ -8,37 +10,33 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.ButtonBox;
 import frc.robot.Constants;
 import frc.robot.DashboardButtonBox;
+import frc.robot.Constants.ReefTagIDs;
+import frc.robot.ButtonBox;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
-import frc.robot.Constants.ReefTagIDs;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.subsystems.RobotMode.DriveMode;
 import frc.robot.utils.Logger;
+import frc.robot.utils.Utils.ReefPosition;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.utils.CommandTrigger;
-import frc.robot.utils.Logger;
-import frc.robot.utils.Utils;
 
-public class AlignWithLeftReef extends Command{
+public class AlignWithRightReefAuton extends Command{
     
     private final Limelight camera = Robot.limelight;
-    private final Drivetrain drivetrain = Robot.drivetrain;
+    private final Drivetrain drivetrain = Robot.getDrivetrain();
 
     private final RobotCentric driveWithTag = new RobotCentric();
     private final FieldCentric driveWithOdometry = new FieldCentric();
     private final Pigeon2 rotation = drivetrain.getPigeon2();
 
-    private final PIDController xController = new PIDController(Constants.Drive.XAlignementPIDkP, Constants.Drive.XAlignementPIDkI, Constants.Drive.XAlignementPIDkD);
+    private final PIDController xController = new PIDController(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
     private final PIDController yController = new PIDController(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
     private final PIDController headingController = new PIDController(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
@@ -46,71 +44,73 @@ public class AlignWithLeftReef extends Command{
     private double yVelocity;
     private double rotationVelocity;
 
+    private final ReefPosition targetReef;
+
     private int targetReefTag;
-    private Pose2d targetReefPose;
     private Rotation2d targetReefRotation;
-    private Pose2d targetPose;
+    private Pose2d targetReefPose = new Pose2d();
+    private Pose2d targetPose = new Pose2d();
     private final Field2d field = drivetrain.getField();
     
-    public AlignWithLeftReef() {
+    public AlignWithRightReefAuton(ReefPosition targetReef) {
+
+        this.targetReef = targetReef;
+
         headingController.enableContinuousInput(-180, 180);
 
-        addRequirements(Robot.drivetrain);
     }
 
     @Override
     public void initialize() {
-        System.out.println("entered left reef align");
-        switch (DashboardButtonBox.getSelectedReefBranch()) {
-            case A:
+        switch (targetReef) {
+            case B:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
                 targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(0)) : new Rotation2d(Units.degreesToRadians(180));
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefAB : ReefTagIDs.redReefAB;
                 break;
         
-            case C:
+            case D:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefCD) : Limelight.getTagPose(ReefTagIDs.redReefCD);
                 targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(60)) : new Rotation2d(Units.degreesToRadians(-120));
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefCD : ReefTagIDs.redReefCD;
                 break;
 
-            case E:
+            case F:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefEF) : Limelight.getTagPose(ReefTagIDs.redReefEF);
                 targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(120)) : new Rotation2d(Units.degreesToRadians(-60));
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefEF : ReefTagIDs.redReefEF;
                 break;
 
-            case G:
+            case H:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefGH) : Limelight.getTagPose(ReefTagIDs.redReefGH);
                 targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(180)) : new Rotation2d(Units.degreesToRadians(0));
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefGH : ReefTagIDs.redReefGH;
                 break;
 
-            case I:
+            case J:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefIJ) : Limelight.getTagPose(ReefTagIDs.redReefIJ);
                 targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(-120)) : new Rotation2d(Units.degreesToRadians(60));
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefIJ : ReefTagIDs.redReefIJ;
                 break;
 
-            case K:
+            case L:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefKL) : Limelight.getTagPose(ReefTagIDs.redReefKL);
                 targetReefRotation = Robot.getAlliance() == Alliance.Blue ? new Rotation2d(Units.degreesToRadians(-60)) : new Rotation2d(Units.degreesToRadians(120));
                 targetReefTag = Robot.getAlliance() == Alliance.Blue ? ReefTagIDs.blueReefKL : ReefTagIDs.redReefKL;
                 break;
 
             default:
-                Logger.logSystemError("AlignWithLeftReef: Invalid branch: " + DashboardButtonBox.getSelectedReefBranch());
+                Logger.logSystemError("AlignWithRightReef: Invalid branch: " + targetReef);
                 this.cancel();
                 break;
         }
 
+        
         xController.setPID(Constants.Drive.XAlignementPIDkP, Constants.Drive.XAlignementPIDkI, Constants.Drive.XAlignementPIDkD);
         yController.setPID(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
         headingController.setPID(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
-        // odometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(-6), new Rotation2d(0)));
-        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), -0.2, new Rotation2d())).getTranslation(), targetReefRotation);
-        // targetPose = new Pose2d(targetReefPose.getX(), targetReefPose.getY() + Units.inchesToMeters(7.5), targetReefPose.getRotation());
+        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), 0.08, new Rotation2d())).getTranslation(), targetReefRotation);
 
         Logger.log("Target Pose", targetPose.toString());
 
@@ -130,13 +130,13 @@ public class AlignWithLeftReef extends Command{
 
     @Override
     public void execute() {
-        
+
         xVelocity = xController.calculate(drivetrain.getPose().getX(), targetPose.getX()) + (xController.getError() < 0 ? -Constants.Drive.XFeedForward : Constants.Drive.XFeedForward);
         yVelocity = yController.calculate(drivetrain.getPose().getY(), targetPose.getY()) + (yController.getError() < 0 ? -Constants.Drive.YFeedForward : Constants.Drive.YFeedForward);
         rotationVelocity = headingController.calculate(drivetrain.getPose().getRotation().getDegrees()) + (headingController.getError() < 0 ? Constants.Drive.rotationalFeedForward : -Constants.Drive.rotationalFeedForward);
 
         Logger.log("Alignment/Is Aligned", isAligned());
-        
+
     }
 
     @Override
@@ -144,8 +144,10 @@ public class AlignWithLeftReef extends Command{
         return isAligned();
     }
 
+
     @Override
     public void end(boolean interrupted) {
+        Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
         camera.resetTagFilter();
     }
 
@@ -154,4 +156,5 @@ public class AlignWithLeftReef extends Command{
         Logger.log("Alignment/Distance Y", yController.getError());
         return xController.atSetpoint() && yController.atSetpoint();
     }
+
 }

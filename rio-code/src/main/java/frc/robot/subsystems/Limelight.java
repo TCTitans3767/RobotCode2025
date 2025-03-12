@@ -53,7 +53,8 @@ public class Limelight extends SubsystemBase{
         System.out.println("started limelight initialization");
 
         try {
-            fieldLayout = new AprilTagFieldLayout("src\\main\\deploy\\AprilTagCalibrations\\field_calibration.json");
+            fieldLayout = new AprilTagFieldLayout(".\\src\\main\\deploy\\AprilTagCalibrations\\field_calibration.json");
+            System.err.println("successfully read calibrated field layout!");
         } catch (Exception e) {
             System.err.println("failed to read calibrated field layout! \n Falling back to 2025 Reefscape Welded!");
             fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);

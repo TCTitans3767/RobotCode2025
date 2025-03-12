@@ -14,7 +14,13 @@ public class CoralReefAligned extends Command{
     @Override
     public void execute() {
         if (TriggerBoard.isCoralButtonPressed()) {
-            Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);
+            Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+            return;
+        }
+
+        if (TriggerBoard.isCoralOverrideButtonPressed()) {
+            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+            return;
         }
     }
 

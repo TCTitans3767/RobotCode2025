@@ -21,7 +21,7 @@ import frc.robot.Commands.drive.AlignWithAlgae;
 import frc.robot.Commands.drive.AlignWithCoralStation;
 import frc.robot.Commands.drive.AlignWithLeftReef;
 import frc.robot.Commands.drive.AlignWithRightReef;
-import frc.robot.Commands.drive.ClimbControllerDrive;
+import frc.robot.Commands.drive.SlowControllerDrive;
 import frc.robot.Commands.drive.ControllerDrive;
 import frc.robot.Commands.elevator.ZeroElevator;
 import frc.robot.Commands.modes.AlgaePickup;
@@ -121,7 +121,7 @@ public class RobotMode extends SubsystemBase {
     public static KnockOffAlgaePose knockOffAlgaePose;
     public static KnockOffAlgaePoseManual knockOffAlgaePoseManual;
 
-    public static ClimbControllerDrive climbControllerDrive;
+    public static SlowControllerDrive slowControllerDrive;
 
     public static ResetPose resetPose;
 
@@ -161,7 +161,7 @@ public class RobotMode extends SubsystemBase {
         
         knockOffAlgaePoseManual = new KnockOffAlgaePoseManual();
 
-        climbControllerDrive = new ClimbControllerDrive();
+        slowControllerDrive = new SlowControllerDrive();
 
         resetPose = new ResetPose();
     }
@@ -170,8 +170,13 @@ public class RobotMode extends SubsystemBase {
     public void periodic() {
 
         Logger.log("current mode", currentMode != null ? currentMode.getName() : "null");
+        Logger.log("current drive command", currentDriveMode != null ? currentDriveMode.getName() : "null");
         Logger.log("Drivetrain/Is Near Reef", Robot.drivetrain.isNearToReef());
         Logger.log("Drivetrain/Current Yaw", Robot.drivetrain.getPose().getRotation().getDegrees());
+
+        Logger.log("Is Current Pose Finsihed", currentMode != null ? currentMode.isFinished() : false);
+
+        Logger.log("Is CoralFloor Scheduled", RobotMode.coralFloor.isScheduled());
 
         if (driveMode != null) {
             switch (driveMode) {
@@ -245,6 +250,14 @@ public class RobotMode extends SubsystemBase {
 
     public void cancelAll() {
         CommandScheduler.getInstance().cancelAll();
+    }
+
+    public boolean isDriveCommandFinished() {
+        if (currentDriveMode != null) {
+            return currentDriveMode.isFinished();
+        } else {
+            return false;
+        }
     }
     
 }

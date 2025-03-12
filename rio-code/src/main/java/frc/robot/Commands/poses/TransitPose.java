@@ -3,6 +3,7 @@ package frc.robot.Commands.poses;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -33,13 +34,13 @@ public class TransitPose extends SequentialCommandGroup{
         public AlgaeInIntakeTransit() {
             addCommands(
                 new ParallelCommandGroup(
-                    new SetIntakeWheelSpeed(0.5),
+                    new SetIntakeWheelSpeed(0.6),
                     new SetManipulatorWheelSpeed(0)
                 ),
                 new SetIntakePosition(0.25),
                 new SetElevatorPosition(0.5),
                 new SetArmAngle(-0.128),
-                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
+                new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
     }
@@ -51,10 +52,10 @@ public class TransitPose extends SequentialCommandGroup{
                     new SetIntakeWheelSpeed(0.5),
                     new SetManipulatorWheelSpeed(-0.05)
                 ),
+                new SetArmAngle(-0.128),
                 new SetIntakePosition(0.25),
                 new SetElevatorPosition(0.5),
-                new SetArmAngle(-0.128),
-                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
+                new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
     }
@@ -63,15 +64,15 @@ public class TransitPose extends SequentialCommandGroup{
         public CoralInManipulatorTransit() {
             addCommands(
                 new ParallelCommandGroup(
-                    new SetIntakeWheelSpeed(0),
-                    new SetManipulatorWheelSpeed(-0.05)
+                    new SetManipulatorWheelSpeed(-0.05),
+                    new SetArmAngle(-0.55)
                 ),
                 new ParallelCommandGroup(
-                    new SetIntakePosition(Constants.Intake.pivotStowPosition),
-                    new SetArmAngle(-0.128)
+                    new SetManipulatorWheelSpeed(0),
+                    new SetIntakeWheelSpeed(0)
                 ),
-                new SetElevatorPosition(0.5),
-                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
+                new SetElevatorPosition(0.03),
+                new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
     }
@@ -80,13 +81,16 @@ public class TransitPose extends SequentialCommandGroup{
         public NoGamePieceTransit() {
             addCommands(
                 new ParallelCommandGroup(
-                    new SetIntakeWheelSpeed(0),
-                    new SetManipulatorWheelSpeed(0)
+                    new SetManipulatorWheelSpeed(0),
+                    new SetArmAngle(-0.128),
+                    new SetIntakeWheelSpeed(0)
                 ),
-                new SetIntakePosition(Constants.Intake.pivotStowPosition),
-                new SetElevatorPosition(0.5),
-                new SetArmAngle(0.128),
-                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);})
+                new ParallelCommandGroup(
+                    new SetIntakePosition(Constants.Intake.pivotStowPosition),
+                    new SetElevatorPosition(0.5),
+                    new SetArmAngle(0.128)
+                ),
+                new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
     }

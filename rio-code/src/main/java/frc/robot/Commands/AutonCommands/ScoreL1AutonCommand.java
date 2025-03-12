@@ -17,7 +17,7 @@ public class ScoreL1AutonCommand extends Command{
     @Override
     public void initialize() {
         timer = Timer.getFPGATimestamp();
-        Robot.intake.setWheelSpeed(-0.2);
+        Robot.intake.setWheelSpeed(-0.25);
     }
 
     @Override

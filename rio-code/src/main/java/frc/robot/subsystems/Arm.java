@@ -110,4 +110,8 @@ public class Arm extends SubsystemBase {
       Logger.logArmMotorVelocity(armMotor.getVelocity().getValueAsDouble());
       Logger.logArmAtPosition(isAtPosition());
     }
+
+    public boolean isNear(double position) {
+      return MathUtil.isNear(position, armMotor.getPosition().getValueAsDouble(), Constants.Arm.errorTolerance);
+    }
   }
