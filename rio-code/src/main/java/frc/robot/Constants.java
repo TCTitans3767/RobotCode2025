@@ -96,17 +96,17 @@ public class Constants {
         public final static Translation2d blueReefCenter = new Translation2d(4.5, 4.03);
         public final static Translation2d redReefCenter = new Translation2d(13.08, 4.03);
         public final static Translation2d blueRightCoralStation = new Translation2d(0.9, 0.6);
-        public final static Pose2d blueRightCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 0.6), new Rotation2d(Units.degreesToRadians(126.5)));
-        public final static Pose2d blueRightCoralStationLeftAlignment = new Pose2d(new Translation2d(0.9, 0.6), new Rotation2d(Units.degreesToRadians(126.5)));
+        public final static Pose2d blueRightCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 0.6), new Rotation2d(Units.degreesToRadians(54)));
+        public final static Pose2d blueRightCoralStationLeftAlignment = new Pose2d(new Translation2d(1.5173242092132568, 0.7038162350654602), new Rotation2d(Units.degreesToRadians(54)));
         public final static Translation2d redRightCoralStation = new Translation2d(16.68, 7.4);
-        public final static Pose2d redRightCoralStationRightAlignment = new Pose2d(new Translation2d(0, 0), new Rotation2d());
-        public final static Pose2d redRightCoralStationLeftAlignment  = new Pose2d(new Translation2d(0, 0), new Rotation2d());
+        public final static Pose2d redRightCoralStationRightAlignment = new Pose2d(new Translation2d(15.914558410644531, 7.411618232727051), new Rotation2d(Units.degreesToRadians(-126)));
+        public final static Pose2d redRightCoralStationLeftAlignment  = new Pose2d(new Translation2d(15.914558410644531, 7.411618232727051), new Rotation2d(Units.degreesToRadians(-126)));
         public final static Translation2d blueLeftCoralStation = new Translation2d(0.9, 7.41);
-        public final static Pose2d blueLeftCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 7.41), new Rotation2d(Units.degreesToRadians(233.5)));
-        public final static Pose2d blueLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(0.9, 7.41), new Rotation2d(Units.degreesToRadians(233.5)));
+        public final static Pose2d blueLeftCoralStationRightAlignment = new Pose2d(new Translation2d(1.5644307136535645, 7.381567001342773), new Rotation2d(Units.degreesToRadians(-54)));
+        public final static Pose2d blueLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(1.5644307136535645, 7.381567001342773), new Rotation2d(Units.degreesToRadians(-54)));
         public final static Translation2d redLeftCoralStation = new Translation2d(16.68, 0.58);
         public final static Pose2d redLeftCoralStationRightAlignment = new Pose2d(new Translation2d(0, 0), new Rotation2d());
-        public final static Pose2d redLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(0, 0), new Rotation2d());
+        public final static Pose2d redLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(15.93091869354248 , 0.6056532263755798 ), new Rotation2d(Units.degreesToRadians(126)));
     }
   
     public static final class Climber {
@@ -136,7 +136,7 @@ public class Constants {
         
         // Motion Magic Constants
         public final static double maxVelocity = 300;
-        public final static double maxAcceleration = 450;
+        public final static double maxAcceleration = 400;
 
         // Conversion Factor
         public final static double conversionFactor = 1;
@@ -192,7 +192,7 @@ public class Constants {
       
         // Motion Magic Constants
         public final static double maxVelocity = 7;
-        public final static double maxAcceleration = 10;
+        public final static double maxAcceleration = 8.5;
         public final static double rotationsMax = 0.6;
         public final static double rotationsMin = -0.6;
       

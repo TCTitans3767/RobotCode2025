@@ -142,4 +142,10 @@ public class Intake extends SubsystemBase{
     public double getWheelSpeed() {
         return leftWheelMotor.get();
     }
+
+    public void setPivotPosition(double rotations, double maximumVelocity) {
+        targetRotations = rotations;
+        pivotMotor.setControl(new MotionMagicVoltage(rotations));
+        Logger.log("Intake/Pivot Target", rotations);
+    }
 }

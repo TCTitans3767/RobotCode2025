@@ -20,7 +20,7 @@ public class CoralRecievedPose extends SequentialCommandGroup{
         addCommands(
                 new InstantCommand(() -> {
                     Robot.robotMode.setDriveMode(DriveMode.Brake);
-                    Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.35));
+                    Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.35));
                 }),
                 new WaitCommand(0.25),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);} else {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0));}}),
