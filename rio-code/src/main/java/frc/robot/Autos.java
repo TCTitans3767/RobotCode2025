@@ -56,7 +56,7 @@ public class Autos {
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)),
             new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithJ4)),
-            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
+            new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()),
             new ParallelCommandGroup(
                 new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("IJ-CoralStation"))),
                 new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
@@ -90,7 +90,7 @@ public class Autos {
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)),
             new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithE4)),
-            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
+            new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()),
             new ParallelCommandGroup(
                 new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("EF-CoralStation"))),
                 new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))

@@ -310,13 +310,9 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
 
     public void followTrajectory(SwerveSample sample) {
         Pose2d currentPose = getState().Pose;
-        // this.setControl(swerveRequest.withVelocityX(sample.vx + (sample.vx != 0 ? choreoXController.calculate(currentPose.getX(), sample.x) : 0))
-        //                             .withVelocityY(sample.vy + (sample.vy != 0 ? choreoYController.calculate(currentPose.getY(), sample.y) : 0))
-        //                             .withRotationalRate(sample.omega + (sample.omega != 0 ? choreoOmegaController.calculate(currentPose.getRotation().getRadians(), sample.heading) : 0))
-        // );
-        this.setControl(swerveRequest.withVelocityX(sample.vx)
-                                    .withVelocityY(sample.vy)
-                                    .withRotationalRate(sample.omega)
+        this.setControl(swerveRequest.withVelocityX(sample.vx + (sample.vx != 0 ? choreoXController.calculate(currentPose.getX(), sample.x) : 0))
+                                    .withVelocityY(sample.vy + (sample.vy != 0 ? choreoYController.calculate(currentPose.getY(), sample.y) : 0))
+                                    .withRotationalRate(sample.omega + (sample.omega != 0 ? choreoOmegaController.calculate(currentPose.getRotation().getRadians(), sample.heading) : 0))
         );
         Logger.log("Drivetrain/haeding error degrees", sample.getPose().getRotation().getDegrees() - getPose().getRotation().getDegrees());
         Logger.log("Drivetrain/pose error meters", getPose().getTranslation().getDistance(new Translation2d(sample.x, sample.y)));
