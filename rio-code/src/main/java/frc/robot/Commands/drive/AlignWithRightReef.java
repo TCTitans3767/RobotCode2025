@@ -10,7 +10,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.DashboardButtonBox;
@@ -55,6 +57,7 @@ public class AlignWithRightReef extends Command{
 
     @Override
     public void initialize() {
+        Robot.lights.setBackLEDColor(LEDPattern.solid(Color.kOrange));
         switch (DashboardButtonBox.getSelectedReefBranch()) {
             case B:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
@@ -103,7 +106,7 @@ public class AlignWithRightReef extends Command{
         yController.setPID(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
         headingController.setPID(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
-        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), 0.09, new Rotation2d())).getTranslation(), targetReefRotation);
+        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), 0.1, new Rotation2d())).getTranslation(), targetReefRotation);
 
         Logger.log("Target Pose", targetPose.toString());
 
@@ -141,6 +144,7 @@ public class AlignWithRightReef extends Command{
     @Override
     public void end(boolean interrupted) {
         Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+        Robot.lights.setBackLEDColor(LEDPattern.solid(Color.kBlue));
         camera.resetTagFilter();
     }
 

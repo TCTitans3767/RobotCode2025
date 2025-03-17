@@ -136,7 +136,7 @@ public class Constants {
         
         // Motion Magic Constants
         public final static double maxVelocity = 300;
-        public final static double maxAcceleration = 400;
+        public final static double maxAcceleration = 380;
 
         // Conversion Factor
         public final static double conversionFactor = 1;
