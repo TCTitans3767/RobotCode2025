@@ -35,55 +35,49 @@ public class Transit extends Command{
             Robot.intake.setWheelSpeed(0);
         }
 
-        if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator() && TriggerBoard.isL1Selected()) {
-            Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
-            return;
-        }
+        if (TriggerBoard.isCoralButtonPressed()) {
 
-        if (TriggerBoard.isCoralButtonPressed() && !TriggerBoard.isCoralInManipulator()) {
-            // if (TriggerBoard.isNearCoralStation()) {
+            if (TriggerBoard.isCoralInManipulator()) {
+
+                if (TriggerBoard.isL1Selected()) {
+                    Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
+                    return;
+                }
+
+                if (!Robot.arm.isNear(-0.5)) {
+                    Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+                    return;
+                } else if (Robot.arm.isNear(-0.5)) {
+                    Robot.robotMode.setCurrentMode(RobotMode.coralReefAlignPose);
+                    return;
+                }
+
+            } else if (!TriggerBoard.isCoralInManipulator()) {
                 Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);
-            // } else {
-            //     Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
-            // }
-            return;
-        } else if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator() && !Robot.arm.isNear(-0.5)) {
-            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
-            return;
-        } else if (TriggerBoard.isCoralButtonPressed() && TriggerBoard.isCoralInManipulator() && Robot.arm.isNear(-0.5)) {
-            Robot.robotMode.setCurrentMode(RobotMode.coralReefAlignPose);
-            return;
+                return;
+            }
+
+        } else if (TriggerBoard.isCoralOverrideButtonPressed()) {
+
+            if (!TriggerBoard.isCoralInManipulator()) {
+                Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
+                return;
+            } else if (TriggerBoard.isCoralInManipulator()) {
+                Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+                return;
+            }
+
+        } else if (TriggerBoard.isAlgaeButtonPressed()) {
+
+            if (!TriggerBoard.isAlgaeInIntake()) {
+                Robot.robotMode.setCurrentMode(RobotMode.algaePickupPose);
+                return;
+            } else if (TriggerBoard.isAlgaeInIntake()) {
+                Robot.robotMode.setCurrentMode(RobotMode.ejectAlgaePose);
+                return;
+            }
+            
         }
-
-        if (TriggerBoard.isAlgaeButtonPressed() && !TriggerBoard.isAlgaeInIntake()) {
-            Robot.robotMode.setCurrentMode(RobotMode.algaePickupPose);
-            return;
-        } else if (TriggerBoard.isAlgaeButtonPressed() && TriggerBoard.isAlgaeInIntake()) {
-            Robot.robotMode.setCurrentMode(RobotMode.ejectAlgaePose);
-        }
-
-        if (TriggerBoard.isCoralOverrideButtonPressed() && !TriggerBoard.isCoralInManipulator()) {
-            Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
-            return;
-        } else if (TriggerBoard.isCoralOverrideButtonPressed() && TriggerBoard.isCoralInManipulator()) {
-            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
-        }
-
-        if (Robot.joystick.b().getAsBoolean()) {
-            Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePoseManual);
-        }
-
-        
-        // if (TriggerBoard.isNearCoralStation() && !TriggerBoard.isCoralInManipulator()) {
-        //     Robot.robotMode.setCurrentMode(RobotMode.coralStationPose);
-        //     return;
-        // }
-
-        // if (Robot.joystick.x().getAsBoolean()) {
-        //     Robot.intake.setWheelSpeed(-0.5);
-        // } else {
-        //     Robot.intake.setWheelSpeed(0);
-        // }
 
     }
 

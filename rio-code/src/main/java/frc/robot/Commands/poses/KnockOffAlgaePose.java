@@ -46,7 +46,7 @@ public class KnockOffAlgaePose extends SequentialCommandGroup{
 
         addCommands(
             new ConditionalCommand(algaeAlign, new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)), TriggerBoard::isL4Selected),
-            new WaitUntilCommand((KnockOffAlgaePose::isAlignCommandFinsihed)).withTimeout(1.5),
+            new WaitUntilCommand((KnockOffAlgaePose::isAlignCommandFinsihed)).withTimeout(1),
             new ParallelCommandGroup(
                 new SetArmAngle(-0.32),
                 new SetElevatorPosition(1.1)

@@ -22,7 +22,7 @@ public class CoralStationPose extends Command{
         Robot.intake.setPivotPosition(Constants.Intake.pivotStowPosition);
         Robot.arm.setPosition(0.128);
         Robot.manipulator.setSpeed(-0.2);
-        Robot.elevator.setPosition(0.5);
+        Robot.elevator.setPosition(0.53);
     }
 
     @Override

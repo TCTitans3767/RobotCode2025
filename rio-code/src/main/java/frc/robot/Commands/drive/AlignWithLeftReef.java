@@ -11,8 +11,10 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.ButtonBox;
 import frc.robot.Constants;
@@ -60,6 +62,7 @@ public class AlignWithLeftReef extends Command{
 
     @Override
     public void initialize() {
+        Robot.lights.setBackLEDColor(LEDPattern.solid(Color.kOrange));
         System.out.println("entered left reef align");
         switch (DashboardButtonBox.getSelectedReefBranch()) {
             case A:
@@ -146,6 +149,8 @@ public class AlignWithLeftReef extends Command{
 
     @Override
     public void end(boolean interrupted) {
+        Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+        Robot.lights.setBackLEDColor(LEDPattern.solid(Color.kBlue));
         camera.resetTagFilter();
     }
 

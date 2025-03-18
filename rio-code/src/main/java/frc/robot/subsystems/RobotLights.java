@@ -34,10 +34,8 @@ public class RobotLights extends SubsystemBase {
     public void periodic() {
     }
 
-    public void setBackLEDColor(Color color) {
-        for (int i = 0; i < backBuffer.getLength(); i++) {
-            backBuffer.setLED(i, color);
-        }
+    public void setBackLEDColor(LEDPattern pattern) {
+        pattern.applyTo(backBuffer);
         backLED.setData(backBuffer);
     }
     
