@@ -6,6 +6,8 @@ package frc.robot;
 
 import java.util.WeakHashMap;
 
+import com.pathplanner.lib.commands.FollowPathCommand;
+
 import dev.doglog.DogLog;
 import dev.doglog.DogLogOptions;
 import edu.wpi.first.epilogue.EpilogueConfiguration;
@@ -91,6 +93,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
+    FollowPathCommand.warmupCommand().schedule();
   }
 
   @Override
@@ -113,6 +116,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // limelight.turnOffAprilTags();
+    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.6, 0.6, 999999));
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
@@ -129,6 +133,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // limelight.turnOnAprilTags();
+    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 999999));
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

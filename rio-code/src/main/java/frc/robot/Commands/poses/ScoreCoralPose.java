@@ -31,11 +31,11 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                         Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.55));
                     } else {
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.35));
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.6));
                     }
 
                 }),
-                new WaitCommand(0.25),
+                new WaitCommand(0.35),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);} else {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0));}}),
                 new InstantCommand(() -> {
                     Robot.manipulator.setSpeed(0);

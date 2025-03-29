@@ -58,10 +58,6 @@ public class AlignWithRightReefAuton extends Command{
 
         headingController.enableContinuousInput(-180, 180);
 
-    }
-
-    @Override
-    public void initialize() {
         switch (targetReef) {
             case B:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
@@ -121,7 +117,10 @@ public class AlignWithRightReefAuton extends Command{
         xController.setTolerance(Constants.Drive.XAlignmentTolerance);
         yController.setTolerance(Constants.Drive.YAlignmentTolerance);
 
-        camera.setTagFilter(new int[]{targetReefTag});
+    }
+
+    @Override
+    public void initialize() {
 
         Robot.robotMode.setDriveMode(DriveMode.FieldCentric);
         Robot.robotMode.setSwerveControl(() -> xVelocity, () -> yVelocity, () -> rotationVelocity);
