@@ -248,6 +248,8 @@ public class Constants {
         public final static double reefDistanceThreshold = 3;
         public final static double coralStationDistanceThreshold = 1.5;
 
+        public final static double maxControllerDriveSpeed = 5;
+
         public final static double XAlignmentTolerance = 0.022;
         public final static double XAlignementPIDkP = 0.55;
         // public final static double XAlignementPIDkP = 0.5;
@@ -283,6 +285,14 @@ public class Constants {
         public static final double L4RotationalAlignementPIDkP = 0.0;
         public static final double L4RotationalAlignementPIDkI = 0;
         public static final double L4RotationalAlignementPIDkD = 0.0015;
+
+        public static final double PathPlannerTranslationP = 9.95;
+        public static final double PathPlannerTranslationI = 0;
+        public static final double PathPlannerTranslationD = 0.055;
+
+        public static final double PathPlannerRotationP = 2.75;
+        public static final double PathPlannerRotationI = 0;
+        public static final double PathPlannerRotationD = 0.013;
 
     }
 
