@@ -28,14 +28,14 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                 new InstantCommand(() -> {
                     if (TriggerBoard.isL1Selected() && !DriverStation.isAutonomousEnabled()) {
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0.55));
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(1));
                     } else {
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.35));
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.6));
                     }
 
                 }),
-                new WaitCommand(0.25),
+                new WaitCommand(0.35),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);} else {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0));}}),
                 new InstantCommand(() -> {
                     Robot.manipulator.setSpeed(0);
@@ -51,8 +51,8 @@ public class ScoreCoralPose extends SequentialCommandGroup{
 
         addCommands(
             new InstantCommand(() -> {
-                if (DashboardButtonBox.getSelectedLevelString() == "1") {
-                    Robot.manipulator.setSpeed(0.001);
+                if (TriggerBoard.isL1Selected()) {
+                    Robot.intake.scoreL1();
                 } else {
                     Robot.manipulator.setSpeed(0.3);
                 }
@@ -65,7 +65,7 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                 ), 
                 new InstantCommand(), 
                 TriggerBoard::isL4Selected
-            ),
+            ), 
             new ConditionalCommand(
                 new InstantCommand(() -> {
                     Robot.manipulator.setSpeed(0);

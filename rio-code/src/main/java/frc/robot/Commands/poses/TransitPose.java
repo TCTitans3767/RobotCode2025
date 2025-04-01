@@ -65,13 +65,13 @@ public class TransitPose extends SequentialCommandGroup{
             addCommands(
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(-0.05),
-                    new SetArmAngle(-0.55)
+                    new SetArmAngle(-0.5)
                 ),
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(0),
-                    new SetIntakeWheelSpeed(0)
+                    new InstantCommand(() -> {Robot.intake.resetWheelSpeed();})
                 ),
-                new SetElevatorPosition(0.03),
+                new SetElevatorPosition(0.46),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
@@ -83,7 +83,7 @@ public class TransitPose extends SequentialCommandGroup{
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(0),
                     new SetArmAngle(-0.128),
-                    new SetIntakeWheelSpeed(0)
+                    new InstantCommand(() -> {Robot.intake.resetWheelSpeed();})
                 ),
                 new ParallelCommandGroup(
                     new SetIntakePosition(Constants.Intake.pivotStowPosition),

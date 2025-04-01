@@ -1,6 +1,8 @@
 package frc.robot.Commands.elevator;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class SetElevatorSpeed extends Command{
@@ -17,8 +19,17 @@ public class SetElevatorSpeed extends Command{
     }
 
     @Override
+    public void execute() {
+        if (MathUtil.isNear(Constants.Elevator.metersMax, Robot.elevator.getHeightMeters(), Constants.Elevator.errorTolerance)) {
+            Robot.elevator.setSpeed(0);
+            Robot.arm.setSpeed(-0.15);
+        }
+    }
+
+    @Override
     public void end(boolean interrupted) {
         Robot.elevator.setSpeed(0);
+        Robot.arm.setSpeed(0);
         Robot.elevator.setPosition(Robot.elevator.getHeightMeters());
     }
 
