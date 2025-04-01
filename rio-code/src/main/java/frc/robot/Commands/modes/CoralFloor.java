@@ -14,14 +14,23 @@ public class CoralFloor extends Command{
     @Override
     public void execute() {
 
-        // if (TriggerBoard.isL1Selected() && TriggerBoard.isCoralInIntake()) {
-        //     Robot.robotMode.setCurrentMode(RobotMode.transitPose);
-        // }
+        if (TriggerBoard.isClimbButtonBoxButtonPressed()) {
+            if (TriggerBoard.isClimbControllerButtonPressed()) {
+                Robot.robotMode.setCurrentMode(RobotMode.climbPose);
+            }
+            return;
+        }
 
-        if (TriggerBoard.isCoralInManipulator()) {
-            Robot.intake.setWheelSpeed(-0.6);
+        if (TriggerBoard.isL1Selected() && TriggerBoard.isCoralInIntake()) {
+            Robot.robotMode.setCurrentMode(RobotMode.L1Pose);
+            Robot.manipulator.setSpeed(0);
+            return;
+        }
+
+        if (!TriggerBoard.isL1Selected() && TriggerBoard.isCoralInManipulator()) {
+            Robot.intake.setWheelSpeed(-20);
             Robot.robotMode.setCurrentMode(RobotMode.transitPose);
-        } else if (TriggerBoard.isCoralOverrideButtonPressed()) {
+        } else if (!TriggerBoard.isL1Selected() && TriggerBoard.isCoralOverrideButtonPressed()) {
             Robot.robotMode.setCurrentMode(RobotMode.transitPose);
         }
     }

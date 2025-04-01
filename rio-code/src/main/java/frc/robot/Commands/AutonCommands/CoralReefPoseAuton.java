@@ -77,8 +77,7 @@ public class CoralReefPoseAuton extends SequentialCommandGroup{
 
         addCommands(
             new SelectCommand<String>(commandMap, () -> reefLevel),
-            new InstantCommand(() -> {Robot.manipulator.setSpeed(0);}),
-            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);})
+            new InstantCommand(() -> {Robot.manipulator.setSpeed(0);})
         );
 
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);

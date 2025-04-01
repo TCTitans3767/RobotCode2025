@@ -10,8 +10,12 @@ import com.ctre.phoenix6.configs.CANrangeConfiguration;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.CoastOut;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -26,8 +30,8 @@ public class Intake extends SubsystemBase{
     private final TalonFX leftWheelMotor, rightWheelMotor, pivotMotor;
     private final TalonFXConfiguration leftWheelConfig, rightWheelConfig, pivotConfig;
 
-    private final Slot0Configs slot0Config;
-    private final MotionMagicConfigs motionMagicConfig;
+    private final Slot0Configs PivotSlot0Config, leftWheelSlot0Config, rightWheelSlot0Config;
+    private final MotionMagicConfigs motionMagicConfig, wheelMotionMagicConfig;
     
     private final CANrange intakeSensor;
     private final CANrangeConfiguration intakeSensorConfig;
@@ -65,25 +69,54 @@ public class Intake extends SubsystemBase{
         
          
         // Slot 0 PID setup 
-        slot0Config = new Slot0Configs();
-        slot0Config.kP = Constants.Intake.kP;
-        slot0Config.kI = Constants.Intake.kI;
-        slot0Config.kD = Constants.Intake.kD;
-        slot0Config.kG = Constants.Intake.kG;
-        slot0Config.kV = Constants.Intake.kV;
-        slot0Config.kS = Constants.Intake.kS;
-        slot0Config.GravityType = GravityTypeValue.Arm_Cosine;
+        PivotSlot0Config = new Slot0Configs();
+        PivotSlot0Config.kP = Constants.Intake.kP;
+        PivotSlot0Config.kI = Constants.Intake.kI;
+        PivotSlot0Config.kD = Constants.Intake.kD;
+        PivotSlot0Config.kG = Constants.Intake.kG;
+        PivotSlot0Config.kV = Constants.Intake.kV;
+        PivotSlot0Config.kS = Constants.Intake.kS;
+        PivotSlot0Config.GravityType = GravityTypeValue.Arm_Cosine;
+
+        // Slot 0 PID setup 
+        leftWheelSlot0Config = new Slot0Configs();
+        leftWheelSlot0Config.kP = Constants.Intake.wheelkP;
+        leftWheelSlot0Config.kI = Constants.Intake.wheelkI;
+        leftWheelSlot0Config.kD = Constants.Intake.wheelkD;
+        leftWheelSlot0Config.kG = Constants.Intake.wheelkG;
+        leftWheelSlot0Config.kV = Constants.Intake.wheelkV;
+        leftWheelSlot0Config.kS = Constants.Intake.wheelkS;
+        leftWheelSlot0Config.GravityType = GravityTypeValue.Elevator_Static;
+
+        // Slot 0 PID setup 
+        rightWheelSlot0Config = new Slot0Configs();
+        rightWheelSlot0Config.kP = Constants.Intake.wheelkP;
+        rightWheelSlot0Config.kI = Constants.Intake.wheelkI;
+        rightWheelSlot0Config.kD = Constants.Intake.wheelkD;
+        rightWheelSlot0Config.kG = Constants.Intake.wheelkG;
+        rightWheelSlot0Config.kV = Constants.Intake.wheelkV;
+        rightWheelSlot0Config.kS = Constants.Intake.wheelkS;
+        rightWheelSlot0Config.GravityType = GravityTypeValue.Elevator_Static;
 
         // Motion Magic setup
         motionMagicConfig = new MotionMagicConfigs();
         motionMagicConfig.MotionMagicCruiseVelocity = Constants.Intake.maxVelocity;
         motionMagicConfig.MotionMagicAcceleration = Constants.Intake.maxAcceleration;
 
+        // Motion Magic setup
+        wheelMotionMagicConfig = new MotionMagicConfigs();
+        wheelMotionMagicConfig.MotionMagicCruiseVelocity = Constants.Intake.wheelMaxVelocity;
+        wheelMotionMagicConfig.MotionMagicAcceleration = Constants.Intake.wheelMaxAcceleration;
+
         // Set the configurations
         leftWheelMotor.getConfigurator().apply(leftWheelConfig);
+        leftWheelMotor.getConfigurator().apply(leftWheelSlot0Config);
+        leftWheelMotor.getConfigurator().apply(wheelMotionMagicConfig);
         leftWheelMotor.setNeutralMode(NeutralModeValue.Brake);
 
         rightWheelMotor.getConfigurator().apply(rightWheelConfig);
+        rightWheelMotor.getConfigurator().apply(rightWheelSlot0Config);
+        rightWheelMotor.getConfigurator().apply(wheelMotionMagicConfig);
         rightWheelMotor.setNeutralMode(NeutralModeValue.Brake);
         rightWheelMotor.setControl(new Follower(Constants.Intake.leftWheelMotorID, true));
 
@@ -91,11 +124,13 @@ public class Intake extends SubsystemBase{
         intakeSensorConfig = new CANrangeConfiguration();
         intakeSensorConfig.ProximityParams.ProximityThreshold = Constants.Intake.detectionRange;
         intakeSensorConfig.ProximityParams.ProximityHysteresis = Constants.Intake.sensorDebounce;
+        intakeSensorConfig.FovParams.FOVRangeX = Constants.Intake.fovXRange;
+        intakeSensorConfig.FovParams.FOVRangeY = Constants.Intake.fovYRange;
         intakeSensorConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRange100Hz;
         intakeSensor.getConfigurator().apply(intakeSensorConfig);
 
         pivotMotor.getConfigurator().apply(pivotConfig);        
-        pivotMotor.getConfigurator().apply(slot0Config);
+        pivotMotor.getConfigurator().apply(PivotSlot0Config);
         pivotMotor.getConfigurator().apply(motionMagicConfig);
         pivotMotor.setNeutralMode(NeutralModeValue.Brake);
     }
@@ -106,7 +141,13 @@ public class Intake extends SubsystemBase{
         Logger.log("Intake/Pivot Absolute Position", pivotEncoder.getPosition().getValueAsDouble());
         Logger.log("Intake/Is Pivot At Position", isPivotAtPosition());
         Logger.log("Intake/Stator Current", leftWheelMotor.getStatorCurrent().getValueAsDouble());
-        Logger.log("Intake/Has Game Piece", hasAlgae());
+        Logger.log("Intake/Wheel Velocity", leftWheelMotor.getVelocity().getValueAsDouble());
+        Logger.log("Intake/Has Game Piece", hasCoral());
+    }
+
+    public void scoreL1() {
+        leftWheelMotor.setControl(new MotionMagicVelocityVoltage(1));
+        rightWheelMotor.setControl(new MotionMagicVelocityVoltage(0.5));
     }
 
     public double getPivotPosition() {
@@ -117,8 +158,14 @@ public class Intake extends SubsystemBase{
         pivotMotor.set(speed);
     }
 
-    public void setWheelSpeed(double speed) {
-        leftWheelMotor.set(speed);
+    public void resetWheelSpeed() {
+        leftWheelMotor.set(0);
+        rightWheelMotor.set(0);
+    }
+
+    public void setWheelSpeed(double rotationsPerSecond) {
+        leftWheelMotor.setControl(new MotionMagicVelocityVoltage(rotationsPerSecond));
+        rightWheelMotor.setControl(new MotionMagicVelocityVoltage(rotationsPerSecond));
     }
 
     public void setPivotPosition(double rotations) {
@@ -133,6 +180,10 @@ public class Intake extends SubsystemBase{
 
     public boolean hasAlgae() {
         return leftWheelMotor.getStatorCurrent().getValueAsDouble() >= 60;
+    }
+
+    public boolean hasCoral() {
+        return intakeSensor.getIsDetected().getValue();
     }
 
     public boolean isWheelMotorTooHot() {

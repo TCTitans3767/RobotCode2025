@@ -17,7 +17,7 @@ public class ClimbPose extends SequentialCommandGroup{
             new SetArmAngle(0.35),
             new SetElevatorPosition(0.021),
             new SetIntakePosition(0.15),
-            new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.climb))
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.deployClimberPose))
         );
 
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);

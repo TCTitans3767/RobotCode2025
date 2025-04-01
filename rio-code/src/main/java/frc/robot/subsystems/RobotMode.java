@@ -32,6 +32,7 @@ import frc.robot.Commands.modes.CoralReef;
 import frc.robot.Commands.modes.CoralReefAligned;
 import frc.robot.Commands.modes.CoralStation;
 import frc.robot.Commands.modes.FinalClimb;
+import frc.robot.Commands.modes.L1;
 import frc.robot.Commands.modes.Transit;
 import frc.robot.Commands.poses.AlgaePickupPose;
 import frc.robot.Commands.poses.ClimbPose;
@@ -47,6 +48,7 @@ import frc.robot.Commands.poses.ScoreCoralPose;
 import frc.robot.Commands.poses.InitialTransitPose;
 import frc.robot.Commands.poses.KnockOffAlgaePose;
 import frc.robot.Commands.poses.KnockOffAlgaePoseManual;
+import frc.robot.Commands.poses.L1Pose;
 import frc.robot.Commands.poses.ResetPose;
 import frc.robot.Commands.poses.TransitPose;
 import frc.robot.generated.TunerConstants;
@@ -124,6 +126,9 @@ public class RobotMode extends SubsystemBase {
 
     public static SlowControllerDrive slowControllerDrive;
 
+    public static L1Pose L1Pose;
+    public static L1 L1;
+
     public static ResetPose resetPose;
 
     public RobotMode() {
@@ -163,6 +168,9 @@ public class RobotMode extends SubsystemBase {
         knockOffAlgaePoseManual = new KnockOffAlgaePoseManual();
 
         slowControllerDrive = new SlowControllerDrive();
+
+        L1Pose = new L1Pose();
+        L1 = new L1();
 
         resetPose = new ResetPose();
     }

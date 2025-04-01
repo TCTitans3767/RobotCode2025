@@ -75,6 +75,6 @@ public class TriggerBoard {
     }
   
     public static boolean isCoralInIntake() {
-        return Robot.intake.hasAlgae();
+        return Robot.intake.hasCoral();
     }
 }
