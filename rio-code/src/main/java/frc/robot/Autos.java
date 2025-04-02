@@ -100,15 +100,15 @@ public class Autos {
             CoralReefPoseAuton L4Pose = new CoralReefPoseAuton("4");
 
             return new SequentialCommandGroup(
-                new InstantCommand(() -> {Robot.drivetrain.resetPose(rightReefStart_E.getStartingHolonomicPose().get());}),
-                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(rightReefStart_E)); Robot.robotMode.setCurrentMode(L4Pose);}),
-                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose)),
+                new InstantCommand(() -> {Robot.drivetrain.resetPose(rightReefStart_E.getStartingHolonomicPose().get()); Robot.robotMode.setCurrentMode(RobotMode.transitPose);}),
+                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(rightReefStart_E));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithE4)),
                 new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralStationPose); Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(E_CoralStation));}),
-                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(CoralStation_C)); Robot.robotMode.setCurrentMode(L4Pose);}),
-                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose)),
+                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(CoralStation_C));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithC4)),
                 new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralStationPose); Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(C_CoralStation));}),
-                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(CoralStation_D)); Robot.robotMode.setCurrentMode(L4Pose);}),
-                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose))
+                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(CoralStation_D));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithD4))
             );
         } catch (Exception e) {
             return Commands.none();

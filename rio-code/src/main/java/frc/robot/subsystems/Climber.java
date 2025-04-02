@@ -65,6 +65,14 @@ public class Climber extends SubsystemBase {
         return;  // Add code here to run every loop
     }
 
+    public TalonFX getLeftMotor() {
+        return leftMotor;
+    }
+
+    public TalonFX getRightMotor() {
+        return rightMotor;
+    }
+
     public void setSpeed(double speed) {
         Logger.log("Climber/target speed", speed);
         leftMotor.set(speed);

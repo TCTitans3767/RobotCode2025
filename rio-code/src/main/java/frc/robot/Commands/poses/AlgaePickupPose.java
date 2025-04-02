@@ -16,7 +16,7 @@ public class AlgaePickupPose extends Command{
             this.cancel();
             return;
         } else {
-            Robot.arm.setPosition(-0.128);
+            Robot.arm.setPosition(-0.1);
             Robot.intake.setWheelSpeed(0.5);
             Robot.intake.setPivotPosition(-0.07);
         }

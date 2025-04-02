@@ -34,12 +34,12 @@ public class TransitPose extends SequentialCommandGroup{
         public AlgaeInIntakeTransit() {
             addCommands(
                 new ParallelCommandGroup(
-                    new SetIntakeWheelSpeed(0.6),
+                    // new SetIntakeWheelSpeed(0.6),
                     new SetManipulatorWheelSpeed(0)
                 ),
                 new SetIntakePosition(0),
                 new SetElevatorPosition(0.5),
-                new SetArmAngle(-0.128),
+                new SetArmAngle(-0.122),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
@@ -52,7 +52,7 @@ public class TransitPose extends SequentialCommandGroup{
                     new SetIntakeWheelSpeed(0.5),
                     new SetManipulatorWheelSpeed(-0.05)
                 ),
-                new SetArmAngle(-0.128),
+                new SetArmAngle(-0.122),
                 new SetIntakePosition(0.25),
                 new SetElevatorPosition(0.5),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
@@ -65,7 +65,7 @@ public class TransitPose extends SequentialCommandGroup{
             addCommands(
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(-0.05),
-                    new SetArmAngle(-0.5)
+                    new SetArmAngle(0.2)
                 ),
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(0),
@@ -82,13 +82,13 @@ public class TransitPose extends SequentialCommandGroup{
             addCommands(
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(0),
-                    new SetArmAngle(-0.128),
+                    new SetArmAngle(-0.378),
                     new InstantCommand(() -> {Robot.intake.resetWheelSpeed();})
                 ),
                 new ParallelCommandGroup(
                     new SetIntakePosition(Constants.Intake.pivotStowPosition),
                     new SetElevatorPosition(0.5),
-                    new SetArmAngle(0.128)
+                    new SetArmAngle(0.122)
                 ),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );

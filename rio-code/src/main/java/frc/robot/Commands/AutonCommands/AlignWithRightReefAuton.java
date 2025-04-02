@@ -106,7 +106,7 @@ public class AlignWithRightReefAuton extends Command{
         yController.setPID(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
         headingController.setPID(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
-        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), 0.08, new Rotation2d())).getTranslation(), targetReefRotation);
+        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), 0.1, new Rotation2d())).getTranslation(), targetReefRotation);
 
         Logger.log("Target Pose", targetPose.toString());
 

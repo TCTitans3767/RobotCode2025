@@ -20,9 +20,9 @@ public class ResetPose extends SequentialCommandGroup{
             new SetManipulatorWheelSpeed(0),
             new SetIntakePosition(0).withTimeout(3),
             new SetIntakeWheelSpeed(-60),
-            new SetArmAngle(-0.3),
+            new SetArmAngle(0.05),
             new SetElevatorPosition(0.5),
-            new SetArmAngle(-0.128),
+            new SetArmAngle(-0.122),
             new SetIntakePosition(Constants.Intake.pivotStowPosition).withTimeout(3),
             new InstantCommand(() -> {Robot.intake.resetWheelSpeed(); Robot.robotMode.setCurrentMode(RobotMode.transit);}).ignoringDisable(true)
         );

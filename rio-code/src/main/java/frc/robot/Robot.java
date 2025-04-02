@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import java.io.IOException;
 import java.util.WeakHashMap;
+
+import org.json.simple.parser.ParseException;
 
 import com.ctre.phoenix6.Orchestra;
 import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.util.FileVersionException;
 
 import dev.doglog.DogLog;
 import dev.doglog.DogLogOptions;
@@ -96,10 +100,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
-    orchestra.addInstrument(drivetrain.getModule(0).getDriveMotor());
-    orchestra.addInstrument(drivetrain.getModule(0).getSteerMotor());
-    orchestra.addInstrument(drivetrain.getModule(1).getDriveMotor());
-    orchestra.addInstrument(drivetrain.getModule(1).getSteerMotor());
+    orchestra.addInstrument(climber.getLeftMotor());
+    orchestra.addInstrument(climber.getRightMotor());
+    orchestra.addInstrument(elevator.getLeftMotor());
+    orchestra.addInstrument(elevator.getRightMotor());
     orchestra.addInstrument(drivetrain.getModule(2).getDriveMotor());
     orchestra.addInstrument(drivetrain.getModule(2).getSteerMotor());
     orchestra.addInstrument(drivetrain.getModule(3).getDriveMotor());
@@ -130,7 +134,18 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     // limelight.turnOffAprilTags();
     drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.6, 0.6, 999999));
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    try {
+      m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    } catch (FileVersionException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (ParseException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();

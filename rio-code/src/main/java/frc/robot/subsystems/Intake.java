@@ -145,6 +145,14 @@ public class Intake extends SubsystemBase{
         Logger.log("Intake/Has Game Piece", hasCoral());
     }
 
+    public TalonFX getLeftWheelMotor() {
+        return leftWheelMotor;
+    }
+    
+    public TalonFX getRightWheelMotor() {
+        return rightWheelMotor;
+    }
+
     public void scoreL1() {
         leftWheelMotor.setControl(new MotionMagicVelocityVoltage(1));
         rightWheelMotor.setControl(new MotionMagicVelocityVoltage(0.5));
@@ -179,7 +187,7 @@ public class Intake extends SubsystemBase{
     }
 
     public boolean hasAlgae() {
-        return leftWheelMotor.getStatorCurrent().getValueAsDouble() >= 60;
+        return leftWheelMotor.getStatorCurrent().getValueAsDouble() >= 70;
     }
 
     public boolean hasCoral() {

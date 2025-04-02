@@ -48,38 +48,42 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
         }
     }
 
-    public class L2 extends SequentialCommandGroup{
+    public class L2 extends ParallelCommandGroup{
         public L2() {
             addCommands(
-                new ParallelCommandGroup(
-                    new SetManipulatorWheelSpeed(0),
-                    new SetElevatorPosition(Constants.L2Measurements.elevtaorHeight).withTimeout(0.4),
-                    new SetArmAngle(Constants.L2Measurements.armAngle)
-                )
+                new SetManipulatorWheelSpeed(-0.05),
+                new SetElevatorPosition(Constants.L2Measurements.elevtaorHeight).withTimeout(0.4),
+                new SetArmAngle(Constants.L2Measurements.armAngle)
             );
         }
     }
 
-    public class L3 extends SequentialCommandGroup{
+    public class L3 extends ParallelCommandGroup{
         public L3() {
             addCommands(
-                new ParallelCommandGroup(
-                    new SetManipulatorWheelSpeed(0),
-                    new SetElevatorPosition(Constants.L3Measurements.elevtaorHeight).withTimeout(0.4),
-                    new SetArmAngle(Constants.L3Measurements.armAngle)
-                )
+                new SetManipulatorWheelSpeed(-0.05),
+                new SetElevatorPosition(Constants.L3Measurements.elevtaorHeight).withTimeout(0.4),
+                new SetArmAngle(Constants.L3Measurements.armAngle)
             );
         }
     }
+
+    // public class L4 extends ParallelCommandGroup{
+    //     public L4() {
+    //         addCommands(
+    //             new SetManipulatorWheelSpeed(-0.05),
+    //             new SetElevatorPosition(Constants.L4Measurements.elevtaorHeight).withTimeout(0.4),
+    //             new SetArmAngle(Constants.L4Measurements.armAngle)
+    //         );
+    //     }
+    // }
 
     public class L4 extends SequentialCommandGroup{
         public L4() {
             addCommands(
-                new ParallelCommandGroup(
-                    new SetManipulatorWheelSpeed(0),
-                    new SetElevatorPosition(Constants.L4Measurements.elevtaorHeight).withTimeout(0.4),
-                    new SetArmAngle(Constants.L4Measurements.armAngle)
-                )
+                new SetManipulatorWheelSpeed(0),
+                new SetElevatorPosition(Constants.L4Measurements.elevtaorHeight).withTimeout(0.4),
+                new SetArmAngle(Constants.L4Measurements.armAngle)
             );
         }
     }
@@ -98,9 +102,10 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
 
         addCommands(
             new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
-            new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
+            // new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
             new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed).withTimeout(1.2),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0).withVelocityY(0).withRotationalRate(0));}),
+            new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.slowControllerDrive);}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);})
         );

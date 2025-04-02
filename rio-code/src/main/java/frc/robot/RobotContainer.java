@@ -6,11 +6,17 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
+import com.pathplanner.lib.util.FileVersionException;
 
 import choreo.Choreo;
 import choreo.auto.AutoFactory;
@@ -91,25 +97,44 @@ public class RobotContainer {
     public final static String rightL1Name = "Right L1";
     public final static String leftL1Name = "Left L1";
     public final static String rightL1NoExtrasName = "Right L1 No Extras"; 
+
+    public PathPlannerPath testPath;
+        
+        private final SendableChooser<Command> autonSelector = new SendableChooser<Command>();
     
-    private final SendableChooser<Command> autonSelector = new SendableChooser<Command>();
-
-    public RobotContainer() {
-
-        configureBindings();
-        configureChoreo();
+        public RobotContainer() {
     
-        autonSelector.addOption(leftL1Name + " + L4", Autos.L1LeftCommandGroup(autoFactory));
-        autonSelector.addOption("Left Triple L4", Autos.J4_K4_L4_CoralStation(autoFactory));
-        autonSelector.addOption("Right Triple L4", Autos.E4_C4_D4_CoralStation(autoFactory));
-        autonSelector.addOption("Left Wall Auton", Autos.lolipopAuto(autoFactory));
-        SmartDashboard.putData("Auton Selection", autonSelector);
+            configureBindings();
+            configureChoreo();
+        
+            autonSelector.addOption(leftL1Name + " + L4", Autos.L1LeftCommandGroup(autoFactory));
+            autonSelector.addOption("Left Triple L4", Autos.J4_K4_L4_CoralStation(autoFactory));
+            autonSelector.addOption("Right Triple L4", Autos.E4_C4_D4_CoralStation(autoFactory));
+            autonSelector.addOption("Left Wall Auton", Autos.lolipopAuto(autoFactory));
+            SmartDashboard.putData("Auton Selection", autonSelector);
 
-        // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
-        // Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-
-        limelight.initialPoseEstimates();
-
+            setupTestPath();
+    
+            // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
+            // Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+    
+            limelight.initialPoseEstimates();
+    
+        }
+    
+        private void setupTestPath() {
+            try {
+                testPath = PathPlannerPath.fromPathFile("Test Path");
+            } catch (FileVersionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
     }
 
     private void configureChoreo() {
@@ -193,8 +218,10 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
-    public Command getAutonomousCommand() {
+    public Command getAutonomousCommand() throws FileVersionException, IOException, ParseException {
         return autonSelector.getSelected();
+        // Robot.drivetrain.resetPose(testPath.getStartingHolonomicPose().get());
+        // return AutoBuilder.followPath(PathPlannerPath.fromPathFile("Test Path"));
     }
 
 }

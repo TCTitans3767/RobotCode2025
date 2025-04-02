@@ -440,6 +440,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
     public void resetPose(Pose2d resetPose) {
         this.resetRotation(resetPose.getRotation());
         this.resetTranslation(resetPose.getTranslation());
+        Robot.limelight.resetIMU();
         return;
     }
 
