@@ -14,6 +14,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
 import frc.robot.Commands.Intake.SetIntakePosition;
+import frc.robot.Commands.Intake.SetIntakeWheelPower;
 import frc.robot.Commands.Intake.SetIntakeWheelSpeed;
 import frc.robot.Commands.arm.SetArmAngle;
 import frc.robot.Commands.drive.ControllerDrive;
@@ -34,7 +35,7 @@ public class TransitPose extends SequentialCommandGroup{
         public AlgaeInIntakeTransit() {
             addCommands(
                 new ParallelCommandGroup(
-                    // new SetIntakeWheelSpeed(0.6),
+                    new SetIntakeWheelPower(0.6),
                     new SetManipulatorWheelSpeed(0)
                 ),
                 new SetIntakePosition(0),
@@ -49,7 +50,7 @@ public class TransitPose extends SequentialCommandGroup{
         public CoralInManipulatorAndAlgaeInIntakeTransit() {
             addCommands(
                 new ParallelCommandGroup(
-                    new SetIntakeWheelSpeed(0.5),
+                    new SetIntakeWheelPower(0.6),
                     new SetManipulatorWheelSpeed(-0.05)
                 ),
                 new SetArmAngle(-0.122),
@@ -71,7 +72,7 @@ public class TransitPose extends SequentialCommandGroup{
                     new SetManipulatorWheelSpeed(0),
                     new InstantCommand(() -> {Robot.intake.resetWheelSpeed();})
                 ),
-                new SetElevatorPosition(0.46),
+                new SetElevatorPosition(0.02),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }

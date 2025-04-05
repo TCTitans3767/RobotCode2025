@@ -102,8 +102,12 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
 
         addCommands(
             new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
+            new ParallelCommandGroup(
+                new ConditionalCommand(new SetElevatorPosition(Constants.L2Measurements.elevtaorHeight), new SetElevatorPosition(Constants.L3Measurements.elevtaorHeight), TriggerBoard::isL2Selected),
+                new SetArmAngle(0.2)
+            ),
             // new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
-            new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed).withTimeout(1.2),
+            new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed).withTimeout(1),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0).withVelocityY(0).withRotationalRate(0));}),
             new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.slowControllerDrive);}),

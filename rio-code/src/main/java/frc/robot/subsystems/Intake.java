@@ -154,8 +154,8 @@ public class Intake extends SubsystemBase{
     }
 
     public void scoreL1() {
-        leftWheelMotor.setControl(new MotionMagicVelocityVoltage(1));
-        rightWheelMotor.setControl(new MotionMagicVelocityVoltage(0.5));
+        leftWheelMotor.setControl(new MotionMagicVelocityVoltage(-30));
+        rightWheelMotor.setControl(new MotionMagicVelocityVoltage(-15));
     }
 
     public double getPivotPosition() {
@@ -174,6 +174,11 @@ public class Intake extends SubsystemBase{
     public void setWheelSpeed(double rotationsPerSecond) {
         leftWheelMotor.setControl(new MotionMagicVelocityVoltage(rotationsPerSecond));
         rightWheelMotor.setControl(new MotionMagicVelocityVoltage(rotationsPerSecond));
+    }
+
+    public void setWheelPower(double speed) {
+        leftWheelMotor.set(speed);
+        rightWheelMotor.set(speed);
     }
 
     public void setPivotPosition(double rotations) {

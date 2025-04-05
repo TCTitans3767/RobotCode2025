@@ -71,7 +71,7 @@ public class RobotMode extends SubsystemBase {
     public Command previousPose = null;
 
     private double MaxSpeed = Constants.Drive.maxControllerDriveSpeed; // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(1.5).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(1.25).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     private Supplier<Double> SwerveXSupplier;
     private Supplier<Double> SwerveYSupplier;

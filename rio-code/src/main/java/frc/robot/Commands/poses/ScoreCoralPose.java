@@ -8,6 +8,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -34,14 +35,14 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                     if (TriggerBoard.isL1Selected() && !DriverStation.isAutonomousEnabled()) {
                         Robot.elevator.setPosition(0.02);
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(1));
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(1.2));
                     } else {
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.6));
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-1.2));
                     }
 
                 }),
-                new WaitCommand(0.35),
+                new WaitCommand(0.25),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);} else {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0));}}),
                 new InstantCommand(() -> {
                     Robot.manipulator.setSpeed(0);
@@ -67,16 +68,16 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                 if (TriggerBoard.isL1Selected()) {
                     Robot.intake.scoreL1();
                 } else {
-                    Robot.manipulator.setSpeed(0.4);
+                    Robot.manipulator.setSpeed(0.3);
                 }
             }),
             new WaitCommand(0.15),
             new ConditionalCommand(
                 new ParallelCommandGroup(
-                    new SetArmAngle(0.2),
+                    new SetArmAngle(0.17),
                     new SetElevatorPosition(1.2)
                 ), 
-                new InstantCommand(), 
+                Commands.none(),
                 TriggerBoard::isL4Selected
             ), 
             new ConditionalCommand(

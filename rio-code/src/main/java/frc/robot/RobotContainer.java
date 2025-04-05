@@ -107,10 +107,10 @@ public class RobotContainer {
             configureBindings();
             configureChoreo();
         
-            autonSelector.addOption(leftL1Name + " + L4", Autos.L1LeftCommandGroup(autoFactory));
             autonSelector.addOption("Left Triple L4", Autos.J4_K4_L4_CoralStation(autoFactory));
             autonSelector.addOption("Right Triple L4", Autos.E4_C4_D4_CoralStation(autoFactory));
-            autonSelector.addOption("Left Wall Auton", Autos.lolipopAuto(autoFactory));
+            autonSelector.addOption("Center G4", Autos.centerAutoG());
+            autonSelector.addOption("Center H4", Autos.centerAutoH());
             SmartDashboard.putData("Auton Selection", autonSelector);
 
             setupTestPath();

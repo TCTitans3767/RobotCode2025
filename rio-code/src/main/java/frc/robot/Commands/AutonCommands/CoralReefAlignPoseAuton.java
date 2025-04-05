@@ -108,7 +108,8 @@ public class CoralReefAlignPoseAuton extends SequentialCommandGroup{
 
         addCommands(
             new ConditionalCommand(leftReefAlign, rightReefAlign, () -> leftAlign),
-            new WaitUntilCommand(() -> isAlignCommandFinsihed()).withTimeout(1),
+            new SetElevatorPosition(Constants.L3Measurements.elevtaorHeight),
+            new WaitUntilCommand(() -> isAlignCommandFinsihed()).withTimeout(0.6),
             new SelectCommand<String>(commandMap, () -> reefLevel),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0).withVelocityY(0).withRotationalRate(0));}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);})

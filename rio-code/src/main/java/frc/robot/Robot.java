@@ -104,8 +104,8 @@ public class Robot extends TimedRobot {
     orchestra.addInstrument(climber.getRightMotor());
     orchestra.addInstrument(elevator.getLeftMotor());
     orchestra.addInstrument(elevator.getRightMotor());
-    orchestra.addInstrument(drivetrain.getModule(2).getDriveMotor());
-    orchestra.addInstrument(drivetrain.getModule(2).getSteerMotor());
+    orchestra.addInstrument(intake.getLeftWheelMotor());
+    orchestra.addInstrument(intake.getRightWheelMotor());
     orchestra.addInstrument(drivetrain.getModule(3).getDriveMotor());
     orchestra.addInstrument(drivetrain.getModule(3).getSteerMotor());
     FollowPathCommand.warmupCommand().schedule();

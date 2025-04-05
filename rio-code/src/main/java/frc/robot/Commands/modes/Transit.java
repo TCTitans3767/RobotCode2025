@@ -42,12 +42,7 @@ public class Transit extends Command{
                 if (TriggerBoard.isL1Selected()) {
                     Robot.robotMode.setCurrentMode(RobotMode.coralReefPose);
                     return;
-                }
-
-                if (!Robot.arm.isNear(0.2)) {
-                    Robot.robotMode.setCurrentMode(RobotMode.transitPose);
-                    return;
-                } else if (Robot.arm.isNear(0.2)) {
+                } else {
                     Robot.robotMode.setCurrentMode(RobotMode.coralReefAlignPose);
                     return;
                 }

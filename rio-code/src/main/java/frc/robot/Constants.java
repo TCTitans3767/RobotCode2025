@@ -113,8 +113,8 @@ public class Constants {
         public final static int leftMotorID = 18;
         public final static int rightMotorID = 19;
       
-        public final static double maxVelocity = 1000;
-        public final static double maxAcceleration = 2000;
+        public final static double maxVelocity = 80;
+        public final static double maxAcceleration = 200;
 
         public final static double conversonFactor = 1;
     }
@@ -127,12 +127,12 @@ public class Constants {
         public static final double maxCurrent = 100;
 
         // PID Constants
-        public final static double kP = 4;
+        public final static double kP = 3.9;
         public final static double kI = 0;
-        public final static double kD = 0.08;
+        public final static double kD = 0.06;
         public final static double kG = 0.185;
         public final static double kV = 0;
-        public final static double kS = 0.4;
+        public final static double kS = 0.2;
         
         // Motion Magic Constants
         public final static double maxVelocity = 120;
@@ -143,10 +143,10 @@ public class Constants {
 
         public final static double RotationsPerMeter = 39.997;
 
-        public final static double metersMax = 1.175;
+        public final static double metersMax = 1.22;
         public final static double metersMin = 0.020;
 
-        public final static double errorTolerance = 0.08;
+        public final static double errorTolerance = 0.12;
         public final static double zeroingSpeed = -0.05;
         public final static double zeroingThreshold = 0.01;
 
@@ -198,7 +198,7 @@ public class Constants {
       
         public final static double conversionFactor = 1;
 
-        public final static double errorTolerance = 0.05;
+        public final static double errorTolerance = 0.08;
     }
 
     public static final class Intake {
@@ -259,7 +259,7 @@ public class Constants {
         public final static double reefDistanceThreshold = 3;
         public final static double coralStationDistanceThreshold = 1.5;
 
-        public final static double maxControllerDriveSpeed = 5;
+        public final static double maxControllerDriveSpeed = 4.3;
 
         public final static double XAlignmentTolerance = 0.022;
         public final static double XAlignementPIDkP = 0.55;
@@ -301,9 +301,9 @@ public class Constants {
         public static final double PathPlannerTranslationI = 0;
         public static final double PathPlannerTranslationD = 0;
 
-        public static final double PathPlannerRotationP = 1.5;
+        public static final double PathPlannerRotationP = 1.8;
         public static final double PathPlannerRotationI = 0;
-        public static final double PathPlannerRotationD = 0;
+        public static final double PathPlannerRotationD = 0.08;
 
     }
 
@@ -329,8 +329,8 @@ public class Constants {
     }
 
     public final static class L4Measurements {
-        public final static double armAngle = 0.0435;
-        public final static double elevtaorHeight = 1.08;
+        public final static double armAngle = 0.0425;
+        public final static double elevtaorHeight = 1.09;
     }
 
     public final static class L3Measurements {

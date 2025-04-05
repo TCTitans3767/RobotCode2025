@@ -11,7 +11,6 @@ public class L1Pose extends SequentialCommandGroup{
 
     public L1Pose() {
         addCommands(
-            new SetIntakeWheelSpeed(0),
             new SetIntakePosition(0.2),
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.L1))
         );
