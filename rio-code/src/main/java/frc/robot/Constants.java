@@ -113,8 +113,8 @@ public class Constants {
         public final static int leftMotorID = 18;
         public final static int rightMotorID = 19;
       
-        public final static double maxVelocity = 0.1;
-        public final static double maxAcceleration = 0.1;
+        public final static double maxVelocity = 80;
+        public final static double maxAcceleration = 200;
 
         public final static double conversonFactor = 1;
     }
@@ -127,26 +127,26 @@ public class Constants {
         public static final double maxCurrent = 100;
 
         // PID Constants
-        public final static double kP = 12;
+        public final static double kP = 3.9;
         public final static double kI = 0;
         public final static double kD = 0.06;
         public final static double kG = 0.185;
         public final static double kV = 0;
-        public final static double kS = 0.5;
+        public final static double kS = 0.2;
         
         // Motion Magic Constants
-        public final static double maxVelocity = 300;
-        public final static double maxAcceleration = 380;
+        public final static double maxVelocity = 120;
+        public final static double maxAcceleration = 250;
 
         // Conversion Factor
         public final static double conversionFactor = 1;
 
         public final static double RotationsPerMeter = 39.997;
 
-        public final static double metersMax = 1.125;
+        public final static double metersMax = 1.22;
         public final static double metersMin = 0.020;
 
-        public final static double errorTolerance = 0.01;
+        public final static double errorTolerance = 0.12;
         public final static double zeroingSpeed = -0.05;
         public final static double zeroingThreshold = 0.01;
 
@@ -183,22 +183,22 @@ public class Constants {
         public static final int ArmEncoderID = 16;
 
         // PID Constants
-        public final static double kP = 68;
+        public final static double kP = 35;
         public final static double kI = 0;
         public final static double kD = 0;
-        public final static double kG = 0.4;
+        public final static double kG = 0.25;
         public final static double kV = 0;
-        public final static double kS = 0.9;
+        public final static double kS = 0;
       
         // Motion Magic Constants
-        public final static double maxVelocity = 7;
-        public final static double maxAcceleration = 8.5;
-        public final static double rotationsMax = 0.6;
-        public final static double rotationsMin = -0.6;
+        public final static double maxVelocity = 3.5;
+        public final static double maxAcceleration = 13;
+        public final static double rotationsMax = 0.5;
+        public final static double rotationsMin = -0.5;
       
         public final static double conversionFactor = 1;
 
-        public final static double errorTolerance = 0.1;
+        public final static double errorTolerance = 0.08;
     }
 
     public static final class Intake {
@@ -216,20 +216,31 @@ public class Constants {
         public final static double kV = 0;
         public final static double kS = 0.32;
 
+        public final static double wheelkP = 0.4;
+        public final static double wheelkI = 0;
+        public final static double wheelkD = 0;
+        public final static double wheelkG = 0;
+        public final static double wheelkV = 0;
+        public final static double wheelkS = 0;
 
         // Motion Magic Constants
         public final static double maxVelocity = 10;
         public final static double maxAcceleration = 17;
         public final static double angleMax = 0.1;
         public final static double angleMin = 0.1;
+
+        public final static double wheelMaxVelocity = 80;
+        public final static double wheelMaxAcceleration = 200;
       
         // Conversion Factor
         public final static double pivotConversionFactor = 1;
         public final static double wheelConversionFactor = 1;
         public static final double pivotErrorTolerance = 0.01;
 
-        public static final double detectionRange = 0.1;
-        public static final double sensorDebounce = 0.01;
+        public static final double detectionRange = 0.063;
+        public static final double sensorDebounce = 0.005;
+        public static final double fovXRange = 8;
+        public static final double fovYRange = 8;
         public static final int sensorID = 25;
         public static final double wheelCurrentLimit = 80;
         public static final double pivotCurrentLimit = 60;
@@ -247,6 +258,8 @@ public class Constants {
     public static final class Drive {
         public final static double reefDistanceThreshold = 3;
         public final static double coralStationDistanceThreshold = 1.5;
+
+        public final static double maxControllerDriveSpeed = 4.3;
 
         public final static double XAlignmentTolerance = 0.022;
         public final static double XAlignementPIDkP = 0.55;
@@ -284,6 +297,14 @@ public class Constants {
         public static final double L4RotationalAlignementPIDkI = 0;
         public static final double L4RotationalAlignementPIDkD = 0.0015;
 
+        public static final double PathPlannerTranslationP = 2;
+        public static final double PathPlannerTranslationI = 0;
+        public static final double PathPlannerTranslationD = 0;
+
+        public static final double PathPlannerRotationP = 1.8;
+        public static final double PathPlannerRotationI = 0;
+        public static final double PathPlannerRotationD = 0.08;
+
     }
 
     public final static class ButtonBoxBindings {
@@ -308,17 +329,17 @@ public class Constants {
     }
 
     public final static class L4Measurements {
-        public final static double armAngle = -0.5;
-        public final static double elevtaorHeight = 0.95;
+        public final static double armAngle = 0.0425;
+        public final static double elevtaorHeight = 1.09;
     }
 
     public final static class L3Measurements {
-        public final static double armAngle = -0.43;
-        public final static double elevtaorHeight = 0.44;
+        public final static double armAngle = 0.09;
+        public final static double elevtaorHeight = 0.46;
     }
 
     public final static class L2Measurements {
-        public final static double armAngle = -0.44;
+        public final static double armAngle = 0.09;
         public final static double elevtaorHeight = 0.02;
     }
 

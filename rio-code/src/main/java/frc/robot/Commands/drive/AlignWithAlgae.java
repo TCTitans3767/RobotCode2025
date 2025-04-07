@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -41,7 +42,7 @@ public class AlignWithAlgae extends Command{
     @Override
     public void initialize() {
         initialPosition = Robot.drivetrain.getPose();
-        targetPose = initialPosition.transformBy(CoralReefAlignPose.isLeftBranchSelected() ? new Transform2d(0, -0.15, new Rotation2d()) : new Transform2d(0, 0.17, new Rotation2d()));
+        targetPose = initialPosition.transformBy(CoralReefAlignPose.isLeftBranchSelected() || DriverStation.isAutonomousEnabled() ? new Transform2d(0, -0.19, new Rotation2d()) : new Transform2d(0, 0.19, new Rotation2d()));
         Logger.log("Alignment/Target Pose", targetPose.toString());
         xController.setSetpoint(targetPose.getX());
         yController.setSetpoint(targetPose.getY());

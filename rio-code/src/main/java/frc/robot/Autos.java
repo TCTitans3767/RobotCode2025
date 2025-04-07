@@ -3,6 +3,8 @@ package frc.robot;
 import java.util.logging.Logger;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import choreo.Choreo;
 import choreo.auto.AutoFactory;
@@ -12,6 +14,7 @@ import edu.wpi.first.wpilibj.AnalogTriggerOutput.AnalogTriggerOutputException;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -26,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Commands.AutonCommands.AlignWithLeftReefAuton;
 import frc.robot.Commands.AutonCommands.AlignWithRightReefAuton;
 import frc.robot.Commands.AutonCommands.CoralReefAlignPoseAuton;
+import frc.robot.Commands.AutonCommands.CoralReefPoseAuton;
 import frc.robot.Commands.AutonCommands.CoralStationAuton;
 import frc.robot.Commands.AutonCommands.CoralStationAutonCommand;
 import frc.robot.Commands.AutonCommands.GroundIntakeAuton;
@@ -39,6 +43,7 @@ import frc.robot.Commands.Intake.SetIntakeWheelSpeed;
 import frc.robot.Commands.arm.SetArmAngle;
 import frc.robot.Commands.elevator.SetElevatorPosition;
 import frc.robot.Commands.modes.CoralReef;
+import frc.robot.Commands.poses.TransitPose;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.utils.Utils.ReefPosition;
 
@@ -46,69 +51,91 @@ public class Autos {
 
     public static Command J4_K4_L4_CoralStation(AutoFactory factory) {
 
-        CoralReefAlignPoseAuton alignWithJ4 = new CoralReefAlignPoseAuton(ReefPosition.J, "4", false);
-        CoralReefAlignPoseAuton alignWithK4 = new CoralReefAlignPoseAuton(ReefPosition.K, "4", true);
-        CoralReefAlignPoseAuton alignWithL4 = new CoralReefAlignPoseAuton(ReefPosition.L, "4", false);
+        try {
+            PathPlannerPath rightReefStart_J = PathPlannerPath.fromPathFile("LeftReefStart-J");
+            PathPlannerPath J_CoralStation = PathPlannerPath.fromPathFile("J-CoralStation");
+            PathPlannerPath CoralStation_K = PathPlannerPath.fromPathFile("CoralStation-K");
+            PathPlannerPath K_CoralStation = PathPlannerPath.fromPathFile("K-CoralStation");
+            PathPlannerPath CoralStation_L = PathPlannerPath.fromPathFile("CoralStation-L");
+            PathPlannerPath L_CoralStation = PathPlannerPath.fromPathFile("L-CoralStation");
 
-        return new SequentialCommandGroup(
-            new InstantCommand(() -> Robot.drivetrain.resetPose(Choreo.loadTrajectory("LeftReefStart-IJ").get().getInitialPose(Robot.getAlliance() == Alliance.Red).get())),
-            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("LeftReefStart-IJ"))),
-            new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)),
-            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
-            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithJ4)),
-            new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()),
-            new ParallelCommandGroup(
-                new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("IJ-CoralStation"))),
-                new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
-            ),
-            // new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
-            // new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-KL"))),
-            // new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
-            // new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithL4)),
-            // new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
-            // new ParallelCommandGroup(
-            //     new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("KL-CoralStation"))),
-            //     new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
-            // ),
-            new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
-            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-KL"))),
-            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
-            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithK4)),
-            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled())
-        );
+            PathPlannerPath flippedRightReefStart_J = PathPlannerPath.fromPathFile("LeftReefStart-J").flipPath();       
+
+            CoralReefAlignPoseAuton alignWithJ4 = new CoralReefAlignPoseAuton(ReefPosition.J, "4", false);
+            CoralReefAlignPoseAuton alignWithK4 = new CoralReefAlignPoseAuton(ReefPosition.K, "4", true);
+            CoralReefAlignPoseAuton alignWithL4 = new CoralReefAlignPoseAuton(ReefPosition.L, "4", false);
+            
+            CoralReefPoseAuton L4Pose = new CoralReefPoseAuton("4");
+
+            return new SequentialCommandGroup(
+                new InstantCommand(() -> {Robot.drivetrain.resetPose(Robot.getAlliance() == Alliance.Blue ? rightReefStart_J.getStartingHolonomicPose().get() : flippedRightReefStart_J.getStartingHolonomicPose().get()); Robot.robotMode.setCurrentMode(RobotMode.transitPose);}),
+                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(rightReefStart_J));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithJ4)),
+                new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralStationPose); Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(J_CoralStation));}),
+                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(CoralStation_K));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithK4)),
+                new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralStationPose); Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(K_CoralStation));}),
+                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(CoralStation_L));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithL4))
+            );
+        } catch (Exception e) {
+            return Commands.none();
+        }
     }
 
     public static Command E4_C4_D4_CoralStation(AutoFactory factory) {
 
-        CoralReefAlignPoseAuton alignWithE4 = new CoralReefAlignPoseAuton(ReefPosition.E, "4", true);
-        CoralReefAlignPoseAuton alignWithC4 = new CoralReefAlignPoseAuton(ReefPosition.C, "4", true);
-        CoralReefAlignPoseAuton alignWithD4 = new CoralReefAlignPoseAuton(ReefPosition.D, "4", false);
+        try {
+            PathPlannerPath rightReefStart_E = PathPlannerPath.fromPathFile("RightReefStart-E");
+            PathPlannerPath E_CoralStation = PathPlannerPath.fromPathFile("E-CoralStation");
+            PathPlannerPath CoralStation_C = PathPlannerPath.fromPathFile("CoralStation-C");
+            PathPlannerPath C_CoralStation = PathPlannerPath.fromPathFile("C-CoralStation");
+            PathPlannerPath CoralStation_D = PathPlannerPath.fromPathFile("CoralStation-D");
+            PathPlannerPath D_CoralStation = PathPlannerPath.fromPathFile("D-CoralStation");
+
+            PathPlannerPath flippedRightReefStart_E = PathPlannerPath.fromPathFile("RightReefStart-E").flipPath();       
+
+            CoralReefAlignPoseAuton alignWithE4 = new CoralReefAlignPoseAuton(ReefPosition.E, "4", true);
+            CoralReefAlignPoseAuton alignWithC4 = new CoralReefAlignPoseAuton(ReefPosition.C, "4", true);
+            CoralReefAlignPoseAuton alignWithD4 = new CoralReefAlignPoseAuton(ReefPosition.D, "4", false);
+            
+            CoralReefPoseAuton L4Pose = new CoralReefPoseAuton("4");
+
+            return new SequentialCommandGroup(
+                new InstantCommand(() -> {Robot.drivetrain.resetPose(Robot.getAlliance() == Alliance.Blue ? rightReefStart_E.getStartingHolonomicPose().get() : flippedRightReefStart_E.getStartingHolonomicPose().get()); Robot.robotMode.setCurrentMode(RobotMode.transitPose);}),
+                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(rightReefStart_E));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithE4)),
+                new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralStationPose); Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(E_CoralStation));}),
+                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(CoralStation_C));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithC4)),
+                new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralStationPose); Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(C_CoralStation));}),
+                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(CoralStation_D));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithD4))
+            );
+        } catch (Exception e) {
+            return Commands.none();
+        }
+    }
+
+    public static Command centerAutoH() {
+
+        CoralReefAlignPoseAuton alignWithH4 = new CoralReefAlignPoseAuton(ReefPosition.H, "4", false);
 
         return new SequentialCommandGroup(
-            new InstantCommand(() -> Robot.drivetrain.resetPose(Choreo.loadTrajectory("RightReefStart-EF").get().getInitialPose(Robot.getAlliance() == Alliance.Red).get())),
-            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("RightReefStart-EF"))),
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)),
-            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
-            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithE4)),
-            new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()),
-            new ParallelCommandGroup(
-                new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("EF-CoralStation"))),
-                new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
-            ),
-            // new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
-            // new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-CD"))),
-            // new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
-            // new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithD4)),
-            // new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled()),
-            // new ParallelCommandGroup(
-            //     new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CD-CoralStation"))),
-            //     new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralStationPose))
-            // ),
-            new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()),
-            new InstantCommand(() -> Robot.robotMode.setDriveModeCommand(factory.trajectoryCmd("CoralStation-CD"))),
-            new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()),
-            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithC4)),
-            new WaitUntilCommand(() -> RobotMode.coralFloor.isScheduled())
+            new WaitUntilCommand(() -> RobotMode.transit.isScheduled()),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithH4))
+        );
+    }
+
+    public static Command centerAutoG() {
+
+        CoralReefAlignPoseAuton alignWithG4 = new CoralReefAlignPoseAuton(ReefPosition.G, "4", true);
+
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)),
+            new WaitUntilCommand(() -> RobotMode.transit.isScheduled()),
+            new InstantCommand(() -> Robot.robotMode.setCurrentMode(alignWithG4))
         );
     }
 

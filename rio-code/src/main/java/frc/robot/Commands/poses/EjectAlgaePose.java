@@ -17,7 +17,7 @@ public class EjectAlgaePose extends SequentialCommandGroup{
         addCommands(
             new SetIntakeWheelSpeed(-0.7),
             new InstantCommand(() -> {
-                Robot.intake.setWheelSpeed(0);
+                Robot.intake.setWheelPower(0);
             }),
             new WaitCommand(0.2),
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose))
