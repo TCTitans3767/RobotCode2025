@@ -25,7 +25,7 @@ public class KnockOffAlgaePoseManual extends SequentialCommandGroup{
 
         addCommands(
             new ParallelCommandGroup(
-                new SetArmAngle(-0.32),
+                new SetArmAngle(0.18),
                 new SetElevatorPosition(1.1)
             ),
             algaeAlign,

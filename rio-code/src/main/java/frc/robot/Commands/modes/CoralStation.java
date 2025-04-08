@@ -20,6 +20,10 @@ public class CoralStation extends Command{
     @Override
     public void execute() {
 
+        if (TriggerBoard.isL1Selected() && Robot.manipulator.getTorque() > 40) {
+            Robot.robotMode.setCurrentMode(null);
+        }
+
         if (TriggerBoard.isCoralInManipulator()) {
             Robot.robotMode.setCurrentMode(RobotMode.coralRecievedPose);
             return;

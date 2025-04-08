@@ -4,7 +4,14 @@
 
 package frc.robot;
 
+import java.io.IOException;
 import java.util.WeakHashMap;
+
+import org.json.simple.parser.ParseException;
+
+import com.ctre.phoenix6.Orchestra;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.util.FileVersionException;
 
 import dev.doglog.DogLog;
 import dev.doglog.DogLogOptions;
@@ -73,6 +80,8 @@ public class Robot extends TimedRobot {
 
   private final RobotContainer m_robotContainer;
 
+  private final Orchestra orchestra = new Orchestra();
+
   public Robot() {
     DogLog.setOptions(new DogLogOptions(
         Robot::doNetworksTablePublishing,
@@ -91,6 +100,15 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
+    orchestra.addInstrument(climber.getLeftMotor());
+    orchestra.addInstrument(climber.getRightMotor());
+    orchestra.addInstrument(elevator.getLeftMotor());
+    orchestra.addInstrument(elevator.getRightMotor());
+    orchestra.addInstrument(drivetrain.getModule(2).getDriveMotor());
+    orchestra.addInstrument(drivetrain.getModule(2).getSteerMotor());
+    orchestra.addInstrument(drivetrain.getModule(3).getDriveMotor());
+    orchestra.addInstrument(drivetrain.getModule(3).getSteerMotor());
+    FollowPathCommand.warmupCommand().schedule();
   }
 
   @Override
@@ -102,7 +120,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    orchestra.stop();
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -113,7 +133,19 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // limelight.turnOffAprilTags();
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.6, 0.6, 999999));
+    try {
+      m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    } catch (FileVersionException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (ParseException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -129,10 +161,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // limelight.turnOnAprilTags();
+    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(0.3, 0.3, 999999));
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    if (robotMode.currentMode == null) {
+    if (robotMode.currentMode != null) {
+      robotMode.setCurrentMode(RobotMode.transitPose);
+    } else {
       robotMode.setCurrentMode(RobotMode.initialTransitPose);
     }
     robotMode.setDriveModeCommand(RobotMode.controllerDrive);
@@ -148,13 +183,16 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     CommandScheduler.getInstance().cancelAll();
+    orchestra.loadMusic("output.chrp");
+    orchestra.play();
   }
 
   @Override
   public void testPeriodic() {}
 
   @Override
-  public void testExit() {}
+  public void testExit() {
+  }
 
   @Override
   public void simulationPeriodic() {}

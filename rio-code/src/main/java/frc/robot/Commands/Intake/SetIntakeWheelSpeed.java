@@ -5,16 +5,16 @@ import frc.robot.Robot;
 
 public class SetIntakeWheelSpeed extends Command{
     
-    double speed;
+    double rotationsPerSecond;
 
-    public SetIntakeWheelSpeed(double speed) {
-        this.speed = speed;
+    public SetIntakeWheelSpeed(double rotationsPerSecond) {
+        this.rotationsPerSecond = rotationsPerSecond;
         addRequirements(Robot.intake);
     }
 
     @Override
     public void initialize() {
-        Robot.intake.setWheelSpeed(speed);
+        Robot.intake.setWheelSpeed(rotationsPerSecond);
     }
 
     @Override

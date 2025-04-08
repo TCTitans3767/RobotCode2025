@@ -6,7 +6,17 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
+import com.pathplanner.lib.util.FileVersionException;
 
 import choreo.Choreo;
 import choreo.auto.AutoFactory;
@@ -19,6 +29,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -86,25 +97,44 @@ public class RobotContainer {
     public final static String rightL1Name = "Right L1";
     public final static String leftL1Name = "Left L1";
     public final static String rightL1NoExtrasName = "Right L1 No Extras"; 
+
+    public PathPlannerPath testPath;
+        
+        private final SendableChooser<Command> autonSelector = new SendableChooser<Command>();
     
-    private final SendableChooser<Command> autonSelector = new SendableChooser<Command>();
-
-    public RobotContainer() {
-
-        configureBindings();
-        configureChoreo();
+        public RobotContainer() {
     
-        autonSelector.addOption(leftL1Name + " + L4", Autos.L1LeftCommandGroup(autoFactory));
-        autonSelector.addOption("Left Triple L4", Autos.J4_K4_L4_CoralStation(autoFactory));
-        autonSelector.addOption("Right Triple L4", Autos.E4_C4_D4_CoralStation(autoFactory));
-        autonSelector.addOption("Left Wall Auton", Autos.lolipopAuto(autoFactory));
-        SmartDashboard.putData("Auton Selection", autonSelector);
+            configureBindings();
+            configureChoreo();
+        
+            autonSelector.addOption(leftL1Name + " + L4", Autos.L1LeftCommandGroup(autoFactory));
+            autonSelector.addOption("Left Triple L4", Autos.J4_K4_L4_CoralStation(autoFactory));
+            autonSelector.addOption("Right Triple L4", Autos.E4_C4_D4_CoralStation(autoFactory));
+            autonSelector.addOption("Left Wall Auton", Autos.lolipopAuto(autoFactory));
+            SmartDashboard.putData("Auton Selection", autonSelector);
 
-        // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
-        // Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
-
-        limelight.initialPoseEstimates();
-
+            setupTestPath();
+    
+            // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
+            // Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+    
+            limelight.initialPoseEstimates();
+    
+        }
+    
+        private void setupTestPath() {
+            try {
+                testPath = PathPlannerPath.fromPathFile("Test Path");
+            } catch (FileVersionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
     }
 
     private void configureChoreo() {
@@ -151,7 +181,7 @@ public class RobotContainer {
         // joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // reset the field-centric heading on left bumper press
-        joystick.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        joystick.back().onTrue(drivetrain.runOnce(() -> {drivetrain.seedFieldCentric(); Robot.limelight.resetIMU();}));
         // joystick.rightBumper().onTrue(limelight.runOnce(() -> limelight.resetIMU(new Rotation3d())));
         // joystick.povUp().onTrue(limelight.runOnce(() -> limelight.initialPoseEstimates()));
         // joystick.povLeft().whileTrue(new RunCommand(() -> {manipulator.setSpeed(0.1);}, manipulator));
@@ -168,15 +198,15 @@ public class RobotContainer {
 
         joystick.start().onTrue(new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.resetPose)));
 
-        joystick.povUp().whileTrue(new SetElevatorSpeed(0.3));
+        joystick.povUp().whileTrue(new SetElevatorSpeed(0.8));
         joystick.povDown().whileTrue(new SetElevatorSpeed(-0.3));
 
         joystick.povRight().whileTrue(new SetIntakePivotSpeed(0.3));
         joystick.povLeft().whileTrue(new SetIntakePivotSpeed(-0.3));
 
-        joystick.a().whileTrue(new PanicIntakeWheelSpeed(-0.5));
+        // joystick.a().whileTrue(new PanicIntakeWheelSpeed(-0.5));
 
-        // joystick.a().whileTrue(new SetArmSpeed(0.3));
+        joystick.a().whileTrue(new SetArmSpeed(0));
         // joystick.y().whileTrue(new SetArmSpeed(-0.3));
 
         joystick.x().whileTrue(new SetClimberSpeed(0.3));
@@ -188,9 +218,10 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
-    public Command getAutonomousCommand() {
-        System.out.println(autonSelector.getSelected().getName());
+    public Command getAutonomousCommand() throws FileVersionException, IOException, ParseException {
         return autonSelector.getSelected();
+        // Robot.drivetrain.resetPose(testPath.getStartingHolonomicPose().get());
+        // return AutoBuilder.followPath(PathPlannerPath.fromPathFile("Test Path"));
     }
 
 }

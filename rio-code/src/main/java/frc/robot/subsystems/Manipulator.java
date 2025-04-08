@@ -32,6 +32,8 @@ public class Manipulator extends SubsystemBase{
         // Motor setup
         motor = new TalonFX(frc.robot.Constants.Manipulator.motorID);
         config = new TalonFXConfiguration();
+        config.CurrentLimits.StatorCurrentLimitEnable = true;
+        config.CurrentLimits.StatorCurrentLimit = 80;
         config.Feedback.SensorToMechanismRatio = Constants.Manipulator.conversionFactor;
         config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 

@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.Logger;
@@ -22,6 +23,8 @@ public class Climber extends SubsystemBase {
     private final Slot0Configs slot0Config;
     private final MotionMagicConfigs motionMagicConfig;
 
+    private double targetRotations = 0;
+
     public Climber() {
         // Initialize the motors
         leftMotor = new TalonFX(Constants.Climber.leftMotorID); 
@@ -30,12 +33,12 @@ public class Climber extends SubsystemBase {
         leftConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
         slot0Config = new Slot0Configs();
-        slot0Config.kP = 0.1;
-        slot0Config.kI = 0.1;
-        slot0Config.kD = 0.1;
-        slot0Config.GravityType = GravityTypeValue.Arm_Cosine;
-        slot0Config.kG = 0.1; // Gravity 
-        slot0Config.kS = 0.1;
+        slot0Config.kP = 80;
+        slot0Config.kI = 0;
+        slot0Config.kD = 0;
+        slot0Config.GravityType = GravityTypeValue.Elevator_Static;
+        slot0Config.kG = 0; // Gravity
+        slot0Config.kS = 0;
 
 
         motionMagicConfig = new MotionMagicConfigs();
@@ -58,13 +61,31 @@ public class Climber extends SubsystemBase {
 
     @Override
     public void periodic() {
-       return;  // Add code here to run every loop
+        Logger.log("Climber/current Rotations", leftMotor.getPosition().getValueAsDouble());
+        return;  // Add code here to run every loop
+    }
+
+    public TalonFX getLeftMotor() {
+        return leftMotor;
+    }
+
+    public TalonFX getRightMotor() {
+        return rightMotor;
     }
 
     public void setSpeed(double speed) {
         Logger.log("Climber/target speed", speed);
         leftMotor.set(speed);
         // Add code here to set the speed of the climber
+    }
+
+    public void setRotations(double rotations) {
+        targetRotations = rotations;
+        leftMotor.setControl(new MotionMagicVoltage(rotations));
+    }
+
+    public boolean isAtPosition() {
+        return MathUtil.isNear(targetRotations, leftMotor.getPosition().getValueAsDouble(), 0.1);
     }
 
 } 

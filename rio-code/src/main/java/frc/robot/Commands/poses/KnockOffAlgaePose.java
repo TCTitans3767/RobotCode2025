@@ -48,7 +48,7 @@ public class KnockOffAlgaePose extends SequentialCommandGroup{
             new ConditionalCommand(algaeAlign, new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)), TriggerBoard::isL4Selected),
             new WaitUntilCommand((KnockOffAlgaePose::isAlignCommandFinsihed)).withTimeout(1),
             new ParallelCommandGroup(
-                new SetArmAngle(-0.32),
+                new SetArmAngle(-0.07),
                 new SetElevatorPosition(1.1)
             ),
             new ParallelRaceGroup(
@@ -60,7 +60,7 @@ public class KnockOffAlgaePose extends SequentialCommandGroup{
             new InstantCommand(() -> {
                 Robot.elevator.setSpeed(0);
                 Robot.robotMode.setDriveMode(DriveMode.Brake);
-                Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.2));
+                Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.5));
             }),
             new WaitCommand(0.6),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0)); Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}),

@@ -20,7 +20,7 @@ public class CoralStationPose extends Command{
             Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
         }
         Robot.intake.setPivotPosition(Constants.Intake.pivotStowPosition);
-        Robot.arm.setPosition(0.128);
+        Robot.arm.setPosition(-0.378);
         Robot.manipulator.setSpeed(-0.2);
         Robot.elevator.setPosition(0.53);
     }

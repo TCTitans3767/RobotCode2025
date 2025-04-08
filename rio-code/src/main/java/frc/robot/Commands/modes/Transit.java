@@ -44,10 +44,10 @@ public class Transit extends Command{
                     return;
                 }
 
-                if (!Robot.arm.isNear(-0.5)) {
+                if (!Robot.arm.isNear(0.2)) {
                     Robot.robotMode.setCurrentMode(RobotMode.transitPose);
                     return;
-                } else if (Robot.arm.isNear(-0.5)) {
+                } else if (Robot.arm.isNear(0.2)) {
                     Robot.robotMode.setCurrentMode(RobotMode.coralReefAlignPose);
                     return;
                 }

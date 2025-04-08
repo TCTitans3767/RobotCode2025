@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -86,10 +87,16 @@ public class Elevator extends SubsystemBase{
         //     rightMotor.setControl(new Follower(Constants.Elevator.leftMotorID, true));
         // }
 
-        if (!isAtPosition()) {
-            logElevatorPosition();
-        }
+        logElevatorPosition();
         
+    }
+
+    public TalonFX getLeftMotor() {
+        return leftMotor;
+    }
+
+    public TalonFX getRightMotor() {
+        return rightMotor;
     }
 
     public void setSpeed(double speed) {
@@ -107,9 +114,7 @@ public class Elevator extends SubsystemBase{
         leftMotor.setControl(motionMagicRequest.withPosition(meters * Constants.Elevator.RotationsPerMeter));
 
         Logger.logElevatorSetHeight(meters);
-        if (!isAtPosition()) {
-            logElevatorPosition();
-        }
+        logElevatorPosition();
     }
 
     public boolean isAtPosition() {
