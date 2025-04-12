@@ -298,13 +298,13 @@ public class Constants {
         public static final double L4RotationalAlignementPIDkI = 0;
         public static final double L4RotationalAlignementPIDkD = 0.0015;
 
-        public static final double PathPlannerTranslationP = 2.6;
+        public static final double PathPlannerTranslationP = 2.73;
         public static final double PathPlannerTranslationI = 0;
-        public static final double PathPlannerTranslationD = 0.06;
+        public static final double PathPlannerTranslationD = 0.065;
 
-        public static final double PathPlannerRotationP = 1.45;
+        public static final double PathPlannerRotationP = 1.23;
         public static final double PathPlannerRotationI = 0;
-        public static final double PathPlannerRotationD = 0.97;
+        public static final double PathPlannerRotationD = 0.093;
 
     }
 

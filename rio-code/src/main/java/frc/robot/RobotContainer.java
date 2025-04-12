@@ -122,6 +122,7 @@ public class RobotContainer {
         autonSelector.addOption("Center H4", Autos.centerAutoH());
         autonSelector.addOption("Lolipops left", Autos.J4_L4_A4_B4_Lolipops());
         autonSelector.addOption("Lolipops left Pathplanner Routine", AutoBuilder.buildAuto("Left Lolipops"));
+        autonSelector.addOption("Lolipops left Pathplanner Routine 3L4", AutoBuilder.buildAuto("Left Lolipops With 3L4"));
         SmartDashboard.putData("Auton Selection", autonSelector);
 
         setupTestPath();
@@ -142,6 +143,7 @@ public class RobotContainer {
         Command AlignWithB4 = new SetModeCommand(Autos.alignWithB4);
         Command AlignWithA2 = new SetModeCommand(Autos.alignWithA2);
         Command AlignWithB2 = new SetModeCommand(Autos.alignWithB2);
+        Command AlignWithL4 = new SetModeCommand(Autos.alignWithL4);
 
         Map<String, Command> pathPlannerCommands = Map.of(
             "TransitPose", TransitPose,
@@ -149,6 +151,7 @@ public class RobotContainer {
             "AlignWithB4", AlignWithB4,
             "AlignWithA2", AlignWithA2,
             "AlignWithB2", AlignWithB2,
+            "AlignWithL4", AlignWithL4,
             "WaitForCoral", WaitForCoral,
             "WaitForCoralFloorPose", WaitForCoralFloorPose
         );

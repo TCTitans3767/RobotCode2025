@@ -35,7 +35,7 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                     if (TriggerBoard.isL1Selected() && !DriverStation.isAutonomousEnabled()) {
                         Robot.elevator.setPosition(0.02);
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(1.2));
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(1.8));
                     } else {
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
                         Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-1.5));

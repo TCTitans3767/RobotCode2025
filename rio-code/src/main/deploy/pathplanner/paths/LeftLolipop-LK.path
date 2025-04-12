@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2235969387687806,
-        "y": 5.75985331632653
+        "x": 1.6117346938775512,
+        "y": 5.8195471938775505
       },
       "isLocked": false,
       "linkedName": "LeftLolipop"
     },
     {
       "anchor": {
-        "x": 3.574170918367347,
-        "y": 5.580771683673468
+        "x": 2.6638392857142863,
+        "y": 5.640465561224489
       },
       "prevControl": {
-        "x": 2.5146045918367355,
-        "y": 5.9687818877551
+        "x": 2.0743622448979595,
+        "y": 5.715082908163265
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.8,
     "rotation": -59.99999999999999
   },
   "reversed": false,
