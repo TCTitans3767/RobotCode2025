@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 2.8205357142857146,
-        "y": 2.0215242346938775
+        "y": 2.021524234693877
       },
       "isLocked": false,
       "linkedName": null
@@ -45,7 +45,7 @@
     "rotation": 54.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "CoralStation Autons",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 59.99999999999999

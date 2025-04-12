@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.453084415584415,
-        "y": 0.8512987012987003
+        "x": 7.1856505102040815,
+        "y": 7.550669642857142
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.373222495201852,
-        "y": 1.6555047478023237
+        "x": 2.8056122448979615,
+        "y": 7.199968112244897
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.20108418367347,
-        "y": 2.416996173469387
+        "x": 2.5369897959183674,
+        "y": 4.655516581632653
       },
       "prevControl": {
-        "x": 2.4692585620261234,
-        "y": 1.8007794847880514
+        "x": 2.5593749999999997,
+        "y": 5.386766581632654
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,19 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "TransitPose",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "TransitPose"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.3,
     "maxAcceleration": 7.3,
@@ -41,14 +53,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 59.99999999999999
+    "velocity": 0.3,
+    "rotation": -22.38013505195957
   },
   "reversed": false,
-  "folder": "CoralStation Autons",
+  "folder": "LolipopAutos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 54.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

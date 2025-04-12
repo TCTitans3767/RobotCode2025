@@ -108,6 +108,9 @@ public class Robot extends TimedRobot {
     orchestra.addInstrument(intake.getRightWheelMotor());
     orchestra.addInstrument(drivetrain.getModule(3).getDriveMotor());
     orchestra.addInstrument(drivetrain.getModule(3).getSteerMotor());
+    
+    Logger.log("Is Auton Command Scheduled", false);
+
     FollowPathCommand.warmupCommand().schedule();
   }
 
@@ -153,7 +156,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    Logger.log("Is Auton Command Scheduled", m_autonomousCommand.isScheduled());
+  }
 
   @Override
   public void autonomousExit() {}

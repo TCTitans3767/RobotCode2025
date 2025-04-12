@@ -127,23 +127,24 @@ public class Constants {
         public static final double maxCurrent = 100;
 
         // PID Constants
-        public final static double kP = 3.9;
+        public final static double kP = 8;
         public final static double kI = 0;
-        public final static double kD = 0.06;
-        public final static double kG = 0.185;
+        public final static double kD = 0.05;
+        public final static double kG = 0.15;
         public final static double kV = 0;
-        public final static double kS = 0.2;
+        public final static double kS = 0.225;
         
         // Motion Magic Constants
-        public final static double maxVelocity = 120;
-        public final static double maxAcceleration = 250;
+        public final static double maxVelocity = 100;
+        public final static double maxAcceleration = 200;
 
         // Conversion Factor
         public final static double conversionFactor = 1;
 
-        public final static double RotationsPerMeter = 39.997;
+        // public final static double RotationsPerMeter = 39.997;
+        public final static double RotationsPerMeter = 33.33;
 
-        public final static double metersMax = 1.22;
+        public final static double metersMax = 1.23;
         public final static double metersMin = 0.020;
 
         public final static double errorTolerance = 0.12;
@@ -262,14 +263,14 @@ public class Constants {
         public final static double maxControllerDriveSpeed = 4.3;
 
         public final static double XAlignmentTolerance = 0.022;
-        public final static double XAlignementPIDkP = 0.55;
+        public final static double XAlignementPIDkP = 0.57;
         // public final static double XAlignementPIDkP = 0.5;
         public final static double XAlignementPIDkI = 0;
         public final static double XAlignementPIDkD = 0;
         public final static double XFeedForward = 0.0;
 
         public final static double YAlignmentTolerance = 0.022;
-        public final static double YAlignementPIDkP = 0.55;
+        public final static double YAlignementPIDkP = 0.57;
         // public final static double YAlignementPIDkP = 0.9;
         public final static double YAlignementPIDkI = 0;
         public final static double YAlignementPIDkD = 0;
@@ -297,13 +298,13 @@ public class Constants {
         public static final double L4RotationalAlignementPIDkI = 0;
         public static final double L4RotationalAlignementPIDkD = 0.0015;
 
-        public static final double PathPlannerTranslationP = 2;
+        public static final double PathPlannerTranslationP = 2.6;
         public static final double PathPlannerTranslationI = 0;
-        public static final double PathPlannerTranslationD = 0;
+        public static final double PathPlannerTranslationD = 0.06;
 
-        public static final double PathPlannerRotationP = 1.8;
+        public static final double PathPlannerRotationP = 1.45;
         public static final double PathPlannerRotationI = 0;
-        public static final double PathPlannerRotationD = 0.08;
+        public static final double PathPlannerRotationD = 0.97;
 
     }
 
@@ -329,8 +330,8 @@ public class Constants {
     }
 
     public final static class L4Measurements {
-        public final static double armAngle = 0.0425;
-        public final static double elevtaorHeight = 1.09;
+        public final static double armAngle = 0.1;
+        public final static double elevtaorHeight = 1.03;
     }
 
     public final static class L3Measurements {

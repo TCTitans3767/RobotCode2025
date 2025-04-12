@@ -38,7 +38,7 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                         Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(1.2));
                     } else {
                         Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-1.2));
+                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-1.5));
                     }
 
                 }),
@@ -68,15 +68,15 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                 if (TriggerBoard.isL1Selected()) {
                     Robot.intake.scoreL1();
                 } else {
-                    Robot.manipulator.setSpeed(0.3);
+                    Robot.manipulator.setSpeed(0.4);
                 }
             }),
             new WaitCommand(0.15),
             new ConditionalCommand(
                 new ParallelCommandGroup(
                     new SetArmAngle(0.17),
-                    new SetElevatorPosition(1.2)
-                ), 
+                    new SetElevatorPosition(1.1)
+                ),
                 Commands.none(),
                 TriggerBoard::isL4Selected
             ), 

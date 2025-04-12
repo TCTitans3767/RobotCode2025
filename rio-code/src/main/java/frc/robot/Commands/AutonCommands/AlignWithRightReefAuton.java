@@ -146,7 +146,7 @@ public class AlignWithRightReefAuton extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+        Robot.robotMode.setDriveMode(DriveMode.Auton);
         camera.resetTagFilter();
     }
 

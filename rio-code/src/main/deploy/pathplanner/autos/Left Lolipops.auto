@@ -1,0 +1,121 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftWall-AB"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignWithB4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoralFloorPose"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "B-MiddleLolipop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleLolipop-AB"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignWithA4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoralFloorPose"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "A-LeftLolipop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftLolipop-AB"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignWithA2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoralFloorPose"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "A-RightLolipop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightLolipop-AB"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignWithB2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoralFloorPose"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.453084415584415,
-        "y": 0.8512987012987003
+        "x": 3.0220025510204085,
+        "y": 4.230197704081632
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.373222495201852,
-        "y": 1.6555047478023237
+        "x": 2.2683673469387755,
+        "y": 3.1631696428571416
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.20108418367347,
-        "y": 2.416996173469387
+        "x": 1.1192602040816326,
+        "y": 2.1259885204081628
       },
       "prevControl": {
-        "x": 2.4692585620261234,
-        "y": 1.8007794847880514
+        "x": 1.9922831632653064,
+        "y": 2.8647002551020413
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 31.239214888208792
   },
   "reversed": false,
-  "folder": "CoralStation Autons",
+  "folder": "LolipopAutos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 54.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

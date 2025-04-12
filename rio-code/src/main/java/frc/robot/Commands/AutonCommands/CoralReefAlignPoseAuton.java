@@ -77,10 +77,10 @@ public class CoralReefAlignPoseAuton extends SequentialCommandGroup{
     //     }
     // }
 
-    public class L4 extends SequentialCommandGroup{
+    public class L4 extends ParallelCommandGroup{
         public L4() {
             addCommands(
-                new SetManipulatorWheelSpeed(0),
+                new SetManipulatorWheelSpeed(-0.05),
                 new SetElevatorPosition(Constants.L4Measurements.elevtaorHeight).withTimeout(0.4),
                 new SetArmAngle(Constants.L4Measurements.armAngle)
             );
@@ -108,9 +108,8 @@ public class CoralReefAlignPoseAuton extends SequentialCommandGroup{
 
         addCommands(
             new ConditionalCommand(leftReefAlign, rightReefAlign, () -> leftAlign),
-            new SetElevatorPosition(Constants.L3Measurements.elevtaorHeight),
-            new WaitUntilCommand(() -> isAlignCommandFinsihed()).withTimeout(0.6),
             new SelectCommand<String>(commandMap, () -> reefLevel),
+            new WaitUntilCommand(() -> isAlignCommandFinsihed()).withTimeout(1),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0).withVelocityY(0).withRotationalRate(0));}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);})
         );

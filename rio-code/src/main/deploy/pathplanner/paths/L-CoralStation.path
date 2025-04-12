@@ -45,7 +45,7 @@
     "rotation": -54.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "CoralStation Autons",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -55.48315876741599

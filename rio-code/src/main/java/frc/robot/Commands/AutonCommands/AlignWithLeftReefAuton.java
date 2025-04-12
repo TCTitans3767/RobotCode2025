@@ -152,6 +152,7 @@ public class AlignWithLeftReefAuton extends Command{
 
     @Override
     public void end(boolean interrupted) {
+        Robot.robotMode.setDriveMode(DriveMode.Auton);
         camera.resetTagFilter();
     }
 

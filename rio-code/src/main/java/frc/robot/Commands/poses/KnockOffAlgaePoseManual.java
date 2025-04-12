@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Robot;
+import frc.robot.TriggerBoard;
 import frc.robot.Commands.arm.SetArmAngle;
 import frc.robot.Commands.elevator.SetElevatorPosition;
 import frc.robot.Constants.Elevator;
@@ -18,31 +19,29 @@ import frc.robot.subsystems.RobotMode;
 import frc.robot.subsystems.RobotMode.DriveMode;
 
 public class KnockOffAlgaePoseManual extends SequentialCommandGroup{
-
-    Command algaeAlign = new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.alignWithAlgae);});
     
     public KnockOffAlgaePoseManual() {
 
         addCommands(
             new ParallelCommandGroup(
-                new SetArmAngle(0.18),
-                new SetElevatorPosition(1.1)
+                new SetArmAngle(-0.02),
+                new SetElevatorPosition(1.05)
             ),
-            algaeAlign,
-            new WaitUntilCommand(algaeAlign::isFinished),
+            new WaitUntilCommand(() -> Robot.joystick.a().getAsBoolean()),
+            new InstantCommand(() -> Robot.elevator.setSpeed(-0.4)),
+            new WaitCommand(0.2),
             new ParallelRaceGroup(
-                new RunCommand(() -> Robot.manipulator.setSpeed(-0.7)),
-                new RunCommand(() -> Robot.elevator.setSpeed(-0.2)),
                 new WaitUntilCommand(KnockOffAlgaePose::isElevatorAtPosition),
                 new WaitUntilCommand(KnockOffAlgaePose::isManipulatorTouchingAlgae)
             ),
             new InstantCommand(() -> {
                 Robot.elevator.setSpeed(0);
                 Robot.robotMode.setDriveMode(DriveMode.Brake);
-                Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.15));
+                Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.5));
             }),
-            new WaitCommand(0.5),
-            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.transitPose); Robot.manipulator.setSpeed(0);})
+            new WaitCommand(0.6),
+            new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0)); Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}),
+            new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose); Robot.manipulator.setSpeed(0);})
         );
 
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);

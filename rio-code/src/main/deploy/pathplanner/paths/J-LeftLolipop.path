@@ -3,61 +3,61 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.1038265306122454,
-        "y": 5.386766581632653
+        "x": 5.267984693877552,
+        "y": 5.625542091836734
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.4056142222932735,
-        "y": 5.327310778447189
+        "x": 3.738138829520267,
+        "y": 6.109597305825602
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "IJ"
     },
     {
       "anchor": {
-        "x": 1.6788903061224492,
-        "y": 6.655261479591836
+        "x": 2.6638392857142863,
+        "y": 5.84939413265306
       },
       "prevControl": {
-        "x": 2.129727448192071,
-        "y": 6.319867449113026
+        "x": 4.547331618266567,
+        "y": 5.84939413265306
       },
       "nextControl": {
-        "x": 1.4783079928439153,
-        "y": 6.804481905806989
+        "x": 1.4383237643118023,
+        "y": 5.84939413265306
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.298341836734694,
-        "y": 7.185044642857142
+        "x": 1.1192602040816326,
+        "y": 5.84939413265306
       },
       "prevControl": {
-        "x": 1.493857038306719,
-        "y": 6.9116118880383715
+        "x": 1.7014668052973871,
+        "y": 5.84939413265306
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LeftLolipop"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
-      "rotationDegrees": -54.0
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 0.0
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 2.0,
-      "maxWaypointRelativePos": 0.7348993288590604,
+      "minWaypointRelativePos": 1.573825503355704,
+      "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 1.0,
-        "maxAcceleration": 0.5,
+        "maxVelocity": 5.3,
+        "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
@@ -77,13 +77,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -54.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "CoralStation Autons",
+  "folder": "LolipopAutos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -121.67546873810915
+    "rotation": -121.12247019679192
   },
   "useDefaultConstraints": true
 }

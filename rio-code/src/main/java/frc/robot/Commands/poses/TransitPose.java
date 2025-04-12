@@ -66,7 +66,7 @@ public class TransitPose extends SequentialCommandGroup{
             addCommands(
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(-0.05),
-                    new SetArmAngle(0.2)
+                    new SetArmAngle(0.03)
                 ),
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(0),
@@ -88,8 +88,8 @@ public class TransitPose extends SequentialCommandGroup{
                 ),
                 new ParallelCommandGroup(
                     new SetIntakePosition(Constants.Intake.pivotStowPosition),
-                    new SetElevatorPosition(0.5),
-                    new SetArmAngle(0.122)
+                    new SetElevatorPosition(0.02),
+                    new SetArmAngle(0.03)
                 ),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
@@ -119,12 +119,12 @@ public class TransitPose extends SequentialCommandGroup{
     }
 
     public static gamePieceState currentGamePieceState() {
-        if (TriggerBoard.isCoralInManipulator() && !TriggerBoard.isAlgaeInIntake()) {
+        if (TriggerBoard.isCoralInManipulator()) {
             return gamePieceState.coralInManipulator;
-        } else if (TriggerBoard.isCoralInManipulator() && TriggerBoard.isAlgaeInIntake()) {
-            return gamePieceState.coralInManipulatorAndAlgaeInIntake;
-        } else if (TriggerBoard.isAlgaeInIntake() && !TriggerBoard.isCoralInManipulator()) {
-            return gamePieceState.algaeInIntake;
+        // } else if (TriggerBoard.isCoralInManipulator() && TriggerBoard.isAlgaeInIntake()) {
+        //     return gamePieceState.coralInManipulatorAndAlgaeInIntake;
+        // } else if (TriggerBoard.isAlgaeInIntake() && !TriggerBoard.isCoralInManipulator()) {
+        //     return gamePieceState.algaeInIntake;
         } else {
             return gamePieceState.noGamePiece;
         }

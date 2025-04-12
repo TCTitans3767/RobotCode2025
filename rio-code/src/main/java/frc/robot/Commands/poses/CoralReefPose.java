@@ -64,9 +64,11 @@ public class CoralReefPose extends SequentialCommandGroup{
     public class L4 extends SequentialCommandGroup{
         public L4() {
             addCommands(
-                new SetManipulatorWheelSpeed(0),
-                new SetElevatorPosition(1.02),
-                new SetArmAngle(-0.455),
+                new ParallelCommandGroup(
+                    new SetManipulatorWheelSpeed(0),
+                    new SetElevatorPosition(1.02),
+                    new SetArmAngle(-0.455)
+                ),
                 new WaitCommand(0.18)
             );
         }

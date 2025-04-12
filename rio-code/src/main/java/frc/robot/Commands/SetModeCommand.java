@@ -10,12 +10,16 @@ public class SetModeCommand extends Command{
 
     public SetModeCommand(Command newMode) {
         this.newMode = newMode;
-        addRequirements(Robot.robotMode);
     }
 
     @Override
     public void initialize() {
         Robot.robotMode.setCurrentMode(newMode);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
 }

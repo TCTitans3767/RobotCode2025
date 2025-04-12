@@ -386,6 +386,10 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         
     }
 
+    public double distanceTo(Translation2d targetTranslation) {
+        return getState().Pose.getTranslation().getDistance(targetTranslation);
+    }
+
     public boolean isNearToReef() {
         return getState().Pose.getTranslation().getDistance(Constants.Field.blueReefCenter) < Constants.Drive.reefDistanceThreshold || getState().Pose.getTranslation().getDistance(Constants.Field.redReefCenter) < Constants.Drive.reefDistanceThreshold;
     }

@@ -1,10 +1,13 @@
 package frc.robot.Commands.modes;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
 import frc.robot.subsystems.RobotMode;
@@ -28,11 +31,11 @@ public class Transit extends Command{
         }
 
         if (Robot.intake.isWheelMotorTooHot()) {
-            Robot.intake.setWheelSpeed(0);
+            Robot.intake.setWheelPower(0);
         }
 
         if (!TriggerBoard.isAlgaeInIntake()) {
-            Robot.intake.setWheelSpeed(0);
+            Robot.intake.setWheelPower(0);
         }
 
         if (TriggerBoard.isCoralButtonPressed()) {
@@ -73,6 +76,10 @@ public class Transit extends Command{
             }
             
         }
+
+        if (Robot.drivetrain.distanceTo(Robot.getAlliance() == Alliance.Blue ? Constants.Field.blueReefCenter : Constants.Field.redReefCenter) >= 1.3 && Robot.joystick.a().getAsBoolean()) {
+            Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePoseManual);
+        }   
 
     }
 

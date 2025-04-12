@@ -52,7 +52,7 @@ public class TriggerBoard {
 
     public static boolean isL3Selected() {return DashboardButtonBox.getSelectedReefLevel() == 3;}
 
-    public static boolean isL4Selected() {return DashboardButtonBox.getSelectedReefLevel() == 4;}
+    public static boolean isL4Selected() {return DashboardButtonBox.getSelectedLevelString().equals("4") && !DriverStation.isAutonomousEnabled();}
 
     public static boolean isLevelSelected() {return Robot.buttonBoxController.getRawButton(0) || Robot.buttonBoxController.getRawButton(1) || Robot.buttonBoxController.getRawButton(2) || Robot.buttonBoxController.getRawButton(3);}
 

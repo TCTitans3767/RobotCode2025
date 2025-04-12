@@ -8,6 +8,7 @@ import java.util.Map;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -78,15 +79,17 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
     //     }
     // }
 
-    public class L4 extends SequentialCommandGroup{
+    public class L4 extends ParallelCommandGroup{
         public L4() {
             addCommands(
-                new SetManipulatorWheelSpeed(0),
+                new SetManipulatorWheelSpeed(-0.05),
                 new SetElevatorPosition(Constants.L4Measurements.elevtaorHeight).withTimeout(0.4),
                 new SetArmAngle(Constants.L4Measurements.armAngle)
             );
         }
     }
+
+    
 
     private Map<String, Command> commandMap = new HashMap<String, Command>();
 
@@ -102,14 +105,15 @@ public class CoralReefAlignPose extends SequentialCommandGroup{
 
         addCommands(
             new ConditionalCommand(leftReefAlign, rightReefAlign, CoralReefAlignPose::isLeftBranchSelected),
-            new ParallelCommandGroup(
-                new ConditionalCommand(new SetElevatorPosition(Constants.L2Measurements.elevtaorHeight), new SetElevatorPosition(Constants.L3Measurements.elevtaorHeight), TriggerBoard::isL2Selected),
-                new SetArmAngle(0.2)
-            ),
-            // new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
+            // new ParallelCommandGroup(
+            //     new ConditionalCommand(new SetElevatorPosition(Constants.L2Measurements.elevtaorHeight), new SetElevatorPosition(Constants.L3Measurements.elevtaorHeight), TriggerBoard::isL2Selected),
+            //     new SetArmAngle(0.2)
+            // ),
+            new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
             new WaitUntilCommand(CoralReefAlignPose::isAlignCommandFinsihed).withTimeout(1),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0).withVelocityY(0).withRotationalRate(0));}),
-            new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
+            // new ConditionalCommand(new SetArmAngle(Constants.L4Measurements.armAngle), Commands.none(), TriggerBoard::isL4Selected),
+            // new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
             new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(RobotMode.slowControllerDrive);}),
             new InstantCommand(() -> {Robot.robotMode.setCurrentMode(RobotMode.scoreCoralPose);})
         );

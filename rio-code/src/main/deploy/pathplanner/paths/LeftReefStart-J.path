@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.342602040816327,
-        "y": 5.4315369897959185
+        "x": 5.4769132653061225,
+        "y": 5.625542091836734
       },
       "prevControl": {
-        "x": 6.544611496500462,
-        "y": 4.954512842437185
+        "x": 6.678922720990258,
+        "y": 5.148517944478001
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": -119.87599269168945
   },
   "reversed": false,
-  "folder": null,
+  "folder": "CoralStation Autons",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

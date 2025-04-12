@@ -61,7 +61,7 @@ public class KnockOffAlgaePose extends SequentialCommandGroup{
             new InstantCommand(() -> {
                 Robot.elevator.setSpeed(0);
                 Robot.robotMode.setDriveMode(DriveMode.Brake);
-                Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.5));
+                Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.9));
             }),
             new WaitCommand(0.6),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0)); Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}),

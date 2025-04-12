@@ -7,15 +7,18 @@ package frc.robot;
 import static edu.wpi.first.units.Units.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.json.simple.parser.ParseException;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectoryState;
 import com.pathplanner.lib.util.FileVersionException;
 
 import choreo.Choreo;
@@ -37,9 +40,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Commands.SetModeCommand;
 import frc.robot.Commands.AutonCommands.PrepL4Auton;
 import frc.robot.Commands.Intake.PanicIntakeWheelSpeed;
 import frc.robot.Commands.Intake.SetIntakePivotSpeed;
@@ -102,27 +110,53 @@ public class RobotContainer {
         
         private final SendableChooser<Command> autonSelector = new SendableChooser<Command>();
     
-        public RobotContainer() {
+    public RobotContainer() {
     
-            configureBindings();
-            configureChoreo();
-        
-            autonSelector.addOption("Left Triple L4", Autos.J4_K4_L4_CoralStation(autoFactory));
-            autonSelector.addOption("Right Triple L4", Autos.E4_C4_D4_CoralStation(autoFactory));
-            autonSelector.addOption("Center G4", Autos.centerAutoG());
-            autonSelector.addOption("Center H4", Autos.centerAutoH());
-            SmartDashboard.putData("Auton Selection", autonSelector);
+        configureBindings();
+        configureChoreo();
+        setUpPathplannerCommands();
+    
+        autonSelector.addOption("Left Triple L4", Autos.J4_K4_L4_CoralStation(autoFactory));
+        autonSelector.addOption("Right Triple L4", Autos.E4_C4_D4_CoralStation(autoFactory));
+        autonSelector.addOption("Center G4", Autos.centerAutoG());
+        autonSelector.addOption("Center H4", Autos.centerAutoH());
+        autonSelector.addOption("Lolipops left", Autos.J4_L4_A4_B4_Lolipops());
+        autonSelector.addOption("Lolipops left Pathplanner Routine", AutoBuilder.buildAuto("Left Lolipops"));
+        SmartDashboard.putData("Auton Selection", autonSelector);
 
-            setupTestPath();
+        setupTestPath();
+
+        // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
+        // Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+
+        limelight.initialPoseEstimates();
     
-            // Robot.robotMode.setCurrentMode(RobotMode.initialTransitPose);
-            // Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+    }
+
+    private void setUpPathplannerCommands() {
+
+        Command TransitPose = new SetModeCommand(RobotMode.transitPose);
+        Command WaitForCoral = new WaitUntilCommand(TriggerBoard::isCoralInManipulator);
+        Command WaitForCoralFloorPose = Commands.print("waiting for coral floor pose").repeatedly().withDeadline(new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()));
+        Command AlignWithA4 = new SetModeCommand(Autos.alignWithA4);
+        Command AlignWithB4 = new SetModeCommand(Autos.alignWithB4);
+        Command AlignWithA2 = new SetModeCommand(Autos.alignWithA2);
+        Command AlignWithB2 = new SetModeCommand(Autos.alignWithB2);
+
+        Map<String, Command> pathPlannerCommands = Map.of(
+            "TransitPose", TransitPose,
+            "AlignWithA4", AlignWithA4,
+            "AlignWithB4", AlignWithB4,
+            "AlignWithA2", AlignWithA2,
+            "AlignWithB2", AlignWithB2,
+            "WaitForCoral", WaitForCoral,
+            "WaitForCoralFloorPose", WaitForCoralFloorPose
+        );
+
+        NamedCommands.registerCommands(pathPlannerCommands);
+    }
     
-            limelight.initialPoseEstimates();
-    
-        }
-    
-        private void setupTestPath() {
+    private void setupTestPath() {
             try {
                 testPath = PathPlannerPath.fromPathFile("Test Path");
             } catch (FileVersionException e) {
@@ -206,7 +240,7 @@ public class RobotContainer {
 
         // joystick.a().whileTrue(new PanicIntakeWheelSpeed(-0.5));
 
-        joystick.a().whileTrue(new SetArmSpeed(0));
+        // joystick.a().whileTrue(new SetArmSpeed(0));
         // joystick.y().whileTrue(new SetArmSpeed(-0.3));
 
         joystick.x().whileTrue(new SetClimberSpeed(0.3));

@@ -1,5 +1,6 @@
 package frc.robot;
 
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -48,6 +49,53 @@ import frc.robot.subsystems.RobotMode;
 import frc.robot.utils.Utils.ReefPosition;
 
 public class Autos {
+
+    public static CoralReefAlignPoseAuton alignWithA4 = new CoralReefAlignPoseAuton(ReefPosition.A, "4", true);
+    public static CoralReefAlignPoseAuton alignWithB4 = new CoralReefAlignPoseAuton(ReefPosition.B, "4", false);
+    public static CoralReefAlignPoseAuton alignWithA2 = new CoralReefAlignPoseAuton(ReefPosition.A, "2", true);
+    public static CoralReefAlignPoseAuton alignWithB2 = new CoralReefAlignPoseAuton(ReefPosition.B, "2", false);
+    public static CoralReefAlignPoseAuton alignWithJ4 = new CoralReefAlignPoseAuton(ReefPosition.J, "4", false);
+    public static CoralReefAlignPoseAuton alignWithK4 = new CoralReefAlignPoseAuton(ReefPosition.K, "4", true);
+    public static CoralReefAlignPoseAuton alignWithL4 = new CoralReefAlignPoseAuton(ReefPosition.L, "4", false);
+    public static CoralReefAlignPoseAuton alignWithE4 = new CoralReefAlignPoseAuton(ReefPosition.E, "4", true);
+    public static CoralReefAlignPoseAuton alignWithC4 = new CoralReefAlignPoseAuton(ReefPosition.C, "4", true);
+    public static CoralReefAlignPoseAuton alignWithD4 = new CoralReefAlignPoseAuton(ReefPosition.D, "4", false);
+
+    public static Command J4_L4_A4_B4_Lolipops() {
+        try {
+
+            PathPlannerPath leftWall_A = PathPlannerPath.fromPathFile("LeftWall-AB");
+            PathPlannerPath A_LeftLolipop = PathPlannerPath.fromPathFile("A-LeftLolipop");
+            PathPlannerPath leftLolipop_B = PathPlannerPath.fromPathFile("LeftLolipop-AB");
+            PathPlannerPath B_MiddleLolipop = PathPlannerPath.fromPathFile("B-MiddleLolipop");
+            PathPlannerPath A_RightLolipop = PathPlannerPath.fromPathFile("A-RightLolipop");
+            PathPlannerPath RightLolipop_B = PathPlannerPath.fromPathFile("RightLolipop-AB");
+
+            PathPlannerPath flipped_LeftWall_AB = PathPlannerPath.fromPathFile("LeftWall-AB").flipPath();
+
+            CoralReefAlignPoseAuton alignWithA4 = new CoralReefAlignPoseAuton(ReefPosition.A, "4", true);
+            CoralReefAlignPoseAuton alignWithB4 = new CoralReefAlignPoseAuton(ReefPosition.B, "4", false);
+            CoralReefAlignPoseAuton alignWithA2 = new CoralReefAlignPoseAuton(ReefPosition.A, "2", true);
+            CoralReefAlignPoseAuton alignWithB2 = new CoralReefAlignPoseAuton(ReefPosition.B, "2", false);
+
+            return new SequentialCommandGroup(
+                new InstantCommand(() -> {Robot.drivetrain.resetPose(Robot.getAlliance() == Alliance.Blue ? leftWall_A.getStartingHolonomicPose().get() : flipped_LeftWall_AB.getStartingHolonomicPose().get()); Robot.robotMode.setCurrentMode(RobotMode.transitPose);}),
+                new InstantCommand(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(leftWall_A));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithA4)),
+                new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()).finallyDo(() -> Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(A_LeftLolipop))),
+                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> {Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(leftLolipop_B));}),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithB4)),
+                new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()).finallyDo(() -> Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(B_MiddleLolipop))),
+                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithA2)),
+                new WaitUntilCommand(() -> RobotMode.coralFloorPose.isScheduled()).finallyDo(() -> Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(A_RightLolipop))),
+                new WaitUntilCommand(() -> RobotMode.transitPose.isScheduled()).finallyDo(() -> Robot.robotMode.setDriveModeCommand(AutoBuilder.followPath(RightLolipop_B))),
+                new WaitUntilCommand(() -> Robot.robotMode.isDriveCommandFinished()).finallyDo(() -> Robot.robotMode.setCurrentMode(alignWithB2))
+            );
+            
+        } catch (Exception e) {
+            return Commands.none();
+        }
+    }
 
     public static Command J4_K4_L4_CoralStation(AutoFactory factory) {
 

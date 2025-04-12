@@ -2,7 +2,10 @@
   "robotWidth": 0.8128,
   "robotLength": 0.8128,
   "holonomicMode": true,
-  "pathFolders": [],
+  "pathFolders": [
+    "CoralStation Autons",
+    "LolipopAutos"
+  ],
   "autoFolders": [],
   "defaultMaxVel": 5.3,
   "defaultMaxAccel": 7.3,
