@@ -63,11 +63,6 @@ public class AlignWithLeftReefAuton extends Command{
 
         headingController.enableContinuousInput(-180, 180);
 
-    }
-
-    @Override
-    public void initialize() {
-        System.out.println("entered left reef align");
         switch (targetReef) {
             case A:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
@@ -116,7 +111,7 @@ public class AlignWithLeftReefAuton extends Command{
         headingController.setPID(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
         // odometryTargetPose = targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), Units.inchesToMeters(-6), new Rotation2d(0)));
-        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), -0.2, new Rotation2d())).getTranslation(), targetReefRotation);
+        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), -0.24, new Rotation2d())).getTranslation(), targetReefRotation);
         // targetPose = new Pose2d(targetReefPose.getX(), targetReefPose.getY() + Units.inchesToMeters(7.5), targetReefPose.getRotation());
 
         Logger.log("Target Pose", targetPose.toString());
@@ -128,7 +123,11 @@ public class AlignWithLeftReefAuton extends Command{
         xController.setTolerance(Constants.Drive.XAlignmentTolerance);
         yController.setTolerance(Constants.Drive.YAlignmentTolerance);
 
-        camera.setTagFilter(new int[]{targetReefTag});
+    }
+
+    @Override
+    public void initialize() {
+        System.out.println("entered left reef align");
 
         Robot.robotMode.setDriveMode(DriveMode.FieldCentric);
         Robot.robotMode.setSwerveControl(() -> xVelocity, () -> yVelocity, () -> rotationVelocity);
@@ -153,6 +152,7 @@ public class AlignWithLeftReefAuton extends Command{
 
     @Override
     public void end(boolean interrupted) {
+        Robot.robotMode.setDriveMode(DriveMode.Auton);
         camera.resetTagFilter();
     }
 

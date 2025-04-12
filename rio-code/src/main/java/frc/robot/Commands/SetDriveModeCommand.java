@@ -11,12 +11,16 @@ public class SetDriveModeCommand extends Command{
     
     public SetDriveModeCommand(Command newDriveCommand) {
         this.newDriveCommand = newDriveCommand;
-        addRequirements(Robot.robotMode);
     }
 
     @Override
     public void initialize() {
         Robot.robotMode.setDriveModeCommand(newDriveCommand);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
 }

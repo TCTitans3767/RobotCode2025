@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.9174107142857144,
+        "y": 2.6110012755102034
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.1190051020408163,
+        "y": 1.8722895408163265
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.4326530612244897,
+        "y": 0.7754145408163253
+      },
+      "prevControl": {
+        "x": 2.2310586734693922,
+        "y": 1.4992028061224496
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.3,
+    "maxAcceleration": 7.3,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 54.0
+  },
+  "reversed": false,
+  "folder": "CoralStation Autons",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 59.99999999999999
+  },
+  "useDefaultConstraints": true
+}

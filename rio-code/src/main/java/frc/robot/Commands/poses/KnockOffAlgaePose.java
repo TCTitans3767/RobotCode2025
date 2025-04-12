@@ -48,19 +48,20 @@ public class KnockOffAlgaePose extends SequentialCommandGroup{
             new ConditionalCommand(algaeAlign, new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.transitPose)), TriggerBoard::isL4Selected),
             new WaitUntilCommand((KnockOffAlgaePose::isAlignCommandFinsihed)).withTimeout(1),
             new ParallelCommandGroup(
-                new SetArmAngle(-0.32),
+                new SetArmAngle(-0.07),
                 new SetElevatorPosition(1.1)
             ),
+            new InstantCommand(() -> Robot.manipulator.setSpeed(-0.7)),
+            new InstantCommand(() -> Robot.elevator.setSpeed(-0.4)),
+            new WaitCommand(0.2),
             new ParallelRaceGroup(
-                new RunCommand(() -> Robot.manipulator.setSpeed(-0.7)),
-                new RunCommand(() -> Robot.elevator.setSpeed(-0.4)),
                 new WaitUntilCommand(KnockOffAlgaePose::isElevatorAtPosition),
                 new WaitUntilCommand(KnockOffAlgaePose::isManipulatorTouchingAlgae)
             ),
             new InstantCommand(() -> {
                 Robot.elevator.setSpeed(0);
                 Robot.robotMode.setDriveMode(DriveMode.Brake);
-                Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.2));
+                Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-0.9));
             }),
             new WaitCommand(0.6),
             new InstantCommand(() -> {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0)); Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}),
@@ -80,7 +81,7 @@ public class KnockOffAlgaePose extends SequentialCommandGroup{
     }
 
     public static boolean isManipulatorTouchingAlgae() {
-        return (Robot.arm.getMotionMagicError() > 0.01 || Robot.arm.getMotionMagicError() < -0.01) && Robot.elevator.getPosition() <= 0.85;
+        return (Robot.arm.getMotionMagicError() > 0.015 || Robot.arm.getMotionMagicError() < -0.015) && Robot.elevator.getPosition() <= 0.85;
     }
 
 }

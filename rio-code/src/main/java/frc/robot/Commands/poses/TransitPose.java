@@ -14,6 +14,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
 import frc.robot.Commands.Intake.SetIntakePosition;
+import frc.robot.Commands.Intake.SetIntakeWheelPower;
 import frc.robot.Commands.Intake.SetIntakeWheelSpeed;
 import frc.robot.Commands.arm.SetArmAngle;
 import frc.robot.Commands.drive.ControllerDrive;
@@ -34,12 +35,12 @@ public class TransitPose extends SequentialCommandGroup{
         public AlgaeInIntakeTransit() {
             addCommands(
                 new ParallelCommandGroup(
-                    new SetIntakeWheelSpeed(0.6),
+                    new SetIntakeWheelPower(0.6),
                     new SetManipulatorWheelSpeed(0)
                 ),
                 new SetIntakePosition(0),
                 new SetElevatorPosition(0.5),
-                new SetArmAngle(-0.128),
+                new SetArmAngle(-0.122),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
@@ -49,10 +50,10 @@ public class TransitPose extends SequentialCommandGroup{
         public CoralInManipulatorAndAlgaeInIntakeTransit() {
             addCommands(
                 new ParallelCommandGroup(
-                    new SetIntakeWheelSpeed(0.5),
+                    new SetIntakeWheelPower(0.6),
                     new SetManipulatorWheelSpeed(-0.05)
                 ),
-                new SetArmAngle(-0.128),
+                new SetArmAngle(-0.122),
                 new SetIntakePosition(0.25),
                 new SetElevatorPosition(0.5),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
@@ -65,13 +66,13 @@ public class TransitPose extends SequentialCommandGroup{
             addCommands(
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(-0.05),
-                    new SetArmAngle(-0.55)
+                    new SetArmAngle(0.03)
                 ),
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(0),
-                    new SetIntakeWheelSpeed(0)
+                    new InstantCommand(() -> {Robot.intake.resetWheelSpeed();})
                 ),
-                new SetElevatorPosition(0.03),
+                new SetElevatorPosition(0.02),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
         }
@@ -82,13 +83,13 @@ public class TransitPose extends SequentialCommandGroup{
             addCommands(
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(0),
-                    new SetArmAngle(-0.128),
-                    new SetIntakeWheelSpeed(0)
+                    new SetArmAngle(-0.378),
+                    new InstantCommand(() -> {Robot.intake.resetWheelSpeed();})
                 ),
                 new ParallelCommandGroup(
                     new SetIntakePosition(Constants.Intake.pivotStowPosition),
-                    new SetElevatorPosition(0.5),
-                    new SetArmAngle(0.128)
+                    new SetElevatorPosition(0.02),
+                    new SetArmAngle(0.03)
                 ),
                 new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);}})
             );
@@ -118,12 +119,12 @@ public class TransitPose extends SequentialCommandGroup{
     }
 
     public static gamePieceState currentGamePieceState() {
-        if (TriggerBoard.isCoralInManipulator() && !TriggerBoard.isAlgaeInIntake()) {
+        if (TriggerBoard.isCoralInManipulator()) {
             return gamePieceState.coralInManipulator;
-        } else if (TriggerBoard.isCoralInManipulator() && TriggerBoard.isAlgaeInIntake()) {
-            return gamePieceState.coralInManipulatorAndAlgaeInIntake;
-        } else if (TriggerBoard.isAlgaeInIntake() && !TriggerBoard.isCoralInManipulator()) {
-            return gamePieceState.algaeInIntake;
+        // } else if (TriggerBoard.isCoralInManipulator() && TriggerBoard.isAlgaeInIntake()) {
+        //     return gamePieceState.coralInManipulatorAndAlgaeInIntake;
+        // } else if (TriggerBoard.isAlgaeInIntake() && !TriggerBoard.isCoralInManipulator()) {
+        //     return gamePieceState.algaeInIntake;
         } else {
             return gamePieceState.noGamePiece;
         }

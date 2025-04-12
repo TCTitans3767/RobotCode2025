@@ -58,10 +58,6 @@ public class AlignWithRightReefAuton extends Command{
 
         headingController.enableContinuousInput(-180, 180);
 
-    }
-
-    @Override
-    public void initialize() {
         switch (targetReef) {
             case B:
                 targetReefPose = Robot.getAlliance() == Alliance.Blue ? Limelight.getTagPose(ReefTagIDs.blueReefAB) : Limelight.getTagPose(ReefTagIDs.redReefAB);
@@ -110,7 +106,7 @@ public class AlignWithRightReefAuton extends Command{
         yController.setPID(Constants.Drive.YAlignementPIDkP, Constants.Drive.YAlignementPIDkI, Constants.Drive.YAlignementPIDkD);
         headingController.setPID(Constants.Drive.rotationAlignementPIDkP, Constants.Drive.rotationAlignementPIDkI, Constants.Drive.rotationAlignementPIDkD);
 
-        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), 0.08, new Rotation2d())).getTranslation(), targetReefRotation);
+        targetPose = new Pose2d(targetReefPose.transformBy(new Transform2d((Constants.Robot.chassisDepthMeters/2), 0.1, new Rotation2d())).getTranslation(), targetReefRotation);
 
         Logger.log("Target Pose", targetPose.toString());
 
@@ -121,7 +117,10 @@ public class AlignWithRightReefAuton extends Command{
         xController.setTolerance(Constants.Drive.XAlignmentTolerance);
         yController.setTolerance(Constants.Drive.YAlignmentTolerance);
 
-        camera.setTagFilter(new int[]{targetReefTag});
+    }
+
+    @Override
+    public void initialize() {
 
         Robot.robotMode.setDriveMode(DriveMode.FieldCentric);
         Robot.robotMode.setSwerveControl(() -> xVelocity, () -> yVelocity, () -> rotationVelocity);
@@ -147,7 +146,7 @@ public class AlignWithRightReefAuton extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+        Robot.robotMode.setDriveMode(DriveMode.Auton);
         camera.resetTagFilter();
     }
 

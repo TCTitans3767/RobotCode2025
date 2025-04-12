@@ -87,19 +87,19 @@ public class Limelight extends SubsystemBase{
 
         goodEstimationFrame = true;
 
-        LimelightHelpers.SetIMUMode(limelightName, 1);
-        LimelightHelpers.SetRobotOrientation(limelightName, 
-            drivetrain.getPose().getRotation().getDegrees(),
-            0, 
-            0, 
-            0, 
-            0,
-            0
-        );
-
         if (Timer.getFPGATimestamp() - runningTimerStart >= 10) {
+            LimelightHelpers.SetIMUMode(limelightName, 1);
+            LimelightHelpers.SetRobotOrientation(limelightName, 
+                drivetrain.getPose().getRotation().getDegrees(),
+                0, 
+                0, 
+                0, 
+                0,
+                0
+            );
             estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
         } else {
+            LimelightHelpers.SetIMUMode(limelightName, 2);
             estimatedPose = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
         }
 
@@ -124,12 +124,12 @@ public class Limelight extends SubsystemBase{
 
     }
 
-    public void resetIMU(Rotation3d robotOrientation) {
+    public void resetIMU() {
         doEstimation = false;
 
         LimelightHelpers.SetIMUMode(limelightName, 1);
         LimelightHelpers.SetRobotOrientation(limelightName, 
-            robotOrientation.getZ(),
+            Robot.drivetrain.getPose().getRotation().getDegrees(),
             0,
             0,
             0,

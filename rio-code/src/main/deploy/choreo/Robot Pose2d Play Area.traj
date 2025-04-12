@@ -15,13 +15,14 @@
  "params":{
   "waypoints":[
     {"x":{"exp":"1.3960177898406982 m", "val":1.3960177898406982}, "y":{"exp":"0.6255332827568054 m", "val":0.6255332827568054}, "heading":{"exp":"233.5 deg", "val":4.075343803406759}, "intervals":62, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"0.9 m", "val":0.9}, "y":{"exp":"0.6 m", "val":0.6}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":37, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"14.3 m", "val":14.3}, "y":{"exp":"3.81 m", "val":3.81}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":37, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"16.68781280517578 m", "val":16.68781280517578}, "y":{"exp":"0.5843153595924377 m", "val":0.5843153595924377}, "heading":{"exp":"0.9685129085111964 rad", "val":0.9685129085111964}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"14.07048511505127 m", "val":14.07048511505127}, "y":{"exp":"2.72763991355896 m", "val":2.72763991355896}, "heading":{"exp":"120 deg", "val":2.0943951023931953}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
-    {"from":"first", "to":"last", "data":{"type":"KeepInRectangle", "props":{"x":{"exp":"0 m", "val":0.0}, "y":{"exp":"0 m", "val":0.0}, "w":{"exp":"17.548 m", "val":17.548}, "h":{"exp":"8.052 m", "val":8.052}}}, "enabled":true}],
+    {"from":"first", "to":"last", "data":{"type":"KeepInRectangle", "props":{"x":{"exp":"0 m", "val":0.0}, "y":{"exp":"0 m", "val":0.0}, "w":{"exp":"17.548 m", "val":17.548}, "h":{"exp":"8.052 m", "val":8.052}}}, "enabled":true},
+    {"from":0, "to":1, "data":{"type":"KeepInCircle", "props":{"x":{"exp":"4.492738049477339 m", "val":4.492738049477339}, "y":{"exp":"4.018733405973762 m", "val":4.018733405973762}, "r":{"exp":"1.3 m", "val":1.3}}}, "enabled":true}],
   "targetDt":{
    "exp":"0.05 s",
    "val":0.05

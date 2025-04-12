@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.9772321428571433,
+        "y": 3.857110969387754
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.0523992844806482,
+        "y": 3.0396427066299703
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.0446428571428572,
+        "y": 2.021524234693877
+      },
+      "prevControl": {
+        "x": 1.7734028360846135,
+        "y": 2.7968717918435155
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.3,
+    "maxAcceleration": 7.3,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 49.49715161466769
+  },
+  "reversed": false,
+  "folder": "LolipopAutos",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.Logger;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -16,15 +17,17 @@ import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 
 public class Arm extends SubsystemBase {
 
     private final TalonFX armMotor;
     private final CANcoder armEncoder;
-    private final TalonFXConfiguration ArmConfig;
+    private final TalonFXConfiguration armMotorConfig;
     private final Slot0Configs slot0Config;
     private final MotionMagicConfigs motionMagicConfig;
+    private final CANcoderConfiguration armEncoderConfig;
 
     private double targetRotations;
 
@@ -32,15 +35,15 @@ public class Arm extends SubsystemBase {
         // Motor basic setup
         armMotor = new TalonFX(Constants.Arm.ArmMotorID);
         armEncoder = new CANcoder(Constants.Arm.ArmEncoderID);
-        ArmConfig = new TalonFXConfiguration();
-        ArmConfig.Feedback.SensorToMechanismRatio = Constants.Arm.conversionFactor;
-        ArmConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
-        ArmConfig.Feedback.FeedbackRemoteSensorID = Constants.Arm.ArmEncoderID;
-        ArmConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        ArmConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Arm.rotationsMax;
-        ArmConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        ArmConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Arm.rotationsMin;
-        ArmConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        armMotorConfig = new TalonFXConfiguration();
+        armMotorConfig.Feedback.SensorToMechanismRatio = Constants.Arm.conversionFactor;
+        armMotorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
+        armMotorConfig.Feedback.FeedbackRemoteSensorID = Constants.Arm.ArmEncoderID;
+        armMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        armMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Arm.rotationsMax;
+        armMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        armMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Arm.rotationsMin;
+        armMotorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         
         // Slot 0 PID setup
         slot0Config = new Slot0Configs();
@@ -57,8 +60,13 @@ public class Arm extends SubsystemBase {
         motionMagicConfig.MotionMagicCruiseVelocity = Constants.Arm.maxVelocity;
         motionMagicConfig.MotionMagicAcceleration = Constants.Arm.maxAcceleration;
 
+        armEncoderConfig = new CANcoderConfiguration();
+        armEncoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+
+        armEncoder.getConfigurator().apply(armEncoderConfig);
+
         // Set the configurations
-        armMotor.getConfigurator().apply(ArmConfig);
+        armMotor.getConfigurator().apply(armMotorConfig);
         armMotor.getConfigurator().apply(slot0Config);
         armMotor.getConfigurator().apply(motionMagicConfig);
         armMotor.setNeutralMode(NeutralModeValue.Brake);
@@ -67,9 +75,7 @@ public class Arm extends SubsystemBase {
     
     @Override
     public void periodic() {
-      if (!isAtPosition()) {
-        logArmPosition();
-      }
+      logArmPosition();
     }
 
     public void setSpeed(double speed) {

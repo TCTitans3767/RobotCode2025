@@ -13,10 +13,13 @@ public class AlgaePickup extends Command{
 
     @Override
     public void execute() {
+
         if (TriggerBoard.isAlgaeInIntake()) {
-            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
-        } else if (TriggerBoard.isAlgaeButtonPressed()) {
-            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+            Robot.intake.setPivotPosition(0);
+        }
+
+        if (TriggerBoard.isAlgaeButtonPressed()) {
+            Robot.robotMode.setCurrentMode(RobotMode.ejectAlgaePose);
         }
     }
 
