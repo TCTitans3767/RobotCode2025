@@ -46,7 +46,7 @@ public class TriggerBoard {
 
     public static boolean isNearProcessor() {return Robot.drivetrain.isNearProcessor();}
 
-    public static boolean isL1Selected() {return DashboardButtonBox.getSelectedReefLevel() == 1;}
+    public static boolean isL1Selected() {return DashboardButtonBox.getSelectedLevelString().equals("1");}
 
     public static boolean isL2Selected() {return DashboardButtonBox.getSelectedReefLevel() == 2;}
 

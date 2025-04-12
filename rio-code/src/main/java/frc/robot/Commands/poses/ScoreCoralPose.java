@@ -71,7 +71,7 @@ public class ScoreCoralPose extends SequentialCommandGroup{
                     Robot.manipulator.setSpeed(0.4);
                 }
             }),
-            new WaitCommand(0.15),
+            new ConditionalCommand(new WaitCommand(2), new WaitCommand(.15), TriggerBoard::isL1Selected),
             new ConditionalCommand(
                 new ParallelCommandGroup(
                     new SetArmAngle(0.17),
