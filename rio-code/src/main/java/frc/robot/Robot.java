@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
   public final static Arm arm = new Arm();
   public final static Limelight limelight = new Limelight("limelight-front", new Pose3d(Units.inchesToMeters(-0.548596), Units.inchesToMeters(9.66), Units.inchesToMeters(28.228805), new Rotation3d(Units.degreesToRadians(0), Units.degreesToRadians(-23), Units.degreesToRadians(10))));
   // public final static Limelight limelight = null;
-  
+
   public final static CommandXboxController joystick = new CommandXboxController(0);
   public final static GenericHID buttonBoxController = new GenericHID(1);
   // public final static ButtonBox buttonBox = new ButtonBox(buttonBoxController);
@@ -85,10 +85,10 @@ public class Robot extends TimedRobot {
   public Robot() {
     DogLog.setOptions(new DogLogOptions(
         Robot::doNetworksTablePublishing,
-        false, 
-        false, 
-        true, 
-        true, 
+        false,
+        false,
+        true,
+        true,
         1000
       )
     );
@@ -106,9 +106,9 @@ public class Robot extends TimedRobot {
     orchestra.addInstrument(elevator.getRightMotor());
     orchestra.addInstrument(intake.getLeftWheelMotor());
     orchestra.addInstrument(intake.getRightWheelMotor());
-    orchestra.addInstrument(drivetrain.getModule(3).getDriveMotor());
-    orchestra.addInstrument(drivetrain.getModule(3).getSteerMotor());
-    
+    orchestra.addInstrument(arm.getArmMotor());
+    orchestra.addInstrument(manipulator.getManipulatorMotor());
+
     Logger.log("Is Auton Command Scheduled", false);
 
     FollowPathCommand.warmupCommand().schedule();
@@ -116,7 +116,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    CommandScheduler.getInstance().run(); 
+    CommandScheduler.getInstance().run();
     // buttonBox.periodic();
     // Logger.log("Selected Level", ButtonBox.getSelectedLevel());
     drivetrain.getField().setRobotPose(drivetrain.getPose());

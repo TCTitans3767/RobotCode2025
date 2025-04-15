@@ -46,7 +46,7 @@ public class Manipulator extends SubsystemBase{
         slot0Config.kV = Constants.Manipulator.kV;
         slot0Config.kS = Constants.Manipulator.kS;
         slot0Config.GravityType = GravityTypeValue.Arm_Cosine;
-        
+
         // Motion Magic setup
         motionMagicConfig = new MotionMagicConfigs();
         motionMagicConfig.MotionMagicCruiseVelocity = Constants.Manipulator.maxVelocity;
@@ -72,6 +72,10 @@ public class Manipulator extends SubsystemBase{
         Logger.log("Manipulator/Has Game Piece", hasGamePiece());
         Logger.log("Manipulator/Sensor Measured Distance", manipulatorSensor.getDistance().getValueAsDouble());
         Logger.log("Manipulator/Wheel Speed", getTorque());
+    }
+
+    public TalonFX getManipulatorMotor() {
+        return this.motor;
     }
 
     public double torqueCurrent() {

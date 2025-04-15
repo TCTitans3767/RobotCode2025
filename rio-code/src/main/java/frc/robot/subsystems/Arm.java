@@ -44,7 +44,7 @@ public class Arm extends SubsystemBase {
         armMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         armMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Arm.rotationsMin;
         armMotorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        
+
         // Slot 0 PID setup
         slot0Config = new Slot0Configs();
         slot0Config.kP = Constants.Arm.kP;
@@ -72,10 +72,14 @@ public class Arm extends SubsystemBase {
         armMotor.setNeutralMode(NeutralModeValue.Brake);
 
     }
-    
+
     @Override
     public void periodic() {
       logArmPosition();
+    }
+
+    public TalonFX getArmMotor() {
+        return this.armMotor;
     }
 
     public void setSpeed(double speed) {
