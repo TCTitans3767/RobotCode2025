@@ -73,21 +73,21 @@ public class Constants {
         public final static int redReefKL = 6;
 
         public final static Integer[] blue = {
-            17,
-            18,
-            19,
-            20,
-            21,
-            22
+                17,
+                18,
+                19,
+                20,
+                21,
+                22
         };
 
         public final static Integer[] red = {
-            6,
-            7,
-            8,
-            9,
-            10,
-            11
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
         };
 
     }
@@ -96,29 +96,37 @@ public class Constants {
         public final static Translation2d blueReefCenter = new Translation2d(4.5, 4.03);
         public final static Translation2d redReefCenter = new Translation2d(13.08, 4.03);
         public final static Translation2d blueRightCoralStation = new Translation2d(0.9, 0.6);
-        public final static Pose2d blueRightCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 0.6), new Rotation2d(Units.degreesToRadians(54)));
-        public final static Pose2d blueRightCoralStationLeftAlignment = new Pose2d(new Translation2d(1.5173242092132568, 0.7038162350654602), new Rotation2d(Units.degreesToRadians(54)));
+        public final static Pose2d blueRightCoralStationRightAlignment = new Pose2d(new Translation2d(0.9, 0.6),
+                new Rotation2d(Units.degreesToRadians(54)));
+        public final static Pose2d blueRightCoralStationLeftAlignment = new Pose2d(
+                new Translation2d(1.5173242092132568, 0.7038162350654602), new Rotation2d(Units.degreesToRadians(54)));
         public final static Translation2d redRightCoralStation = new Translation2d(16.68, 7.4);
-        public final static Pose2d redRightCoralStationRightAlignment = new Pose2d(new Translation2d(15.914558410644531, 7.411618232727051), new Rotation2d(Units.degreesToRadians(-126)));
-        public final static Pose2d redRightCoralStationLeftAlignment  = new Pose2d(new Translation2d(15.914558410644531, 7.411618232727051), new Rotation2d(Units.degreesToRadians(-126)));
+        public final static Pose2d redRightCoralStationRightAlignment = new Pose2d(
+                new Translation2d(15.914558410644531, 7.411618232727051), new Rotation2d(Units.degreesToRadians(-126)));
+        public final static Pose2d redRightCoralStationLeftAlignment = new Pose2d(
+                new Translation2d(15.914558410644531, 7.411618232727051), new Rotation2d(Units.degreesToRadians(-126)));
         public final static Translation2d blueLeftCoralStation = new Translation2d(0.9, 7.41);
-        public final static Pose2d blueLeftCoralStationRightAlignment = new Pose2d(new Translation2d(1.5644307136535645, 7.381567001342773), new Rotation2d(Units.degreesToRadians(-54)));
-        public final static Pose2d blueLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(1.5644307136535645, 7.381567001342773), new Rotation2d(Units.degreesToRadians(-54)));
+        public final static Pose2d blueLeftCoralStationRightAlignment = new Pose2d(
+                new Translation2d(1.5644307136535645, 7.381567001342773), new Rotation2d(Units.degreesToRadians(-54)));
+        public final static Pose2d blueLeftCoralStationLeftAlignment = new Pose2d(
+                new Translation2d(1.5644307136535645, 7.381567001342773), new Rotation2d(Units.degreesToRadians(-54)));
         public final static Translation2d redLeftCoralStation = new Translation2d(16.68, 0.58);
-        public final static Pose2d redLeftCoralStationRightAlignment = new Pose2d(new Translation2d(0, 0), new Rotation2d());
-        public final static Pose2d redLeftCoralStationLeftAlignment  = new Pose2d(new Translation2d(15.93091869354248 , 0.6056532263755798 ), new Rotation2d(Units.degreesToRadians(126)));
+        public final static Pose2d redLeftCoralStationRightAlignment = new Pose2d(new Translation2d(0, 0),
+                new Rotation2d());
+        public final static Pose2d redLeftCoralStationLeftAlignment = new Pose2d(
+                new Translation2d(15.93091869354248, 0.6056532263755798), new Rotation2d(Units.degreesToRadians(126)));
     }
-  
+
     public static final class Climber {
         public final static int leftMotorID = 18;
         public final static int rightMotorID = 19;
-      
+
         public final static double maxVelocity = 80;
         public final static double maxAcceleration = 200;
 
         public final static double conversonFactor = 1;
     }
-  
+
     public static final class Elevator {
         // CAN IDs
         public final static int leftMotorID = 13;
@@ -133,7 +141,7 @@ public class Constants {
         public final static double kG = 0.15;
         public final static double kV = 0;
         public final static double kS = 0.225;
-        
+
         // Motion Magic Constants
         public final static double maxVelocity = 100;
         public final static double maxAcceleration = 200;
@@ -177,7 +185,6 @@ public class Constants {
         public static final int sensorID = 24;
     }
 
-
     public static final class Arm {
         // CAN IDs
         public final static int ArmMotorID = 15;
@@ -190,13 +197,13 @@ public class Constants {
         public final static double kG = 0.25;
         public final static double kV = 0;
         public final static double kS = 0;
-      
+
         // Motion Magic Constants
         public final static double maxVelocity = 3.5;
         public final static double maxAcceleration = 13;
         public final static double rotationsMax = 0.5;
         public final static double rotationsMin = -0.5;
-      
+
         public final static double conversionFactor = 1;
 
         public final static double errorTolerance = 0.08;
@@ -232,7 +239,7 @@ public class Constants {
 
         public final static double wheelMaxVelocity = 80;
         public final static double wheelMaxAcceleration = 200;
-      
+
         // Conversion Factor
         public final static double pivotConversionFactor = 1;
         public final static double wheelConversionFactor = 1;
@@ -249,7 +256,6 @@ public class Constants {
         public static final double pivotStowPosition = 0.32;
 
     }
-  
 
     public static final class Robot {
         public final static double chassisWidthMeters = Units.inchesToMeters(32.5);
@@ -340,8 +346,8 @@ public class Constants {
     }
 
     public final static class L2Measurements {
-        public final static double armAngle = 0.07;
-        public final static double elevtaorHeight = 0.07;
+        public final static double armAngle = 0.09;
+        public final static double elevtaorHeight = 0.02;
     }
 
 }
