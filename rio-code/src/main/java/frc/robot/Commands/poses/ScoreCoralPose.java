@@ -26,29 +26,34 @@ import frc.robot.Commands.elevator.SetElevatorPosition;
 import frc.robot.subsystems.RobotMode;
 import frc.robot.subsystems.RobotMode.DriveMode;
 
-public class ScoreCoralPose extends SequentialCommandGroup{
+public class ScoreCoralPose extends SequentialCommandGroup {
 
     private class scoreAndTransit extends SequentialCommandGroup {
         public scoreAndTransit() {
             addCommands(
-                new InstantCommand(() -> {
-                    if (TriggerBoard.isL1Selected() && !DriverStation.isAutonomousEnabled()) {
-                        Robot.elevator.setPosition(0.02);
-                        Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(1.8));
-                    } else {
-                        Robot.robotMode.setDriveMode(DriveMode.Brake);
-                        Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-1.5));
-                    }
+                    new InstantCommand(() -> {
+                        if (TriggerBoard.isL1Selected() && !DriverStation.isAutonomousEnabled()) {
+                            Robot.elevator.setPosition(0.02);
+                            Robot.robotMode.setDriveMode(DriveMode.Brake);
+                            Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(1.8));
+                        } else {
+                            Robot.robotMode.setDriveMode(DriveMode.Brake);
+                            Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(-1.5));
+                        }
 
-                }),
-                new WaitCommand(0.25),
-                new InstantCommand(() -> {if (!DriverStation.isAutonomousEnabled()) {Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);} else {Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0));}}),
-                new InstantCommand(() -> {
-                    Robot.manipulator.setSpeed(0);
-                    Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
-                })
-            );
+                    }),
+                    new WaitCommand(0.25),
+                    new InstantCommand(() -> {
+                        if (!DriverStation.isAutonomousEnabled()) {
+                            Robot.robotMode.setDriveModeCommand(RobotMode.controllerDrive);
+                        } else {
+                            Robot.drivetrain.setControl(new SwerveRequest.RobotCentric().withVelocityX(0));
+                        }
+                    }),
+                    new InstantCommand(() -> {
+                        Robot.manipulator.setSpeed(0);
+                        Robot.robotMode.setCurrentMode(RobotMode.coralFloorPose);
+                    }));
         }
     }
 
@@ -63,32 +68,31 @@ public class ScoreCoralPose extends SequentialCommandGroup{
         // commandMap.put("2", new SetArmAngle(Constants.L2Measurements.armAngle));
 
         addCommands(
-            // new SelectCommand<String>(commandMap, DashboardButtonBox::getSelectedLevelString),
-            new InstantCommand(() -> {
-                if (TriggerBoard.isL1Selected()) {
-                    Robot.intake.scoreL1();
-                } else {
-                    Robot.manipulator.setSpeed(0.4);
-                }
-            }),
-            new ConditionalCommand(new WaitCommand(2), new WaitCommand(.15), TriggerBoard::isL1Selected),
-            new ConditionalCommand(
-                new ParallelCommandGroup(
-                    new SetArmAngle(0.17),
-                    new SetElevatorPosition(1.1)
-                ),
-                Commands.none(),
-                TriggerBoard::isL4Selected
-            ), 
-            new ConditionalCommand(
+                // new SelectCommand<String>(commandMap,
+                // DashboardButtonBox::getSelectedLevelString),
                 new InstantCommand(() -> {
-                    Robot.manipulator.setSpeed(0);
-                    Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
+                    if (TriggerBoard.isL1Selected()) {
+                        Robot.intake.scoreL1();
+                    } else if (TriggerBoard.isL4Selected()) {
+                        Robot.manipulator.setSpeed(0.4);
+                    } else {
+                        Robot.manipulator.setSpeed(0.25);
+                    }
                 }),
-                new scoreAndTransit(),
-                DashboardButtonBox::isAlgaeKnockoffOn
-            )
-        );
+                new ConditionalCommand(new WaitCommand(2), new WaitCommand(.15), TriggerBoard::isL1Selected),
+                new ConditionalCommand(
+                        new ParallelCommandGroup(
+                                new SetArmAngle(0.17),
+                                new SetElevatorPosition(1.1)),
+                        Commands.none(),
+                        TriggerBoard::isL4Selected),
+                new ConditionalCommand(
+                        new InstantCommand(() -> {
+                            Robot.manipulator.setSpeed(0);
+                            Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePose);
+                        }),
+                        new scoreAndTransit(),
+                        DashboardButtonBox::isAlgaeKnockoffOn));
 
         addRequirements(Robot.arm, Robot.climber, Robot.intake, Robot.manipulator, Robot.elevator);
     }
