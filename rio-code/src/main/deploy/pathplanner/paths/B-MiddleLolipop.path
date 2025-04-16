@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 0.9998724489795918,
-        "y": 4.028730867346938
+        "x": 0.85,
+        "y": 4.029
       },
       "prevControl": {
-        "x": 1.24764722607937,
-        "y": 4.062012391247673
+        "x": 1.0977747770997783,
+        "y": 4.062281523900735
       },
       "nextControl": null,
       "isLocked": false,
@@ -61,7 +61,7 @@
     "rotation": -3.4336303624505473
   },
   "reversed": false,
-  "folder": "LolipopAutos",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
