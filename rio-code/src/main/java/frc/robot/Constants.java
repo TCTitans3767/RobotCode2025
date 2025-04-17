@@ -337,7 +337,7 @@ public class Constants {
 
     public final static class L4Measurements {
         public final static double armAngle = 0.1;
-        public final static double elevtaorHeight = 1.03;
+        public final static double elevtaorHeight = 1.05;
     }
 
     public final static class L3Measurements {

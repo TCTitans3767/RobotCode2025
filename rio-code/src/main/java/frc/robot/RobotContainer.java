@@ -151,6 +151,7 @@ public class RobotContainer {
         Command AlignWithA2 = new SetModeCommand(Autos.alignWithA2);
         Command AlignWithB2 = new SetModeCommand(Autos.alignWithB2);
         Command AlignWithL4 = new SetModeCommand(Autos.alignWithL4);
+        Command AlignWithK4 = new SetModeCommand(Autos.alignWithK4);
 
         Map<String, Command> pathPlannerCommands = Map.of(
                 "TransitPose", TransitPose,
@@ -159,6 +160,7 @@ public class RobotContainer {
                 "AlignWithA2", AlignWithA2,
                 "AlignWithB2", AlignWithB2,
                 "AlignWithL4", AlignWithL4,
+                "AlignWithK4", AlignWithK4,
                 "WaitForCoral", WaitForCoral,
                 "WaitForCoralFloorPose", WaitForCoralFloorPose);
 
