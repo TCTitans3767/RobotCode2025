@@ -206,7 +206,7 @@ public class Constants {
 
         public final static double conversionFactor = 1;
 
-        public final static double errorTolerance = 0.08;
+        public final static double errorTolerance = 0.1;
     }
 
     public static final class Intake {

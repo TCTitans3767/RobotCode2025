@@ -28,6 +28,8 @@ public class Manipulator extends SubsystemBase{
     private final CANrange manipulatorSensor;
     private final CANrangeConfiguration manipulatorSensorConfig;
 
+    private double setWheelSpeed = 0;
+
     public Manipulator() {
         // Motor setup
         motor = new TalonFX(frc.robot.Constants.Manipulator.motorID);
@@ -71,7 +73,8 @@ public class Manipulator extends SubsystemBase{
         // This method will be called once per scheduler run
         Logger.log("Manipulator/Has Game Piece", hasGamePiece());
         Logger.log("Manipulator/Sensor Measured Distance", manipulatorSensor.getDistance().getValueAsDouble());
-        Logger.log("Manipulator/Wheel Speed", getTorque());
+        Logger.log("Manipulator/Wheel Speed", motor.get());
+        Logger.log("Manipulator/Set Wheel Speed", setWheelSpeed);
     }
 
     public TalonFX getManipulatorMotor() {
@@ -85,6 +88,7 @@ public class Manipulator extends SubsystemBase{
     public void setSpeed(double speed) {
         // Move the manipulator at the given speed
         motor.set(speed);
+        setWheelSpeed = speed;
     }
 
     public double getTorque() {

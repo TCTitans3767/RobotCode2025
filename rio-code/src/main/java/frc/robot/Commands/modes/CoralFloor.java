@@ -19,8 +19,10 @@ public class CoralFloor extends Command{
             new FlashLights().schedule();
             Robot.intake.setWheelSpeed(-20);
             Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+            return;
         } else if (!TriggerBoard.isL1Selected() && TriggerBoard.isCoralOverrideButtonPressed()) {
             Robot.robotMode.setCurrentMode(RobotMode.transitPose);
+            return;
         }
 
         if (TriggerBoard.isClimbButtonBoxButtonPressed()) {
@@ -32,12 +34,25 @@ public class CoralFloor extends Command{
 
         if (TriggerBoard.isAlgaeButtonPressed()) {
             Robot.robotMode.setCurrentMode(RobotMode.algaePickupPose);
+            return;
+        }
+
+        if (TriggerBoard.isAlgaeRemoveButtonPressed()) {
+            Robot.robotMode.setCurrentMode(RobotMode.knockOffAlgaePoseManual);
+            return;
         }
 
         if (TriggerBoard.isL1Selected() && TriggerBoard.isCoralInIntake()) {
             Robot.robotMode.setCurrentMode(RobotMode.L1Pose);
             Robot.intake.setWheelPower(0);
             Robot.manipulator.setSpeed(0);
+            return;
+        }
+
+        if(TriggerBoard.isCoralInManipulator()) {
+            new FlashLights().schedule();
+            Robot.intake.setWheelSpeed(-20);
+            Robot.robotMode.setCurrentMode(RobotMode.transitPose);
             return;
         }
 
