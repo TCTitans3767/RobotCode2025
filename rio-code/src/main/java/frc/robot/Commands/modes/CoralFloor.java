@@ -15,6 +15,10 @@ public class CoralFloor extends Command{
     @Override
     public void execute() {
 
+        if (TriggerBoard.isL1Selected()) {
+            Robot.intake.setWheelSpeed(30);
+        }
+
         if (!TriggerBoard.isL1Selected() && TriggerBoard.isCoralInManipulator()) {
             new FlashLights().schedule();
             Robot.intake.setWheelSpeed(-20);
