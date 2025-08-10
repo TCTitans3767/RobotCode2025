@@ -255,6 +255,8 @@ public class Constants {
 
         public static final double pivotStowPosition = 0.32;
 
+        public static final double starWheelCircumference = 0.39898226;
+
     }
 
     public static final class Robot {

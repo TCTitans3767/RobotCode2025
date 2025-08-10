@@ -1,0 +1,105 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "OpposingBarge-EF"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignWithE4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoralFloorPose"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "WaitForCoral"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "EF-OpposingBargeAPop"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "OpposingBargeAPop-EF"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignWithF4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoralFloorPose"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "WaitForCoral"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "EF-OpposingBargeBPop"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "OpposingBargeBPop-CD"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignWithD4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoralFloorPose"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

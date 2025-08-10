@@ -1,0 +1,111 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightWall-AB"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignWithB4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoralFloorPose"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "WaitForCoral"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "B-MiddleLolipop"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleLolipop-AB"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignWithA4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoralFloorPose"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "WaitForCoral"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "A-RightLolipop"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "WaitForCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightLolipop-CD"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignWithC4"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

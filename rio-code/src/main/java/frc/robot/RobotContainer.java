@@ -5,6 +5,7 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
+import static java.util.Map.entry;
 
 import java.io.IOException;
 import java.util.Map;
@@ -121,14 +122,16 @@ public class RobotContainer {
         configureChoreo();
         setUpPathplannerCommands();
 
-        autonSelector.addOption("Left Triple L4", Autos.J4_K4_L4_CoralStation(autoFactory));
-        autonSelector.addOption("Right Triple L4", Autos.E4_C4_D4_CoralStation(autoFactory));
+//        autonSelector.addOption("Left Triple L4", Autos.J4_K4_L4_CoralStation(autoFactory));
+//        autonSelector.addOption("Right Triple L4", Autos.E4_C4_D4_CoralStation(autoFactory));
         autonSelector.addOption("Center G4", Autos.centerAutoG());
         autonSelector.addOption("Center H4", Autos.centerAutoH());
-        autonSelector.addOption("Lolipops left", Autos.J4_L4_A4_B4_Lolipops());
+//        autonSelector.addOption("Lolipops left", Autos.J4_L4_A4_B4_Lolipops());
         autonSelector.addOption("Lolipops left Pathplanner Routine", AutoBuilder.buildAuto("Left Lolipops"));
         autonSelector.addOption("Lolipops left Pathplanner Routine 3L4",
                 AutoBuilder.buildAuto("Left Lolipops With 3L4"));
+        autonSelector.addOption("Lolipops Right 3L4",  AutoBuilder.buildAuto("Right Lolipops"));
+        autonSelector.addOption("Steal Coral Auto", AutoBuilder.buildAuto("Steal Coral Auton"));
         SmartDashboard.putData("Auton Selection", autonSelector);
 
         setupTestPath();
@@ -152,17 +155,25 @@ public class RobotContainer {
         Command AlignWithB2 = new SetModeCommand(Autos.alignWithB2);
         Command AlignWithL4 = new SetModeCommand(Autos.alignWithL4);
         Command AlignWithK4 = new SetModeCommand(Autos.alignWithK4);
+        Command AlignWithD4 = new SetModeCommand(Autos.alignWithD4);
+        Command AlignWithF4 = new SetModeCommand(Autos.alignWithF4);
+        Command AlignWithE4 = new SetModeCommand(Autos.alignWithE4);
+        Command AlignWithC4 = new SetModeCommand(Autos.alignWithC4);
 
-        Map<String, Command> pathPlannerCommands = Map.of(
-                "TransitPose", TransitPose,
-                "AlignWithA4", AlignWithA4,
-                "AlignWithB4", AlignWithB4,
-                "AlignWithA2", AlignWithA2,
-                "AlignWithB2", AlignWithB2,
-                "AlignWithL4", AlignWithL4,
-                "AlignWithK4", AlignWithK4,
-                "WaitForCoral", WaitForCoral,
-                "WaitForCoralFloorPose", WaitForCoralFloorPose);
+        Map<String, Command> pathPlannerCommands = Map.ofEntries(
+                entry("TransitPose", TransitPose),
+                entry("AlignWithA4", AlignWithA4),
+                entry("AlignWithB4", AlignWithB4),
+                entry("AlignWithA2", AlignWithA2),
+                entry("AlignWithB2", AlignWithB2),
+                entry("AlignWithL4", AlignWithL4),
+                entry("AlignWithK4", AlignWithK4),
+                entry("AlignWithD4", AlignWithD4),
+                entry("AlignWithE4", AlignWithE4),
+                entry("AlignWithF4", AlignWithF4),
+                entry("AlignWithC4", AlignWithC4),
+                entry("WaitForCoral", WaitForCoral),
+                entry("WaitForCoralFloorPose", WaitForCoralFloorPose));
 
         NamedCommands.registerCommands(pathPlannerCommands);
     }

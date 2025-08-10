@@ -1,6 +1,8 @@
 package frc.robot.Commands.modes;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
 import frc.robot.Commands.Lights.FlashLights;
@@ -17,6 +19,10 @@ public class CoralFloor extends Command{
 
         if (TriggerBoard.isL1Selected()) {
             Robot.intake.setWheelSpeed(30);
+        } else {
+            ChassisSpeeds chassisSpeed = Robot.getDrivetrain().getChassisSpeeds();
+            double metersPerSecond = Math.sqrt(((chassisSpeed.vxMetersPerSecond) * (chassisSpeed.vxMetersPerSecond)) + ((chassisSpeed.vyMetersPerSecond) * (chassisSpeed.vyMetersPerSecond)));
+            Robot.intake.setWheelSpeed((Math.abs(metersPerSecond/ Constants.Intake.starWheelCircumference) * 3) + 20);
         }
 
         if (!TriggerBoard.isL1Selected() && TriggerBoard.isCoralInManipulator()) {

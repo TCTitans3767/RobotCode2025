@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Commands.Intake.CoralFloorSpeed;
 import frc.robot.Robot;
 import frc.robot.Commands.Intake.SetIntakePosition;
 import frc.robot.Commands.Intake.SetIntakeWheelSpeed;
@@ -23,7 +24,6 @@ public class CoralFloorPose extends SequentialCommandGroup{
                 new SetElevatorPosition(0.02).withTimeout(0.4),
                 new SetManipulatorWheelSpeed(-0.25)
             ),
-            new SetIntakeWheelSpeed(60),
             new InstantCommand(() -> Robot.robotMode.setCurrentMode(RobotMode.coralFloor))
         );
 

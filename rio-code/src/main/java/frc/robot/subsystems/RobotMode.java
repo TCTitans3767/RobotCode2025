@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Commands.Intake.CoralFloorSpeed;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Commands.SetDriveModeCommand;
@@ -117,6 +118,7 @@ public class RobotMode extends SubsystemBase {
     public static DeployClimberPose deployClimberPose;
     public static ClimbPose climbPose;
     public static EjectAlgaePose ejectAlgaePose;
+    public static CoralFloorSpeed coralFloorSpeed;
 
     public static SetDriveModeCommand setDriveModeCommand;
     public static SetModeCommand setModeCommand;
@@ -173,6 +175,8 @@ public class RobotMode extends SubsystemBase {
         L1 = new L1();
 
         resetPose = new ResetPose();
+
+        coralFloorSpeed = new CoralFloorSpeed();
     }
 
     @Override

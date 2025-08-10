@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1192602040816326,
-        "y": 2.2028
+        "x": 7.170218142947635,
+        "y": 3.067203006228885
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8621391916008263,
-        "y": 3.024009138266858
+        "x": 6.5724490603885135,
+        "y": 2.8855099239864863
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.037053571428572,
-        "y": 3.1198
+        "x": 5.89518201673353,
+        "y": 2.6244346824852185
       },
       "prevControl": {
-        "x": 1.866451221655609,
-        "y": 2.9277539942669635
+        "x": 6.350688542546453,
+        "y": 2.8176500475084456
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.8,
-    "rotation": 0.0
+    "velocity": 0,
+    "rotation": 155.93293621964494
   },
   "reversed": false,
   "folder": "LolipopAutos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 179.80667882889847
   },
   "useDefaultConstraints": true
 }

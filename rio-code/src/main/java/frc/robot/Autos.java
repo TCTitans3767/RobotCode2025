@@ -60,6 +60,7 @@ public class Autos {
     public static CoralReefAlignPoseAuton alignWithE4 = new CoralReefAlignPoseAuton(ReefPosition.E, "4", true);
     public static CoralReefAlignPoseAuton alignWithC4 = new CoralReefAlignPoseAuton(ReefPosition.C, "4", true);
     public static CoralReefAlignPoseAuton alignWithD4 = new CoralReefAlignPoseAuton(ReefPosition.D, "4", false);
+    public static CoralReefAlignPoseAuton alignWithF4 = new  CoralReefAlignPoseAuton(ReefPosition.F, "4", false);
 
     public static Command J4_L4_A4_B4_Lolipops() {
         try {
