@@ -15,7 +15,7 @@ public class InitialTransitPose extends SequentialCommandGroup{
     public InitialTransitPose() {
 
         addCommands(
-            new SetArmAngle(0.05),
+            new SetArmAngle(-0.122),
             new SetIntakeWheelSpeed(0),
             new SetIntakePosition(0.32),
             new SetElevatorPosition(0.2),
