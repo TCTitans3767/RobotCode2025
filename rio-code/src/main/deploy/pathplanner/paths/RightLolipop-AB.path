@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1192602040816326,
-        "y": 2.2028
+        "x": 1.096875,
+        "y": 2.1931441326530603
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8621391916008263,
-        "y": 3.024009138266858
+        "x": 1.293254948124286,
+        "y": 2.3478532661090483
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "RightLolipop"
     },
     {
       "anchor": {
         "x": 2.037053571428572,
-        "y": 3.1198
+        "y": 4.931600765306122
       },
       "prevControl": {
-        "x": 1.866451221655609,
-        "y": 2.9277539942669635
+        "x": 1.2410826015238805,
+        "y": 4.121132023938143
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AB"
     }
   ],
   "rotationTargets": [],
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.8,
+    "velocity": 3.0,
     "rotation": 0.0
   },
   "reversed": false,
