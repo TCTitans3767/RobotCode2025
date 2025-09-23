@@ -22,7 +22,7 @@ public class SetElevatorSpeed extends Command{
     public void execute() {
         if (MathUtil.isNear(Constants.Elevator.metersMax, Robot.elevator.getHeightMeters(), Constants.Elevator.errorTolerance)) {
             Robot.elevator.setSpeed(0);
-            Robot.arm.setSpeed(-0.15);
+            Robot.arm.setSpeed(0.15);
         }
     }
 
