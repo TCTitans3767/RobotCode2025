@@ -9,15 +9,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.TriggerBoard;
 import frc.robot.Commands.Intake.SetIntakePosition;
 import frc.robot.Commands.Intake.SetIntakeWheelPower;
-import frc.robot.Commands.Intake.SetIntakeWheelSpeed;
 import frc.robot.Commands.arm.SetArmAngle;
-import frc.robot.Commands.drive.ControllerDrive;
 import frc.robot.Commands.elevator.SetElevatorPosition;
 import frc.robot.Commands.manipulator.SetManipulatorWheelSpeed;
 import frc.robot.subsystems.RobotMode;
@@ -83,7 +80,7 @@ public class TransitPose extends SequentialCommandGroup{
             addCommands(
                 new ParallelCommandGroup(
                     new SetManipulatorWheelSpeed(0),
-                    new SetArmAngle(-0.378),
+                    new SetArmAngle(-0.2),
                     new InstantCommand(() -> {Robot.intake.resetWheelSpeed();})
                 ),
                 new ParallelCommandGroup(

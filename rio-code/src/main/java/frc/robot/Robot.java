@@ -51,7 +51,7 @@ import frc.robot.subsystems.RobotMode;
 import frc.robot.utils.Logger;
 
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+    private Command m_autonomousCommand;
 
   private static boolean testMode = true;
 
