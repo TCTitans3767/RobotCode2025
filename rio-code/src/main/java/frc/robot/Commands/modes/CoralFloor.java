@@ -22,7 +22,11 @@ public class CoralFloor extends Command{
         } else {
             ChassisSpeeds chassisSpeed = Robot.getDrivetrain().getChassisSpeeds();
             double metersPerSecond = Math.sqrt(((chassisSpeed.vxMetersPerSecond) * (chassisSpeed.vxMetersPerSecond)) + ((chassisSpeed.vyMetersPerSecond) * (chassisSpeed.vyMetersPerSecond)));
-            Robot.intake.setWheelSpeed((Math.abs(metersPerSecond/ Constants.Intake.starWheelCircumference) * 3) + 20);
+            Robot.intake.setWheelSpeed((Math.abs(metersPerSecond/ Constants.Intake.starWheelCircumference) * 3) + 10);
+        }
+
+        if (!TriggerBoard.isL1Selected() && TriggerBoard.isCoralInIntake()) {
+            Robot.intake.setWheelSpeed(40);
         }
 
         if (!TriggerBoard.isL1Selected() && TriggerBoard.isCoralInManipulator()) {
